@@ -1,0 +1,415 @@
+.toolbar {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.toolbar * {
+    height: 90%;
+}
+
+.clearCanvas, .toolbar button {
+    padding: 10px;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    background-color: white;
+    border-radius: 100px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
+
+.clearCanvas:hover, .toolbar button:hover {
+    background-color: black;
+    color: white;
+}
+
+.toolbar div:nth-of-type(4) {
+    height: 100%;
+}
+
+.toolbar div:nth-of-type(1), .toolbar div:nth-of-type(2), .toolbar div:nth-of-type(3){
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+}
+
+.toolbar i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.toolbar div input {
+    width: 80%;
+    text-align: center;
+    font-size: 22px;
+}
+
+.toolbar label {
+    text-align: center;
+    font-size: 18px;
+    height: 30px;
+    width: 80%;
+    margin-bottom: 10px;
+    line-height: 30px;
+    border-bottom: 3px solid black;
+}
+
+.board {
+    width: 100%;
+    height: 85%;
+    border: 2px solid black;
+    display: flex;
+    margin-top: 10px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.board canvas {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+div.save {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5%;
+    font-size: 30px;
+}
+
+div.save i::after {
+    content:'Save';
+    font-size: 15px;
+    margin-left: 10px;
+    color: black;
+}
+
+div.save i {
+    color: black;
+}
+
+
+@media (min-width: 320px) and (orientation:portrait) {
+    .toolbar>button, .toolbar>div>button {
+        font-size: 15px;
+        height: 60%;
+    }
+
+    .toolbar>div {
+        height:100%;
+    }
+
+    .toolbar label {
+        margin-bottom: 5px;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .toolbar div input {
+        height: 20px;
+        font-size: 12px;
+    }
+
+    .toolbar>button {
+        margin-right: 10px;
+    }
+
+    .toolbar>div>button {
+        margin-left: 10px;
+    }
+
+    .board {
+        height: 100%;
+    }
+
+    div.save {
+        height: 20%;
+    }
+
+    div.save a {
+        font-size: 19px;
+    }
+
+    div.save i::after { 
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 360px) and (orientation:portrait) {
+    .toolbar>button, .toolbar>div>button {
+        font-size: 15px;
+        height: 60%;
+    }
+
+    .toolbar>div {
+        height:100%;
+    }
+
+    .toolbar label {
+        margin-bottom: 5px;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .toolbar div input {
+        height: 10px;
+        font-size: 12px;
+    }
+
+    .toolbar>button {
+        margin-right: 10px;
+    }
+
+    .toolbar>div>button {
+        margin-left: 10px;
+    }
+
+    .board {
+        height: 100%;
+    }
+
+    div.save {
+        height: 10%;
+    }
+
+    div.save a {
+        font-size: 19px;
+    }
+
+    div.save i::after { 
+        font-size: 11px;
+    }
+}
+
+
+@media (min-width: 768px) and (orientation:portrait) {
+    .toolbar>button, .toolbar>div>button {
+        font-size: 40px;
+        height: 90%;
+    }
+
+    .toolbar label {
+        margin-bottom: 10px;
+        font-size: 25px;
+        width: 100%;
+    }
+
+    .toolbar div input {
+        height: 30px;
+        font-size: 30px;
+    }
+
+    .toolbar>button {
+        margin-right: 20px;
+    }
+
+    .toolbar>div>button {
+        margin-left: 20px;
+    }
+
+    div.save a {
+        font-size: 40px;
+    }
+
+    div.save i::after { 
+        font-size: 30px;
+    }
+}
+
+@media (min-width: 912px) and (orientation:portrait) {
+    .toolbar>button, .toolbar>div>button {
+        font-size: 50px;
+        height: 90%;
+        padding: 15px;
+    }
+
+    .toolbar label {
+        margin-bottom: 20px;
+        font-size: 25px;
+        width: 70%;
+    }
+
+    .toolbar div input {
+        height: 50px;
+        font-size: 35px;
+    }
+
+    .toolbar>button {
+        margin-right: 20px;
+    }
+
+    .toolbar>div>button {
+        margin-left: 20px;
+    }
+
+    .board{
+        height: 80%;
+    }
+
+    div.save a {
+        font-size: 40px;
+    }
+
+    div.save i::after { 
+        font-size: 30px;
+    }
+}
+
+
+    @media (min-width: 533px) and (orientation:landscape) {
+        .toolbar>button, .toolbar>div>button {
+            font-size: 20px;
+            height: 90%;
+        }
+
+        .toolbar {
+            height: 50px;
+        }
+    
+        .toolbar label {
+            font-size: 15px;
+            width: 70%;
+        }
+    
+        .toolbar div input {
+            height: 10px;
+            font-size: 15px;
+        }
+    
+        .toolbar>button {
+            margin-right: 20px;
+        }
+    
+        .toolbar>div>button {
+            margin-left: 20px;
+        }
+    
+        .board{
+            height: 60%;
+        }
+    
+        div.save a {
+            font-size: 20px;
+        }
+
+        div.save {
+            height: 20%;
+        }
+    
+        div.save i::after { 
+            font-size: 10px;
+        }
+    }
+
+    @media (min-width: 640px) and (orientation:landscape) {
+    
+        .board{
+            height: 100%;
+        }
+
+    }
+
+
+    @media (min-width: 1024px) and (orientation:landscape) {
+        .toolbar>button, .toolbar>div>button {
+            font-size: 30px;
+            height: 90%;
+        }
+
+        .toolbar {
+            height: 80px;
+        }
+    
+        .toolbar label {
+            font-size: 25px;
+            width: 70%;
+        }
+    
+        .toolbar div input {
+            height: 35px;
+            font-size: 20px;
+        }
+    
+        .toolbar>button {
+            margin-right: 20px;
+        }
+    
+        .toolbar>div>button {
+            margin-left: 20px;
+        }
+    
+        .board{
+            height:100%;
+        }
+    
+        div.save a {
+            font-size: 40px;
+        }
+
+        div.save {
+            height: 20%;
+        }
+    
+        div.save i::after { 
+            font-size: 25px;
+        }
+    }
+
+    @media (min-width: 1366px) and (orientation:landscape) {
+        .toolbar>button, .toolbar>div>button {
+            font-size: 30px;
+            height: 90%;
+        }
+
+        .toolbar {
+            height: 80px;
+        }
+    
+        .toolbar label {
+            font-size: 25px;
+            width: 70%;
+        }
+    
+        .toolbar div input {
+            height: 35px;
+            font-size: 20px;
+        }
+    
+        .toolbar>button {
+            margin-right: 20px;
+        }
+    
+        .toolbar>div>button {
+            margin-left: 20px;
+        }
+    
+        .board{
+            height:100%;
+        }
+    
+        div.save a {
+            font-size: 40px;
+        }
+
+        div.save {
+            height: 10%;
+        }
+    
+        div.save i::after { 
+            font-size: 25px;
+        }
+    }

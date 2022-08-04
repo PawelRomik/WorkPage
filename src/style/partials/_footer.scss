@@ -1,0 +1,463 @@
+footer {
+    background-color: black;
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+}
+
+footer>div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .clock{
+    color: white;
+    text-indent: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 1%;
+}
+
+
+
+#footer-container i {
+    line-height: 50px;
+    margin-right: 5%;
+}
+
+#footer-container {
+    color: white;
+    display: flex;
+    color: white;
+    margin-right: 1%;
+    justify-content: flex-end;
+    align-items: center;
+    width: 10%;
+}
+
+footer a {
+    font-size: 30px;
+    color: white;
+}
+
+footer div.windows {
+    color: white;
+    font-size: 30px;
+    margin-left: 1%;
+    width: 10%;
+}
+
+.app {
+    background-color: rgb(24, 24, 24);
+    border-bottom: 6px solid purple;
+    height: 100%;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media (min-width: 320px) and (orientation:portrait) {
+
+    footer {
+        height: 35px;
+    }
+
+    .windows i {
+        font-size: 22px;
+    }
+
+    .windows {
+        text-align: center;
+    }
+
+    .app a{
+        font-size: 20px;
+    }
+
+    .app {
+        width: 50px;
+    }
+
+    .clock {
+        font-size: 9px;
+    }
+
+    #footer-container {
+        font-size: 11px;
+        margin-right: 3%;
+    }
+
+    #footer-container>i{
+        margin-right: 30%;
+    }
+}
+
+@media (min-width: 360px) and (orientation:portrait) {
+
+        .windows i {
+            font-size: 22px;
+        }
+
+        .windows {
+            text-align: center;
+        }
+
+        .app a{
+            font-size: 23px;
+        }
+
+        .clock {
+            font-size: 11px;
+            margin-right: 27%;
+        }
+
+        #footer-container {
+            font-size: 13px;
+        }
+
+        #footer-container>i{
+            margin-right: 30%;
+        }
+}
+
+
+@media (min-width: 384px) and (orientation:portrait) {
+    #footer-container {
+        font-size: 13px;
+        margin-right: 4%;
+    }
+}
+
+@media (min-width: 390px) and (orientation:portrait) {
+
+    footer {
+        height: 50px;
+    }
+}
+
+@media (min-width: 768px) and (orientation:portrait) {
+
+    .windows i {
+        font-size: 32px;
+    }
+
+    .windows {
+        text-align: center;
+    }
+
+    .app a{
+        font-size: 45px;
+    }
+
+    .app {
+        width: 100px;
+    }
+
+    .clock {
+        font-size: 20px;
+    }
+
+    #footer-container {
+        font-size: 20px;
+        margin-right: 4%;
+    }
+
+    footer {
+        height: 80px;
+    }
+
+    #footer-container>i{
+        margin-right: 30%;
+    }
+}
+
+@media (min-width: 912px) and (orientation:portrait) {
+
+    .windows i {
+        font-size: 40px;
+    }
+
+    .windows {
+        text-align: center;
+    }
+
+    .app a{
+        font-size: 45px;
+    }
+
+    .app {
+        width: 100px;
+    }
+
+    .clock {
+        font-size: 24px;
+    }
+
+    #footer-container {
+        font-size: 26px;
+        margin-right: 4%;
+    }
+
+    footer {
+        height: 80px;
+    }
+
+    #footer-container>i{
+        margin-right: 30%;
+    }
+}
+
+    @media (min-width: 533px) and (orientation:landscape) {
+    
+        footer {
+            height: 35px;
+        }
+    
+        .windows i {
+            font-size: 20px;
+        }
+    
+        .windows {
+            text-align: center;
+        }
+    
+        .app a{
+            font-size: 20px;
+        }
+    
+        .app {
+            width: 50px;
+        }
+    
+        .clock {
+            font-size: 11px;
+        }
+    
+        #footer-container {
+            font-size: 12px;
+            margin-right: 3%;
+        }
+    
+        #footer-container>i{
+            margin-right: 15%;
+        }
+    }
+
+    @media (min-width: 640px) and (orientation:landscape) {
+        footer {
+            height: 35px;
+        }
+    
+        .windows i {
+            font-size: 20px;
+        }
+    
+        .windows {
+            text-align: center;
+        }
+    
+        .app a{
+            font-size: 20px;
+        }
+    
+        .app {
+            width: 50px;
+        }
+    
+        .clock {
+            font-size: 11px;
+        }
+    
+        #footer-container {
+            font-size: 12px;
+            margin-right: 3%;
+        }
+    
+        #footer-container>i{
+            margin-right: 15%;
+        }
+    }
+
+    @media (min-width: 731px) and (orientation:landscape) {
+        footer {
+            height: 40px;
+        }
+    
+        .windows i {
+            font-size: 20px;
+        }
+    
+        .windows {
+            text-align: left;
+        }
+    
+        .app a{
+            font-size: 20px;
+        }
+    
+        .app {
+            width: 50px;
+        }
+    
+        .clock {
+            font-size: 11px;
+        }
+    
+        #footer-container {
+            font-size: 12px;
+            margin-right: 3%;
+        }
+    
+        #footer-container>i{
+            margin-right: 15%;
+        }
+    }
+
+    @media (min-width: 844px) and (orientation:landscape) {
+        footer {
+            height: 30px;
+        }
+    
+        .windows i {
+            font-size: 22px;
+        }
+    
+        .windows {
+            text-align: left;
+        }
+    
+        .app a{
+            font-size: 20px;
+        }
+    
+        .app {
+            width: 50px;
+        }
+    
+        .clock {
+            font-size: 12px;
+        }
+    
+        #footer-container {
+            font-size: 12px;
+            margin-right: 3%;
+        }
+    
+        #footer-container>i{
+            margin-right: 15%;
+        }
+    }
+
+    @media (min-width: 1024px) and (orientation:landscape) {
+    
+        footer {
+            height: 50px;
+        }
+    
+        .windows i {
+            font-size: 30px;
+        }
+    
+        .windows {
+            text-align: left;
+        }
+    
+        .app a{
+            font-size: 30px;
+        }
+    
+        .app {
+            width: 60px;
+        }
+    
+        .clock {
+            font-size: 15px;
+        }
+    
+        #footer-container {
+            font-size: 18px;
+            margin-right: 3%;
+        }
+    
+        #footer-container>i{
+            margin-right: 15%;
+        }
+    }
+
+    @media (min-width: 1280px) and (orientation:landscape) {
+        footer {
+            height: 60px;
+        }
+    
+        .windows i {
+            font-size: 30px;
+        }
+    
+        .windows {
+            text-align: left;
+        }
+    
+        .app a{
+            font-size: 30px;
+        }
+    
+        .app {
+            width: 60px;
+        }
+    
+        .clock {
+            font-size: 15px;
+        }
+    
+        #footer-container {
+            font-size: 18px;
+            margin-right: 3%;
+        }
+    
+        #footer-container>i{
+            margin-right: 15%;
+        }
+    }
+
+    @media (min-width: 1366px) and (orientation:landscape) {
+        footer {
+            height: 55px;
+        }
+    
+        .windows i {
+            font-size: 40px;
+        }
+    
+        .windows {
+            text-align: left;
+        }
+    
+        .app a{
+            font-size: 40px;
+        }
+    
+        .app {
+            width: 80px;
+        }
+    
+        .clock {
+            font-size: 18px;
+        }
+    
+        #footer-container {
+            font-size: 20px;
+            margin-right: 3%;
+        }
+    
+        #footer-container>i{
+            margin-right: 15%;
+        }
+    }

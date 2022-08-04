@@ -1,0 +1,219 @@
+#appBox div.tasks {
+    margin: 0 auto;
+    margin-top: 3%;
+    height: 85%;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto
+}
+
+div.tasks>div {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+div.tasks>div>div {
+    border-bottom: 2px solid rgb(182, 182, 182);
+    border-top: 2px solid rgb(182, 182, 182);
+    width: 100%;
+    font-size: 22px;
+    height: auto;
+    line-height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(238, 237, 237);
+    padding-left: 20px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+
+div.tasks>div>div>div {
+    word-wrap: break-word;
+    max-width: 80%;
+}
+
+div.tasks button {
+    background-color: white;
+    padding: 5px;
+    border: 2px solid black;
+    display: flex;
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    transition: 0.1s linear;
+    cursor: pointer;
+}
+
+div.tasks button:hover {
+    background-color: rgb(52, 245, 52);
+    border: 2px solid rgb(13, 175, 54);
+}
+
+.addTask {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.addTask input {
+    border: 6px double black;
+    font-size: 30px;
+    padding: 5px;
+}
+.addTask button {
+    border: 6px double black;
+    margin-left: 1%;
+    padding: 5px;
+    font-size: 30px;
+    color: black;
+    cursor: pointer;
+}
+
+.addTask input:focus {
+    border: 6px solid black;
+}
+
+.addTask button:hover {
+    border: 6px solid black;
+}
+
+.addTask .error {
+    color: red;
+    flex-basis: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+@media (min-width: 320px) and (orientation:portrait) {
+    .addTask input, .addTask button {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 384px) and (orientation:portrait) {
+    .addTask input, .addTask button {
+        font-size: 15px;
+        margin-top: 10%;
+    }
+}
+
+@media (min-width: 390px) and (orientation:portrait) {
+    .addTask input, .addTask button {
+        font-size: 20px;
+        margin-top: 10%;
+    }
+}
+
+@media (min-width: 768px) and (orientation:portrait) {
+    .addTask input, .addTask button {
+        font-size: 25px;
+        margin-top: 3%;
+    }
+
+    .tasks div {
+        font-size: 26px;
+    }
+
+    div.tasks button {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (min-width: 912px) and (orientation:portrait) {
+    .addTask input, .addTask button {
+        font-size: 50px;
+        margin-top: 3%;
+    }
+
+    .tasks div {
+        font-size: 46px;
+    }
+
+    div.tasks button {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+
+    @media (min-width: 533px) and (orientation:landscape) {
+        .addTask input, .addTask button {
+            font-size: 15px;
+            margin-top: 3%;
+        }
+
+        #appBox div.tasks {
+            height: 70%;
+        }
+    
+        .tasks div {
+            font-size: 17px;
+        }
+    
+        div.tasks button {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+
+    @media (min-width: 731px) and (orientation:landscape) {
+        .addTask input, .addTask button {
+            font-size: 20px;
+            margin-top: 2%;
+        }
+    
+        .tasks div {
+            font-size: 20px;
+        }
+    
+        div.tasks button {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+
+    @media (min-width: 1024px) and (orientation:landscape) {
+        .addTask input, .addTask button {
+            font-size: 35px;
+            margin-top: 8%;
+            margin-bottom: 30%;
+        }
+
+        #appBox div.tasks {
+            height: 70%;
+        }
+    
+        .tasks div {
+            font-size: 27px;
+        }
+    
+        div.tasks button {
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    @media (min-width: 1366px) and (orientation:landscape) {
+        .addTask input, .addTask button {
+            font-size: 35px;
+            margin-top: 5%;
+        }
+
+        #appBox div.tasks {
+            height: 80%;
+        }
+    
+    }
