@@ -1,0 +1,188 @@
+.loginScreen {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: -10;
+		left: -10;
+		width: 150%;
+		height: 150%;
+		background-color: black;
+		background: url("../../assets/test.webp");
+		filter: blur(5px);
+		margin: 0;
+		z-index: -1;
+		animation: slideAnimation 200s linear infinite;
+	}
+
+	.loginProfile {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		color: white;
+		gap: 1rem;
+		font-family: Arial, Helvetica, sans-serif;
+
+		img {
+			width: 15rem;
+			border: 6px solid white;
+			border-radius: 400px;
+			background: linear-gradient(225deg, rgba(12, 33, 232, 1) 0%, rgba(255, 0, 230, 1) 100%);
+		}
+
+		p {
+			font-size: 30px;
+			font-weight: bold;
+		}
+
+		.loginPanel {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			input {
+				background-color: black;
+				color: white;
+				padding: 0.75rem 1.5rem;
+				border: 2px solid white;
+				border-right: none;
+				border-radius: 30px 0 0 30px;
+				outline: none;
+				transition: 0.1s;
+
+				&:focus {
+					background-color: white;
+					color: black;
+
+					& ~ button {
+						background-color: white;
+						color: black;
+					}
+				}
+			}
+
+			button {
+				transition: 0.1s;
+				background-color: black;
+				color: white;
+				padding: 0.75rem 1.5rem;
+				border: 2px solid white;
+				border-left: none;
+				border-radius: 0 30px 30px 0;
+				outline: none;
+				cursor: pointer;
+
+				&:hover,
+				&:focus {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+}
+
+.lds-roller {
+	display: inline-block;
+	position: relative;
+	width: 80px;
+	height: 80px;
+}
+.lds-roller div {
+	animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	transform-origin: 40px 40px;
+}
+.lds-roller div:after {
+	content: " ";
+	display: block;
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #fff;
+	margin: -4px 0 0 -4px;
+}
+.lds-roller div:nth-child(1) {
+	animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+	top: 63px;
+	left: 63px;
+}
+.lds-roller div:nth-child(2) {
+	animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+	top: 68px;
+	left: 56px;
+}
+.lds-roller div:nth-child(3) {
+	animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+	top: 71px;
+	left: 48px;
+}
+.lds-roller div:nth-child(4) {
+	animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+	top: 72px;
+	left: 40px;
+}
+.lds-roller div:nth-child(5) {
+	animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+	top: 71px;
+	left: 32px;
+}
+.lds-roller div:nth-child(6) {
+	animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+	top: 68px;
+	left: 24px;
+}
+.lds-roller div:nth-child(7) {
+	animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+	top: 63px;
+	left: 17px;
+}
+.lds-roller div:nth-child(8) {
+	animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+	top: 56px;
+	left: 12px;
+}
+
+@keyframes lds-roller {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes slideAnimation {
+	0% {
+		background-position: 0% 0%;
+	}
+	50% {
+		background-position: 50% 50%;
+	}
+	100% {
+		background-position: 100% 0%;
+	}
+}
