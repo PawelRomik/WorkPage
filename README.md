@@ -1,38 +1,30 @@
-<h1 align="center">WorkPage</h1>
+# React + TypeScript + Vite
 
-## Project Overview :tada:
-<h3>Workpage</h3> 
-a simple website where users have access to many useful tools such as a <strong>Calculator</strong>, <strong>To-Do List</strong> or <strong>Paint</strong>.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Tech/framework used :wrench:
-* [React](https://github.com/facebook/react)              
-* [Sass](https://github.com/sass/dart-sass)
-* [MathJS](https://github.com/josdejong/mathjs)
+Currently, two official plugins are available:
 
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Screenshots :tv:
+## Expanding the ESLint configuration
 
-<p align="center">
-    <img src="/src/img/screenshots/main.png" alt="Website">
-</p>
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-<p align="center">
-    <img src="/src/img/screenshots/calculator.png" alt="Calculator">
-</p>
+- Configure the top-level `parserOptions` property like this:
 
-<p align="center">
-    <img src="/src/img/screenshots/paint.png" alt="Paint">
-</p>
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
+```
 
-## Installation :floppy_disk:
-To install this project run:
-> npm install
-## Available scripts
-
-| Command                   | Description                   |
-| ------------------------- | ----------------------------- |
-| `npm run start`           | Open local server             |
-| `npm run build`           | Create optimized build        |
-
-## Live :round_pushpin:
-> https://eloquent-treacle-cf19f9.netlify.app
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
