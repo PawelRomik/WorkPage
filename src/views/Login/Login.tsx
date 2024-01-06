@@ -43,7 +43,7 @@ const Login: React.FC<LoginProps> = ({ onSuccessfulLogin }) => {
 					<img src={avatar} alt='avatar' className='userAvatar' />
 					<p className='user'>User</p>
 					<div className='loginPanel'>
-						<input placeholder='password' onKeyPress={handleKeyPress} aria-label='Type your password' className='passwordInput'></input>
+						<input type='password' placeholder='password' onKeyPress={handleKeyPress} aria-label='Type your password' className='passwordInput'></input>
 						<button onClick={handleLogin} aria-label='Login' className='signInButton'>
 							<i className='fa-solid fa-arrow-right-to-bracket'></i>
 						</button>
