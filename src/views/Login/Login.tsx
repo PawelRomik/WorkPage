@@ -27,15 +27,18 @@ const Login: React.FC<LoginProps> = ({ onSuccessfulLogin }) => {
 	return (
 		<main className='loginScreen'>
 			{loading ? (
-				<div className='lds-roller'>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
+				<div>
+					<Timer />
+					<div className='lds-roller'>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
 				</div>
 			) : (
 				<div className='loginProfile'>
