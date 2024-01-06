@@ -1,5 +1,6 @@
 import { useState } from "react";
 import avatar from "../../assets/loginAvatar.png";
+import Timer from "../Timer/Timer";
 import "./Login.style.scss";
 
 interface LoginProps {
@@ -38,12 +39,13 @@ const Login: React.FC<LoginProps> = ({ onSuccessfulLogin }) => {
 				</div>
 			) : (
 				<div className='loginProfile'>
-					<img src={avatar} alt='avatar' />
-					<p>User</p>
+					<Timer />
+					<img src={avatar} alt='avatar' className='userAvatar' />
+					<p className='user'>User</p>
 					<div className='loginPanel'>
-						<input placeholder='password' onKeyPress={handleKeyPress} aria-label='Type your password'></input>
-						<button onClick={handleLogin} aria-label='Login'>
-							Login
+						<input placeholder='password' onKeyPress={handleKeyPress} aria-label='Type your password' className='passwordInput'></input>
+						<button onClick={handleLogin} aria-label='Login' className='signInButton'>
+							<i className='fa-solid fa-arrow-right-to-bracket'></i>
 						</button>
 					</div>
 				</div>
