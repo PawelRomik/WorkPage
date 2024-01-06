@@ -1,0 +1,41 @@
+.taskbar {
+	background-color: black;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 2rem;
+}
+
+.windowsButton {
+	background-color: transparent;
+	color: white;
+	border: none;
+	font-size: 1.25rem;
+	margin-left: 0.5rem;
+	cursor: pointer;
+}
+
+.taskbarTimer {
+	margin-right: 0.5rem;
+}
+
+.rightTaskbarContainer {
+	display: flex;
+	gap: 0.75rem;
+	color: white;
+}
+
+@media (min-width: 768px) {
+	.taskbar {
+		height: 3rem;
+	}
+
+	.windowsButton {
+		font-size: 1.75rem;
+	}
+
+	.rightTaskbarContainer {
+		font-size: 1.25rem;
+		gap: 1rem;
+	}
+}

@@ -23,6 +23,14 @@
 	}
 }
 
+.loginTimer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 1rem;
+	font-size: 3rem;
+}
+
 .loginProfile {
 	display: flex;
 	justify-content: center;

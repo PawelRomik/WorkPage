@@ -1,6 +1,6 @@
 import { useState } from "react";
 import avatar from "../../assets/loginAvatar.png";
-import Timer from "../Timer/Timer";
+import Timer from "../../components/Timer/Timer";
 import "./Login.style.scss";
 
 interface LoginProps {
@@ -28,7 +28,9 @@ const Login: React.FC<LoginProps> = ({ onSuccessfulLogin }) => {
 		<main className='loginScreen'>
 			{loading ? (
 				<div>
-					<Timer />
+					<div className='loginTimer'>
+						<Timer />
+					</div>
 					<div className='lds-roller'>
 						<div></div>
 						<div></div>
@@ -42,7 +44,9 @@ const Login: React.FC<LoginProps> = ({ onSuccessfulLogin }) => {
 				</div>
 			) : (
 				<div className='loginProfile'>
-					<Timer />
+					<div className='loginTimer'>
+						<Timer />
+					</div>
 					<img src={avatar} alt='avatar' className='userAvatar' />
 					<p className='user'>User</p>
 					<div className='loginPanel'>

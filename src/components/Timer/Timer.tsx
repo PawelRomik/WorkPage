@@ -15,7 +15,7 @@ const Timer = () => {
 
 	return (
 		<div className='timer'>
-			<p className='timerValue'>{`${currentTime.getHours()}:${currentTime.getMinutes()}`}</p>
+			<p className='timerValue'>{`${currentTime.getHours().toString().padStart(2, "0")}:${currentTime.getMinutes().toString().padStart(2, "0")}`}</p>
 		</div>
 	);
 };
