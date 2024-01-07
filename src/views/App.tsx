@@ -4,7 +4,7 @@ import Login from "./Login/Login";
 import System from "./System/System";
 
 export default function App() {
-	const [loggedIn, changeLoggedIn] = useState(false);
+	const [loggedIn, changeLoggedIn] = useState(true);
 
 	const login = () => {
 		changeLoggedIn(true);
