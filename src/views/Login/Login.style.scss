@@ -57,7 +57,8 @@
 	align-items: center;
 }
 
-.passwordInput {
+.passwordInput,
+.loginJoinButton {
 	background-color: black;
 	color: white;
 	padding: 0.75rem 1.5rem;
@@ -105,7 +106,8 @@
 	}
 
 	.passwordInput,
-	.signInButton {
+	.signInButton,
+	.loginJoinButton {
 		font-size: 1.25rem;
 	}
 }

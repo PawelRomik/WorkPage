@@ -1,4 +1,5 @@
 import "./AppContainer.style.scss";
+import Settings from "../Settings/Settings";
 
 interface AppContainerProps {
 	app: {
@@ -10,6 +11,15 @@ interface AppContainerProps {
 }
 
 const AppContainer: React.FC<AppContainerProps> = ({ app, closeApp }) => {
+	const renderAppContent = () => {
+		switch (app.name) {
+			case "Settings":
+				return <Settings />;
+			default:
+				return null;
+		}
+	};
+
 	return (
 		<div className='appContainer'>
 			<header className='appContainerHeader'>
@@ -18,7 +28,7 @@ const AppContainer: React.FC<AppContainerProps> = ({ app, closeApp }) => {
 					X
 				</button>
 			</header>
-			<main className='appContainerContent'></main>
+			<main className='appContainerContent'>{renderAppContent()}</main>
 		</div>
 	);
 };

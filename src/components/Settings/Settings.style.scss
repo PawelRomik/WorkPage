@@ -1,0 +1,138 @@
+.settingsContainer {
+	background-color: white;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.changePasswordSection {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	flex: 1;
+	width: 100%;
+}
+
+.passContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.changeWallpaperSection {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	flex: 1;
+}
+
+.wallpaperConfirmButton {
+	transition: 0.1s;
+	background-color: black;
+	color: white;
+	padding: 0.75rem 1.5rem;
+	border: 2px solid white;
+	border-left: none;
+	border-radius: 0 30px 30px 0;
+	outline: none;
+	cursor: pointer;
+
+	&:hover,
+	&:focus {
+		color: rgb(214, 23, 214);
+	}
+}
+
+.changePasswordInput,
+.wallpaperInput {
+	background-color: black;
+	color: white;
+	padding: 0.75rem 1.5rem;
+	border: 2px solid white;
+	border-right: none;
+	border-radius: 30px;
+	outline: none;
+	transition: 0.1s;
+
+	&:focus {
+		background-color: white;
+		color: black;
+		border: 3px solid black;
+
+		& ~ .signInButton {
+			background-color: white;
+			color: black;
+		}
+	}
+}
+
+.wallpaperInput:focus {
+	border-right: none;
+	& ~ .wallpaperConfirmButton {
+		background-color: white;
+		color: black;
+		border: 3px solid black;
+		border-left: none;
+	}
+}
+
+.wallpaperPanel {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+}
+.wallpaperInput {
+	border-radius: 30px 0 0 30px;
+}
+
+.unlockButton,
+.removeButton {
+	padding: 0.5rem;
+	font-weight: bold;
+	margin-top: 0.5rem;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 300px;
+	cursor: pointer;
+	transition: 0.25s;
+	outline: none;
+
+	&:focus,
+	&:hover {
+		background-color: rgb(214, 23, 214);
+	}
+}
+
+.changePasswordButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	width: 100%;
+}
+.wallpapersSelection {
+	width: 100%;
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+
+	& button {
+		width: 25%;
+		cursor: pointer;
+		border: 2px solid white;
+		background-color: transparent;
+		& img {
+			width: 100%;
+		}
+	}
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Login/Login";
 import System from "./System/System";
+import { PasswordProvider } from "../providers/PasswordContext";
 
 export default function App() {
 	const [loggedIn, changeLoggedIn] = useState(false);
@@ -21,11 +22,13 @@ export default function App() {
 	};
 
 	return (
-		<Router>
-			<Routes>
-				<Route path='/' element={getRouteElement("/")} />
-				<Route path='/system' element={getRouteElement("/system")} />
-			</Routes>
-		</Router>
+		<PasswordProvider>
+			<Router>
+				<Routes>
+					<Route path='/' element={getRouteElement("/")} />
+					<Route path='/system' element={getRouteElement("/system")} />
+				</Routes>
+			</Router>
+		</PasswordProvider>
 	);
 }
