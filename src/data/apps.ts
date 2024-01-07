@@ -24,4 +24,9 @@ export default [
 		name: "Minesweeper",
 		class: "fa-solid fa-land-mine-on",
 	},
+	{
+		id: 5,
+		name: "Settings",
+		class: "fa-solid fa-gear appIcon",
+	},
 ];

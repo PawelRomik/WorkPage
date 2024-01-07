@@ -1,0 +1,44 @@
+.appContainer {
+	background-color: rgb(39, 39, 39);
+	position: absolute;
+	top: 50%;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 95%;
+	height: 95%;
+	z-index: 3;
+	border: 6px solid black;
+}
+
+.appContainerHeader {
+	display: flex;
+	background-color: black;
+	color: white;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 1rem;
+}
+
+.closeButton {
+	background-color: transparent;
+	color: white;
+	width: 3.5rem;
+	height: 2.5rem;
+	padding: 0.5rem;
+	border: none;
+	font-weight: bold;
+	font-size: 1rem;
+
+	&:hover,
+	&:focus {
+		background-color: rgb(194, 26, 194);
+		color: white;
+	}
+}
+
+.appContainerContent {
+	flex: 1;
+}
