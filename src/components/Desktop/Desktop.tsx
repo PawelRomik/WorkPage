@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import data from "../../data/apps";
 import AppContainer from "../AppContainer/AppContainer";
 import Weather from "../Weather/Weather";
+import { useBackgroundContext } from "../../providers/BackgroundContext";
 
 interface App {
 	id: number;
@@ -11,6 +12,7 @@ interface App {
 }
 
 export default function Desktop() {
+	const { background } = useBackgroundContext();
 	const [allApps, setAllApps] = useState<App[]>([]);
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 
@@ -36,7 +38,7 @@ export default function Desktop() {
 	));
 
 	return (
-		<main className='desktop'>
+		<main className='desktop' style={{ backgroundImage: `url(${background})` }}>
 			{chosenApp !== null && <AppContainer app={chosenApp} closeApp={closeApp} />}
 			<div className='apps'>
 				<section className='leftApps'>{apps}</section>
