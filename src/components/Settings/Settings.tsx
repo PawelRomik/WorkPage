@@ -109,7 +109,7 @@ function Settings() {
 						placeholder='New Password'
 					/>
 
-					<div className='changePasswordButton'>
+					<div className='changePasswordButtons'>
 						<button className='unlockButton' onClick={password ? changePass : unlock}>
 							Confirm
 						</button>
