@@ -10,7 +10,8 @@
 
 .changePasswordSection {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
+	gap: 10%;
 	align-items: center;
 	flex-direction: column;
 	flex: 1;
@@ -113,9 +114,8 @@
 
 .changePasswordButton {
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
-	gap: 1rem;
 	width: 100%;
 }
 .wallpapersSelection {
@@ -134,5 +134,34 @@
 		& img {
 			width: 100%;
 		}
+	}
+}
+
+@media (min-width: 768px) {
+	.changePasswordSection h2,
+	.changeWallpaperSection h2 {
+		font-size: 2.25rem;
+	}
+
+	.changePasswordInput,
+	.wallpaperInput,
+	.wallpaperConfirmButton {
+		font-size: 1.5rem;
+	}
+
+	.unlockButton,
+	.removeButton {
+		font-size: 1.25rem;
+		padding: 0.75rem;
+	}
+
+	.error {
+		font-size: 1.25rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	.wallpapersSelection {
+		width: 60%;
 	}
 }

@@ -2,18 +2,50 @@ import "./Settings.style.scss";
 import wallpaperData from "../../data/wallpapers";
 import { useState } from "react";
 import { usePasswordContext } from "../../providers/PasswordContext";
+import { useBackgroundContext } from "../../providers/BackgroundContext";
 
 function Settings() {
+	const { setBackground } = useBackgroundContext();
+	const [backgroundInputValue, setBackgroundInputValue] = useState("");
+
 	const { password, setPassword } = usePasswordContext();
-	const [oldPassword, setOldPassword] = useState<string>("");
-	const [newPassword, setNewPassword] = useState<string>("");
+	const [oldPassword, setOldPassword] = useState("");
+	const [newPassword, setNewPassword] = useState("");
+
 	const [error, changeErrorStatus] = useState("");
 
 	const wallpapers = wallpaperData.map((el, i) => (
-		<button key={i} className='wallpaperButton'>
+		<button key={i} className='wallpaperButton' onClick={(e) => changeBackground(e)}>
 			<img src={el} alt='wallpaper' />
 		</button>
 	));
+
+	const changeBackground = (e: React.MouseEvent) => {
+		if (e.currentTarget.children.length > 0) {
+			const firstChild = e.currentTarget.children[0];
+			if (firstChild instanceof HTMLImageElement) {
+				const imageSrc = firstChild.src;
+				setBackground(imageSrc);
+			}
+		}
+	};
+
+	const handleCustomWallpaper = () => {
+		if (backgroundInputValue) {
+			const img = new Image();
+			img.src = backgroundInputValue;
+			img.onload = () => {
+				setBackground(backgroundInputValue);
+				setBackgroundInputValue("");
+			};
+		}
+	};
+
+	const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			handleCustomWallpaper();
+		}
+	};
 
 	const unlock = () => {
 		if (newPassword.length > 0) {
@@ -93,8 +125,17 @@ function Settings() {
 				<h2>SET YOUR WALLPAPER</h2>
 
 				<div className='wallpaperPanel'>
-					<input className='wallpaperInput' type='text' name='wallpaperInput' id='wallpaperInput' placeholder={`Custom wallpaper: (url)`}></input>
-					<button className='wallpaperConfirmButton'>
+					<input
+						className='wallpaperInput'
+						type='text'
+						name='wallpaperInput'
+						value={backgroundInputValue}
+						onChange={(e) => setBackgroundInputValue(e.target.value)}
+						id='wallpaperInput'
+						placeholder={`Custom wallpaper: (url)`}
+						onKeyDown={handleInputKeyDown}
+					></input>
+					<button className='wallpaperConfirmButton' onClick={handleCustomWallpaper}>
 						<i className='fa-solid fa-arrow-right-to-bracket'></i>
 					</button>
 				</div>
