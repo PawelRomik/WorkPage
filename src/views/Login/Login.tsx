@@ -2,17 +2,16 @@ import { useState } from "react";
 import avatar from "../../assets/loginAvatar.png";
 import Timer from "../../components/Timer/Timer";
 import "./Login.style.scss";
-import { usePasswordContext } from "../../providers/PasswordContext";
+import { useSettingsContext } from "../../providers/SettingsContext";
+import { useAuthContext } from "../../providers/AuthContext";
 
-interface LoginProps {
-	onSuccessfulLogin: () => void;
-}
-
-const Login: React.FC<LoginProps> = ({ onSuccessfulLogin }) => {
-	const { password } = usePasswordContext();
+const Login: React.FC = () => {
+	const { login } = useAuthContext();
+	const { password } = useSettingsContext();
 	const [loading, setLoading] = useState(false);
 	const [loginInput, updateLoginInput] = useState("");
 	const [error, setError] = useState("");
+
 	const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === "Enter") {
 			handleLogin();
@@ -25,7 +24,7 @@ const Login: React.FC<LoginProps> = ({ onSuccessfulLogin }) => {
 
 			setTimeout(() => {
 				setLoading(false);
-				onSuccessfulLogin();
+				login();
 			}, 3000);
 		} else {
 			setError("Incorrect password");

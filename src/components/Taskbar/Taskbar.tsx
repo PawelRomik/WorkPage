@@ -1,10 +1,14 @@
 import Timer from "../Timer/Timer";
 import "./Taskbar.style.scss";
 
-export default function Taskbar() {
+type TaskbarProps = {
+	displayUserWindowState: () => void;
+};
+
+const Taskbar: React.FC<TaskbarProps> = ({ displayUserWindowState }) => {
 	return (
 		<footer className='taskbar'>
-			<button className='windowsButton'>
+			<button className='windowsButton' onClick={displayUserWindowState}>
 				<i className='fa-brands fa-windows'></i>
 			</button>
 			<div className='rightTaskbarContainer'>
@@ -16,4 +20,6 @@ export default function Taskbar() {
 			</div>
 		</footer>
 	);
-}
+};
+
+export default Taskbar;

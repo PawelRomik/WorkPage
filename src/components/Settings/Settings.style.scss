@@ -23,6 +23,7 @@
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	gap: 5%;
 }
 
 .changeWallpaperSection {
@@ -34,6 +35,71 @@
 }
 
 .wallpaperConfirmButton {
+	transition: 0.1s;
+	background-color: black;
+	color: white;
+	padding: 0.75rem 1.5rem;
+	border: 2px solid rgb(0, 0, 0);
+	border-left: none;
+	border-radius: 0 30px 30px 0;
+	outline: none;
+	cursor: pointer;
+
+	&:hover,
+	&:focus {
+		color: rgb(214, 23, 214) !important;
+	}
+}
+
+//
+.passwordInput,
+.loginJoinButton {
+	background-color: black;
+	color: white;
+	padding: 0.75rem 1.5rem;
+	border: 2px solid white;
+	border-right: none;
+	border-radius: 30px 0 0 30px;
+	outline: none;
+	transition: 0.1s;
+
+	&:focus {
+		background-color: white;
+		color: black;
+
+		& ~ .signInButton {
+			background-color: white;
+			color: black;
+		}
+	}
+}
+
+.changePasswordInput {
+	margin: 0.25rem;
+}
+
+.wallpaperInput {
+	background-color: black;
+	color: white;
+	padding: 0.75rem 1.5rem;
+	border: 2px solid black;
+	border-right: none;
+	border-radius: 30px 0 0 30px;
+	outline: none;
+	transition: 0.1s;
+
+	&:focus {
+		background-color: white;
+		color: black;
+
+		& ~ .wallpaperConfirmButton {
+			background-color: white;
+			color: black;
+		}
+	}
+}
+
+.signInButton {
 	transition: 0.1s;
 	background-color: black;
 	color: white;
@@ -50,13 +116,11 @@
 	}
 }
 
-.changePasswordInput,
-.wallpaperInput {
+.changePasswordInput {
 	background-color: black;
 	color: white;
 	padding: 0.75rem 1.5rem;
-	border: 2px solid white;
-	border-right: none;
+	border: 2px solid black;
 	border-radius: 30px;
 	outline: none;
 	transition: 0.1s;
@@ -64,22 +128,11 @@
 	&:focus {
 		background-color: white;
 		color: black;
-		border: 3px solid black;
 
 		& ~ .signInButton {
 			background-color: white;
 			color: black;
 		}
-	}
-}
-
-.wallpaperInput:focus {
-	border-right: none;
-	& ~ .wallpaperConfirmButton {
-		background-color: white;
-		color: black;
-		border: 3px solid black;
-		border-left: none;
 	}
 }
 

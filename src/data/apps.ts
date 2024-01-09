@@ -26,6 +26,11 @@ export default [
 	},
 	{
 		id: 5,
+		name: "Translator",
+		class: "fa-solid fa-gear appIcon",
+	},
+	{
+		id: 6,
 		name: "Settings",
 		class: "fa-solid fa-gear appIcon",
 	},

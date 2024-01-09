@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import data from "../../data/apps";
 import AppContainer from "../AppContainer/AppContainer";
 import Weather from "../Weather/Weather";
-import { useBackgroundContext } from "../../providers/BackgroundContext";
+import { useSettingsContext } from "../../providers/SettingsContext";
+import UserWindow from "../UserWindow/UserWindow";
 
 interface App {
 	id: number;
@@ -11,8 +12,13 @@ interface App {
 	class: string;
 }
 
-export default function Desktop() {
-	const { background } = useBackgroundContext();
+type DesktopProps = {
+	userWindowState: boolean;
+	hideUserWindowState: () => void;
+};
+
+const Desktop: React.FC<DesktopProps> = ({ hideUserWindowState, userWindowState }) => {
+	const { background } = useSettingsContext();
 	const [allApps, setAllApps] = useState<App[]>([]);
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 
@@ -38,12 +44,15 @@ export default function Desktop() {
 	));
 
 	return (
-		<main className='desktop' style={{ backgroundImage: `url(${background})` }}>
+		<main className='desktop' style={{ backgroundImage: `url(${background})` }} onClick={hideUserWindowState}>
 			{chosenApp !== null && <AppContainer app={chosenApp} closeApp={closeApp} />}
+			{userWindowState && <UserWindow />}
 			<div className='apps'>
 				<section className='leftApps'>{apps}</section>
 			</div>
 			<Weather />
 		</main>
 	);
-}
+};
+
+export default Desktop;
