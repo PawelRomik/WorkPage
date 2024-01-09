@@ -1,0 +1,31 @@
+.userWindow {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: black;
+	width: 12rem;
+	height: 5rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	color: white;
+	flex-direction: column;
+}
+
+.userWindow p {
+	font-weight: bold;
+}
+
+.userWindow button {
+	background-color: rgb(29, 29, 29);
+	cursor: pointer;
+	outline: none;
+	border: none;
+	color: white;
+	padding: 0.5rem 1rem;
+
+	&:hover,
+	&:focus {
+		background-color: rgb(214, 23, 214);
+	}
+}

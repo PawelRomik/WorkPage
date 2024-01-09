@@ -1,14 +1,11 @@
 import "./Settings.style.scss";
 import wallpaperData from "../../data/wallpapers";
 import { useState } from "react";
-import { usePasswordContext } from "../../providers/PasswordContext";
-import { useBackgroundContext } from "../../providers/BackgroundContext";
+import { useSettingsContext } from "../../providers/SettingsContext";
 
 function Settings() {
-	const { setBackground } = useBackgroundContext();
+	const { setBackground, password, setPassword } = useSettingsContext();
 	const [backgroundInputValue, setBackgroundInputValue] = useState("");
-
-	const { password, setPassword } = usePasswordContext();
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 
@@ -47,7 +44,7 @@ function Settings() {
 		}
 	};
 
-	const unlock = () => {
+	const unlock = (e: React.MouseEvent<HTMLButtonElement>) => {
 		if (newPassword.length > 0) {
 			if (newPassword) {
 				setPassword(newPassword);
@@ -56,6 +53,7 @@ function Settings() {
 				setTimeout(() => {
 					changeErrorStatus("");
 				}, 3000);
+				e.currentTarget.blur();
 			}
 		} else {
 			changeErrorStatus("Please enter the password");

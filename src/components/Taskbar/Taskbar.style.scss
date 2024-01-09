@@ -13,10 +13,17 @@
 	font-size: 1.25rem;
 	margin-left: 0.5rem;
 	cursor: pointer;
+	outline: none;
+
+	&:hover,
+	&:focus {
+		color: rgb(214, 23, 214);
+	}
 }
 
 .taskbarTimer {
 	margin-right: 0.5rem;
+	cursor: pointer;
 }
 
 .rightTaskbarContainer {
