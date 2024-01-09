@@ -5,6 +5,7 @@ import AppContainer from "../AppContainer/AppContainer";
 import Weather from "../Weather/Weather";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import UserWindow from "../UserWindow/UserWindow";
+import CalendarWindow from "../CalendarWindow/CalendarWindow";
 
 interface App {
 	id: number;
@@ -14,10 +15,12 @@ interface App {
 
 type DesktopProps = {
 	userWindowState: boolean;
+	calendarWindowState: boolean;
 	hideUserWindowState: () => void;
+	hideCalendarWindow: () => void;
 };
 
-const Desktop: React.FC<DesktopProps> = ({ hideUserWindowState, userWindowState }) => {
+const Desktop: React.FC<DesktopProps> = ({ hideUserWindowState, userWindowState, calendarWindowState, hideCalendarWindow }) => {
 	const { background } = useSettingsContext();
 	const [allApps, setAllApps] = useState<App[]>([]);
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
@@ -43,10 +46,16 @@ const Desktop: React.FC<DesktopProps> = ({ hideUserWindowState, userWindowState 
 		</button>
 	));
 
+	const hidePanels = () => {
+		hideUserWindowState();
+		hideCalendarWindow();
+	};
+
 	return (
-		<main className='desktop' style={{ backgroundImage: `url(${background})` }} onClick={hideUserWindowState}>
+		<main className='desktop' style={{ backgroundImage: `url(${background})` }} onClick={hidePanels}>
 			{chosenApp !== null && <AppContainer app={chosenApp} closeApp={closeApp} />}
 			{userWindowState && <UserWindow />}
+			{calendarWindowState && <CalendarWindow />}
 			<div className='apps'>
 				<section className='leftApps'>{apps}</section>
 			</div>

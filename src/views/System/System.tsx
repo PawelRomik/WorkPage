@@ -6,6 +6,7 @@ import "./System.style.scss";
 
 export default function System() {
 	const [userWindowState, changeUserWindowState] = useState(false);
+	const [calendarWindowState, changeCalendarWindowState] = useState(false);
 
 	const displayUserWindowState = () => {
 		changeUserWindowState(true);
@@ -15,10 +16,18 @@ export default function System() {
 		changeUserWindowState(false);
 	};
 
+	const displayCalendarWindow = () => {
+		changeCalendarWindowState(true);
+	};
+
+	const hideCalendarWindow = () => {
+		changeCalendarWindowState(false);
+	};
+
 	return (
 		<>
-			<Desktop userWindowState={userWindowState} hideUserWindowState={hideUserWindowState} />
-			<Taskbar displayUserWindowState={displayUserWindowState} />
+			<Desktop userWindowState={userWindowState} hideUserWindowState={hideUserWindowState} calendarWindowState={calendarWindowState} hideCalendarWindow={hideCalendarWindow} />
+			<Taskbar displayUserWindowState={displayUserWindowState} displayCalendarWindow={displayCalendarWindow} />
 		</>
 	);
 }
