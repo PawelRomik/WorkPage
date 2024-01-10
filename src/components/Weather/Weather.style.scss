@@ -18,7 +18,10 @@
 }
 
 .weatherIcon {
-	font-size: 1.5rem;
+	width: 3rem;
+	filter: brightness(100) drop-shadow(1px 1px 0 black) drop-shadow(1px -1px 0 black) drop-shadow(-1px -1px 0 black) drop-shadow(-1px 1px 0 black);
+
+	color: white;
 }
 
 @media (min-width: 768px) {
@@ -29,6 +32,6 @@
 	}
 
 	.weatherIcon {
-		font-size: 2.5rem;
+		width: 4rem;
 	}
 }

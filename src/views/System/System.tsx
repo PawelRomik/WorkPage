@@ -9,7 +9,7 @@ export default function System() {
 	const [calendarWindowState, changeCalendarWindowState] = useState(false);
 
 	const displayUserWindowState = () => {
-		changeUserWindowState(true);
+		changeUserWindowState((prevState) => !prevState);
 	};
 
 	const hideUserWindowState = () => {
@@ -17,7 +17,7 @@ export default function System() {
 	};
 
 	const displayCalendarWindow = () => {
-		changeCalendarWindowState(true);
+		changeCalendarWindowState((prevState) => !prevState);
 	};
 
 	const hideCalendarWindow = () => {
