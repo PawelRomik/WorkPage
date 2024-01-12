@@ -1,5 +1,6 @@
 import "./AppContainer.style.scss";
 import Settings from "../Settings/Settings";
+import Notes from "../Notes/Notes";
 
 interface AppContainerProps {
 	app: {
@@ -15,6 +16,8 @@ const AppContainer: React.FC<AppContainerProps> = ({ app, closeApp }) => {
 		switch (app.name) {
 			case "Settings":
 				return <Settings />;
+			case "Notes":
+				return <Notes />;
 			default:
 				return null;
 		}
