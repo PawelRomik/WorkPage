@@ -16,11 +16,21 @@
 	padding: 0.25rem;
 	overflow-x: scroll;
 	overflow-y: hidden;
-	-ms-overflow-style: none;
-	scrollbar-width: none;
+	scrollbar-color: rgb(58, 58, 58);
+	scrollbar-width: thin;
 
 	&::-webkit-scrollbar {
-		display: none;
+		margin: 5px;
+		height: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: rgb(58, 58, 58);
+		border-radius: 4px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: black;
 	}
 }
 
