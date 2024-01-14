@@ -145,7 +145,7 @@ const ToDoList = () => {
 								onChange={handleInputChange}
 							></input>
 						</div>
-						{currentlyEdited ? (
+						{currentlyEdited !== null ? (
 							<button className='ToDoListButton' onClick={() => finishEditing()}>
 								Finish Editing
 							</button>
