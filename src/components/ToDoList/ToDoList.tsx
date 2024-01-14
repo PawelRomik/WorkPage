@@ -66,7 +66,6 @@ const ToDoList = () => {
 
 	const startEditing = (index: number) => {
 		setCurrentlyEdited(index);
-		console.log(index);
 		const taskToEdit = tasks[index];
 		changeInputValues({
 			taskName: taskToEdit.taskName,
