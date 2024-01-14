@@ -66,6 +66,7 @@ const ToDoList = () => {
 
 	const startEditing = (index: number) => {
 		setCurrentlyEdited(index);
+		console.log(index);
 		const taskToEdit = tasks[index];
 		changeInputValues({
 			taskName: taskToEdit.taskName,
@@ -145,7 +146,7 @@ const ToDoList = () => {
 								onChange={handleInputChange}
 							></input>
 						</div>
-						{currentlyEdited ? (
+						{currentlyEdited !== null ? (
 							<button className='ToDoListButton' onClick={() => finishEditing()}>
 								Finish Editing
 							</button>
