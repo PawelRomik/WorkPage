@@ -2,6 +2,7 @@ import "./AppContainer.style.scss";
 import Settings from "../Settings/Settings";
 import Notes from "../Notes/Notes";
 import ToDoList from "../ToDoList/ToDoList";
+import Calculator from "../Calculator/Calculator";
 
 interface AppContainerProps {
 	app: {
@@ -17,6 +18,8 @@ const AppContainer: React.FC<AppContainerProps> = ({ app, closeApp }) => {
 		switch (app.name) {
 			case "Settings":
 				return <Settings />;
+			case "Calculator":
+				return <Calculator />;
 			case "ToDoList":
 				return <ToDoList />;
 			case "Notes":
