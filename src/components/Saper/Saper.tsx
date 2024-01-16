@@ -4,7 +4,7 @@ import Confetti from "react-confetti";
 
 const rows = 8;
 const columns = 8;
-const totalBombs = 15;
+const totalBombs = 12;
 
 const colors = ["white", "blue", "green", "red", "purple", "orange", "cyan", "darkgreen", "darkred"];
 
