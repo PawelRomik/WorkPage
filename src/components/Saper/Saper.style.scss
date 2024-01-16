@@ -1,0 +1,79 @@
+.saperContainer {
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+}
+
+.saperBoard {
+	width: 80%;
+}
+
+.saperCell {
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 1px solid black;
+	background-color: rgb(161, 161, 161);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.saperCellRevealed {
+	background-color: white;
+}
+
+.saperRow {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.saperBomb {
+	background-color: rgb(255, 0, 234);
+}
+
+.saperButton {
+	transition: 0.1s;
+	background-color: black;
+	color: white;
+	padding: 0.75rem 1.5rem;
+	border: 2px solid rgb(0, 0, 0);
+	border-radius: 30px;
+	outline: none;
+	cursor: pointer;
+
+	&:hover,
+	&:focus {
+		background-color: rgb(214, 23, 214);
+		color: white;
+	}
+}
+
+.saperEndScreen {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+	gap: 1rem;
+	flex-direction: column;
+}
+
+@media (min-width: 768px) {
+	.saperCell {
+		width: 4.5rem;
+		height: 4.5rem;
+		font-size: 2rem;
+	}
+
+	.saperContainer {
+		font-size: 2rem;
+	}
+
+	.saperButton {
+		font-size: 2rem;
+	}
+}
