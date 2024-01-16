@@ -3,6 +3,7 @@ import Settings from "../Settings/Settings";
 import Notes from "../Notes/Notes";
 import ToDoList from "../ToDoList/ToDoList";
 import Calculator from "../Calculator/Calculator";
+import Saper from "../Saper/Saper";
 
 interface AppContainerProps {
 	app: {
@@ -24,6 +25,8 @@ const AppContainer: React.FC<AppContainerProps> = ({ app, closeApp }) => {
 				return <ToDoList />;
 			case "Notes":
 				return <Notes />;
+			case "Minesweeper":
+				return <Saper />;
 			default:
 				return null;
 		}
