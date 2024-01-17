@@ -44,6 +44,9 @@
 .noteEdit {
 	flex: 1;
 	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .noteButton {
@@ -120,12 +123,20 @@
 	}
 }
 
+.notesInfo {
+	color: white;
+	font-weight: bold;
+}
+
 @media (min-width: 768px) {
 	.noteTextArea {
 		padding: 0.5rem;
 		font-size: 1.25rem;
 	}
 
+	.notesInfo {
+		font-size: 2rem;
+	}
 	.noteButton {
 		width: 3.5rem;
 		height: 3.5rem;
