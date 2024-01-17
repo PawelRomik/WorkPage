@@ -117,7 +117,7 @@ const ToDoList = () => {
 
 	return (
 		<div className='ToDoListContainer'>
-			<section className='ToDoListTasksContainer'>{taskElements}</section>
+			<section className='ToDoListTasksContainer'>{tasks.length > 0 ? taskElements : <p className='toDoInfo'>No tasks found, create a new one.</p>}</section>
 			<section className='ToDoListAddTask'>
 				{allowEdit ? (
 					<>

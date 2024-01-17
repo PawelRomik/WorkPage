@@ -68,6 +68,18 @@
 	outline: none;
 	transition: 0.1s;
 
+	&:autofill,
+	&:autofill:hover {
+		box-shadow: 0 0 0 30px rgb(0, 0, 0) inset !important;
+		-webkit-text-fill-color: white !important;
+	}
+
+	&:autofill:focus,
+	&:autofill:active {
+		box-shadow: 0 0 0 30px rgb(255, 255, 255) inset !important;
+		-webkit-text-fill-color: rgb(0, 0, 0) !important;
+	}
+
 	&:focus {
 		background-color: white;
 		color: black;

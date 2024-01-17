@@ -87,7 +87,9 @@ const Notes = () => {
 					</button>
 				</div>
 			</section>
-			<section className='noteEdit'>{notes.length > 0 && <textarea className='noteTextArea' value={noteValue} onChange={updateNote}></textarea>}</section>
+			<section className='noteEdit'>
+				{notes.length > 0 ? <textarea className='noteTextArea' value={noteValue} onChange={updateNote}></textarea> : <p className='notesInfo'>No notes found, make a new one.</p>}
+			</section>
 		</div>
 	);
 };
