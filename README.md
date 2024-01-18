@@ -1,30 +1,48 @@
-# React + TypeScript + Vite
+<h1 align="center">WorkPage</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview :tada:
+<h3>Workpage</h3> 
+<p align="center">
+     <img src="https://github.com/LeQu15/WorkPage/assets/78439105/806657bb-d380-4c13-a6d7-8461dbe2b342" alt="desktop">
+</p>
+A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>, <b>Notes</b>, <b>Paint</b> or <b>Translator</b>. Boost your productivity and keep everything in one convenient place!
 
-Currently, two official plugins are available:
+## Tech/framework used :wrench:
+* [Vite](https://github.com/vitejs/vite)
+* [React](https://github.com/facebook/react)
+* [React-calendar](https://github.com/wojtekmaj/react-calendar)
+* [React-confetti](https://github.com/alampros/react-confetti)
+* [TypeScript](https://github.com/microsoft/TypeScript)
+* [Nanoid](https://github.com/ai/nanoid)             
+* [Sass](https://github.com/sass/sass)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Screenshots :tv:
 
-## Expanding the ESLint configuration
+<p align="center">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/6db9b06d-1e30-4d89-901c-a2efad0ef106" alt="Calculator">
+</p>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+<p align="center">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/64ce03d1-e384-493b-9a2a-cdb9082f3899" alt="ToDoList">
+</p>
 
-- Configure the top-level `parserOptions` property like this:
+<p align="center">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/fc8e6560-41dc-4f63-9d1c-1f4ce484b41a" alt="Notes">
+</p>
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+<p align="center">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/f1b5f303-7b80-4bd7-a6a7-75534f44851e" alt="Minesweeper">
+</p>
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Installation :floppy_disk:
+To install this project run:
+> npm install
+## Available scripts
+
+| Command                   | Description                   |
+| ------------------------- | ----------------------------- |
+| `npm run dev`           | Open local server             |
+| `npm run build`           | Create optimized build        |
+
+## Live :round_pushpin:
+> https://eloquent-treacle-cf19f9.netlify.app/system
