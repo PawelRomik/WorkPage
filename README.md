@@ -45,4 +45,4 @@ To install this project run:
 | `npm run build`           | Create optimized build        |
 
 ## Live :round_pushpin:
-> https://eloquent-treacle-cf19f9.netlify.app/system
+> https://eloquent-treacle-cf19f9.netlify.app
