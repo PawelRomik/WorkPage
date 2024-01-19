@@ -1,0 +1,121 @@
+.translatorContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 100%;
+}
+
+.translatorTopSection {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+	align-items: center;
+	background-color: black;
+	height: 3rem;
+	position: relative;
+}
+
+.languagesSelection {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.translatorTopSection button {
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 0.25rem 0.5rem;
+	border: 2px solid white;
+	font-size: 1rem;
+	height: 2rem;
+	cursor: pointer;
+	transition: 0.1s;
+
+	&:focus,
+	&:hover {
+		border: 2px solid rgb(238, 50, 238);
+		color: rgb(238, 50, 238);
+	}
+}
+
+.translatorTopSection select {
+	font-size: 1rem;
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 0.25rem 0.5rem;
+	border: 2px solid white;
+	height: 2rem;
+	outline: none;
+
+	&:focus {
+		border: 2px solid rgb(238, 50, 238);
+	}
+}
+
+.translatorBottomSection {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	gap: 0.25rem;
+}
+
+.translateResult {
+	height: 100%;
+	background-color: white;
+	color: black;
+	flex: 1;
+	padding: 0.5rem;
+	font-size: 1rem;
+}
+
+.translateInput {
+	height: 100%;
+	background-color: white;
+	color: black;
+	flex: 1;
+	border: 2px solid white;
+	display: flex;
+	vertical-align: top;
+	outline: none;
+	padding: 0.5rem;
+	font-size: 1rem;
+
+	&:focus {
+		border: 2px solid rgb(238, 50, 238);
+	}
+}
+
+@media (min-width: 768px) {
+	.translationClearButton {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		left: 1rem;
+	}
+
+	.translateInput,
+	.translateResult {
+		font-size: 1.5rem;
+	}
+
+	.translatorTopSection {
+		height: 5rem;
+	}
+
+	.languagesSelection {
+		gap: 1rem;
+	}
+
+	.translatorTopSection select,
+	.translatorTopSection button {
+		height: 3rem;
+		font-size: 1.5rem;
+	}
+}
