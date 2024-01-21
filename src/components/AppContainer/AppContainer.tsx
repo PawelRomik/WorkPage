@@ -5,6 +5,7 @@ import ToDoList from "../ToDoList/ToDoList";
 import Calculator from "../Calculator/Calculator";
 import Saper from "../Saper/Saper";
 import Translator from "../Translator/Translator";
+import Paint from "../Paint/Paint";
 
 interface AppContainerProps {
 	app: {
@@ -28,6 +29,8 @@ const AppContainer: React.FC<AppContainerProps> = ({ app, closeApp }) => {
 				return <ToDoList />;
 			case "Notes":
 				return <Notes />;
+			case "Paint":
+				return <Paint />;
 			case "Minesweeper":
 				return <Saper />;
 			default:
