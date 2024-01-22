@@ -34,6 +34,14 @@ A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>,
     <img src="https://github.com/LeQu15/WorkPage/assets/78439105/f1b5f303-7b80-4bd7-a6a7-75534f44851e" alt="Minesweeper">
 </p>
 
+<p align="center">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/2ac1e306-6be7-4ac7-a532-c7c5d1a6c778" alt="Paint">
+</p>
+
+<p align="center">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/c72a4f3b-03aa-49f3-82c7-540de033dce0" alt="Translator">
+</p>
+
 ## Installation :floppy_disk:
 To install this project run:
 > npm install
