@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import weatherImages from "../../data/weatherImages";
+import weatherIcons from "../../data/weatherIcons";
 import "./Weather.style.scss";
 
 interface WeatherData {
 	temp: number;
-	icon: keyof typeof weatherImages | "";
+	icon: keyof typeof weatherIcons | "";
 }
 
 const Weather = () => {
@@ -62,7 +62,7 @@ const Weather = () => {
 	return (
 		data.icon && (
 			<div className='weather'>
-				<img src={weatherImages[data.icon]} className='weatherIcon' alt={`Weather Icon - ${data.icon}`} />
+				<img src={weatherIcons[data.icon]} className='weatherIcon' alt={`Weather Icon - ${data.icon}`} />
 				<p>{data.temp} &#8451;</p>
 			</div>
 		)

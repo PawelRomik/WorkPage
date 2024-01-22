@@ -4,6 +4,7 @@ import Timer from "../../components/Timer/Timer";
 import "./Login.style.scss";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { useAuthContext } from "../../providers/AuthContext";
+import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 
 const Login: React.FC = () => {
 	const { login } = useAuthContext();
@@ -38,16 +39,7 @@ const Login: React.FC = () => {
 					<div className='loginTimer'>
 						<Timer />
 					</div>
-					<div className='lds-roller'>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-					</div>
+					<LoadingAnimation />
 				</div>
 			) : (
 				<div className='loginProfile'>
@@ -63,7 +55,7 @@ const Login: React.FC = () => {
 								value={loginInput}
 								onChange={(e) => updateLoginInput(e.target.value)}
 								placeholder='password'
-								onKeyPress={handleKeyPress}
+								onKeyDown={handleKeyPress}
 								aria-label='Type your password'
 								className='passwordInput'
 							></input>
