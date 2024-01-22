@@ -21,7 +21,7 @@ import thunderShowersDay from "../assets/weather/thunder-showers-day.png";
 import thunderShowersNight from "../assets/weather/thunder-showers-night.png";
 import wind from "../assets/weather/wind.png";
 
-const weatherImages = {
+const weatherIcons = {
 	"clear-day": clearDay,
 	"clear-night": clearNight,
 	cloudy: cloudy,
@@ -46,4 +46,4 @@ const weatherImages = {
 	wind: wind,
 };
 
-export default weatherImages;
+export default weatherIcons;

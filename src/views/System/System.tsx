@@ -2,8 +2,6 @@ import { useState } from "react";
 import Desktop from "../../components/Desktop/Desktop";
 import Taskbar from "../../components/Taskbar/Taskbar";
 
-import "./System.style.scss";
-
 export default function System() {
 	const [userWindowState, changeUserWindowState] = useState(false);
 	const [calendarWindowState, changeCalendarWindowState] = useState(false);
