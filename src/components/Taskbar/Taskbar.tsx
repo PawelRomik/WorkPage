@@ -1,4 +1,4 @@
-import Timer from "../Timer/Timer";
+import Clock from "../Clock/Clock";
 import "./Taskbar.style.scss";
 
 type TaskbarProps = {
@@ -16,7 +16,7 @@ const Taskbar: React.FC<TaskbarProps> = ({ displayUserWindowState, displayCalend
 				<i className='fa-solid fa-volume-high'></i>
 				<i className='fa-solid fa-wifi'></i>
 				<div className='taskbarTimer' onClick={displayCalendarWindow}>
-					<Timer />
+					<Clock />
 				</div>
 			</div>
 		</footer>

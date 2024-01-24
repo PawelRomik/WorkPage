@@ -1,25 +1,19 @@
-import { useState } from "react";
-import avatar from "../../assets/loginAvatar.png";
-import Timer from "../../components/Timer/Timer";
+import { useCallback, useState } from "react";
+import Clock from "../../components/Clock/Clock";
 import "./Login.style.scss";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { useAuthContext } from "../../providers/AuthContext";
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
+import LoginProfile from "../../components/LoginProfile/LoginProfile";
 
-const Login: React.FC = () => {
+const Login = () => {
 	const { login } = useAuthContext();
 	const { password } = useSettingsContext();
 	const [loading, setLoading] = useState(false);
-	const [loginInput, updateLoginInput] = useState("");
-	const [error, setError] = useState("");
+	const [error, setError] = useState<undefined | string>(undefined);
+	const [loginInput, setLoginInput] = useState("");
 
-	const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === "Enter") {
-			handleLogin();
-		}
-	};
-
-	const handleLogin = () => {
+	const handleLogin = useCallback(() => {
 		if (password === loginInput) {
 			setLoading(true);
 
@@ -30,46 +24,26 @@ const Login: React.FC = () => {
 		} else {
 			setError("Incorrect password");
 		}
-	};
+	}, [login, loginInput, password]);
+
+	const handleKeyPress = useCallback(
+		(event: React.KeyboardEvent<HTMLInputElement>) => {
+			if (event.key === "Enter") {
+				handleLogin();
+			}
+		},
+		[handleLogin]
+	);
 
 	return (
 		<main className='loginScreen'>
+			<div className='loginTimer'>
+				<Clock />
+			</div>
 			{loading ? (
-				<div>
-					<div className='loginTimer'>
-						<Timer />
-					</div>
-					<LoadingAnimation />
-				</div>
+				<LoadingAnimation />
 			) : (
-				<div className='loginProfile'>
-					<div className='loginTimer'>
-						<Timer />
-					</div>
-					<img src={avatar} alt='avatar' className='userAvatar' />
-					<p className='user'>User</p>
-					<div className='loginPanel'>
-						{password ? (
-							<input
-								type='password'
-								value={loginInput}
-								onChange={(e) => updateLoginInput(e.target.value)}
-								placeholder='password'
-								onKeyDown={handleKeyPress}
-								aria-label='Type your password'
-								className='passwordInput'
-							></input>
-						) : (
-							<button className='loginJoinButton' aria-label='Login' onClick={handleLogin}>
-								Enter
-							</button>
-						)}
-						<button onClick={handleLogin} aria-label='Login' className='signInButton'>
-							<i className='fa-solid fa-arrow-right-to-bracket'></i>
-						</button>
-					</div>
-					{error && <p className='loginError'>Incorrect Password</p>}
-				</div>
+				<LoginProfile handleKeyPress={handleKeyPress} handleLogin={handleLogin} error={error} password={password} loginInput={loginInput} updateLoginInput={setLoginInput} />
 			)}
 		</main>
 	);
