@@ -1,17 +1,18 @@
 import "./Desktop.style.scss";
-import { useEffect, useState } from "react";
-import data from "../../data/apps";
+import { useCallback, useState } from "react";
+import { useSettingsContext } from "../../providers/SettingsContext";
+import appData from "../../data/apps";
 import AppContainer from "../AppContainer/AppContainer";
 import Weather from "../Weather/Weather";
-import { useSettingsContext } from "../../providers/SettingsContext";
 import UserWindow from "../UserWindow/UserWindow";
 import CalendarWindow from "../CalendarWindow/CalendarWindow";
+import DesktopApps from "./DesktopApps/DesktopApps";
 
-interface App {
+export type App = {
 	id: number;
 	name: string;
 	class: string;
-}
+};
 
 type DesktopProps = {
 	userWindowState: boolean;
@@ -22,43 +23,36 @@ type DesktopProps = {
 
 const Desktop: React.FC<DesktopProps> = ({ hideUserWindowState, userWindowState, calendarWindowState, hideCalendarWindow }) => {
 	const { background } = useSettingsContext();
-	const [allApps, setAllApps] = useState<App[]>([]);
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 
-	useEffect(() => {
-		setAllApps(data);
-	}, []);
-
-	const launchApp = (e: React.MouseEvent) => {
+	const launchApp = useCallback((e: React.MouseEvent) => {
 		const target = e.currentTarget as HTMLButtonElement;
 		const id: number = Number(target.dataset.app);
-		changeChosenApp(allApps[id]);
-	};
+		changeChosenApp(appData[id]);
+	}, []);
 
-	const closeApp = () => {
+	const closeApp = useCallback(() => {
 		changeChosenApp(null);
-	};
+	}, []);
 
-	const apps = allApps.map((app) => (
-		<button className={`app ${app.name === "Settings" && "settings"}`} key={app.id} data-app={app.id} onClick={(e) => launchApp(e)}>
-			<i className={`${app.class} appIcon`}></i>
-			<p>{app.name}</p>
-		</button>
-	));
-
-	const hidePanels = () => {
+	const hidePanels = useCallback(() => {
 		hideUserWindowState();
 		hideCalendarWindow();
-	};
+	}, [hideCalendarWindow, hideUserWindowState]);
+
+	const handleLaunchApp = useCallback(
+		(e: React.MouseEvent) => {
+			launchApp(e);
+		},
+		[launchApp]
+	);
 
 	return (
 		<main className='desktop' style={{ backgroundImage: `url(${background})` }} onClick={hidePanels}>
-			{chosenApp !== null && <AppContainer app={chosenApp} closeApp={closeApp} />}
+			{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} />}
 			{userWindowState && <UserWindow />}
 			{calendarWindowState && <CalendarWindow />}
-			<div className='apps'>
-				<section className='leftApps'>{apps}</section>
-			</div>
+			<DesktopApps appData={appData} handleLaunchApp={handleLaunchApp} />
 			<Weather />
 		</main>
 	);

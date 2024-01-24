@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import App from "./views/App";
-import "./globalStyles.scss";
+import "./assets/styles/globalStyles.scss";
 import { SettingsProvider } from "./providers/SettingsContext";
 import { AuthProvider } from "./providers/AuthContext";
 

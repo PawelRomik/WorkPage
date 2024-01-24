@@ -1,0 +1,18 @@
+.apps {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.leftApps {
+	display: flex;
+	flex-direction: column;
+	margin: 1rem;
+	gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+	.leftApps {
+		margin: 2rem;
+		gap: 3rem;
+	}
+}
