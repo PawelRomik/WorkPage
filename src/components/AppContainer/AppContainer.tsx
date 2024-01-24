@@ -7,16 +7,16 @@ import Saper from "../Saper/Saper";
 import Translator from "../Translator/Translator";
 import Paint from "../Paint/Paint";
 
-interface AppContainerProps {
+type AppContainerProps = {
 	app: {
 		id: number;
 		name: string;
 		class: string;
 	};
 	closeApp: () => void;
-}
+};
 
-const AppContainer: React.FC<AppContainerProps> = ({ app, closeApp }) => {
+const AppContainer = ({ app, closeApp }: AppContainerProps) => {
 	const renderAppContent = () => {
 		switch (app.name) {
 			case "Settings":
