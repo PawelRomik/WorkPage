@@ -3,7 +3,7 @@ import Login from "./Login/Login";
 import System from "./System/System";
 import { useAuthContext } from "../providers/AuthContext";
 
-export default function App() {
+const App = () => {
 	const { loggedIn } = useAuthContext();
 
 	const getRouteElement = (path: string) => {
@@ -24,4 +24,6 @@ export default function App() {
 			</Routes>
 		</Router>
 	);
-}
+};
+
+export default App;
