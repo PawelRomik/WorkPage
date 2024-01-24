@@ -2,7 +2,7 @@ import { useState } from "react";
 import Desktop from "../../components/Desktop/Desktop";
 import Taskbar from "../../components/Taskbar/Taskbar";
 
-export default function System() {
+const System = () => {
 	const [userWindowState, changeUserWindowState] = useState(false);
 	const [calendarWindowState, changeCalendarWindowState] = useState(false);
 
@@ -28,4 +28,6 @@ export default function System() {
 			<Taskbar displayUserWindowState={displayUserWindowState} displayCalendarWindow={displayCalendarWindow} />
 		</>
 	);
-}
+};
+
+export default System;

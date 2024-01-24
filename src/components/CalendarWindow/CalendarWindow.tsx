@@ -1,5 +1,5 @@
 import CurrentDate from "../CurrentDate/CurrentDate";
-import Timer from "../Timer/Timer";
+import Clock from "../Clock/Clock";
 import "./CalendarWindow.style.scss";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
@@ -12,7 +12,7 @@ const CalendarWindow = () => {
 	return (
 		<div className='calendarContainer' onClick={dontHideOnClick}>
 			<section className='currentDateSection'>
-				<Timer />
+				<Clock />
 				<CurrentDate />
 			</section>
 			<section className='calendar'>

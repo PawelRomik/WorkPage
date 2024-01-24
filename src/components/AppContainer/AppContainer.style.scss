@@ -1,3 +1,5 @@
+@import "./../../assets/styles/variables";
+
 .appContainer {
 	background-color: rgb(39, 39, 39);
 	position: absolute;
@@ -36,7 +38,7 @@
 
 	&:hover,
 	&:focus {
-		background-color: rgb(160, 26, 194);
+		background-color: $primary-color;
 		color: white;
 	}
 }
