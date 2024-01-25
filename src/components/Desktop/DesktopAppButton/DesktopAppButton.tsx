@@ -1,5 +1,6 @@
 import type { App } from "../Desktop";
 import "./DesktopAppButton.style.scss";
+import { useMemo } from "react";
 
 type AppButtonProps = {
 	app: App;
@@ -7,10 +8,10 @@ type AppButtonProps = {
 };
 
 const AppButton = ({ app, handleLaunchApp }: AppButtonProps) => {
-	const { id, name, class: appClass } = app;
+	const { id, name, class: appClass } = useMemo(() => app, [app]);
 
-	const buttonClass = `app ${name === "Settings" ? "settings" : ""}`;
-	const iconClass = `${appClass} appIcon`;
+	const buttonClass = useMemo(() => `app ${name === "Settings" ? "settings" : ""}`, [name]);
+	const iconClass = useMemo(() => `${appClass} appIcon`, [appClass]);
 
 	return (
 		<button className={buttonClass} key={id} data-app={id} onClick={handleLaunchApp}>

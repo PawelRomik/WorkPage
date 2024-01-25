@@ -6,7 +6,7 @@ type TaskbarProps = {
 	displayCalendarWindow: () => void;
 };
 
-const Taskbar: React.FC<TaskbarProps> = ({ displayUserWindowState, displayCalendarWindow }) => {
+const Taskbar = ({ displayUserWindowState, displayCalendarWindow }: TaskbarProps) => {
 	return (
 		<footer className='taskbar'>
 			<button className='systemButton' onClick={displayUserWindowState}>

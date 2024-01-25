@@ -9,11 +9,7 @@ type DesktopAppsProps = {
 };
 
 const DesktopApps = ({ handleLaunchApp, appData }: DesktopAppsProps) => {
-	const apps = useMemo(() => {
-		if (!appData) return;
-
-		return appData.map((app) => <AppButton key={app.id} app={app} handleLaunchApp={handleLaunchApp} />);
-	}, [appData, handleLaunchApp]);
+	const apps = useMemo(() => appData.map((app) => <AppButton key={app.id} app={app} handleLaunchApp={handleLaunchApp} />), [appData, handleLaunchApp]);
 
 	return (
 		<div className='apps'>

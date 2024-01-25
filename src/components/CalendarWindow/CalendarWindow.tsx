@@ -3,11 +3,12 @@ import Clock from "../Clock/Clock";
 import "./CalendarWindow.style.scss";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
+import { useCallback } from "react";
 
 const CalendarWindow = () => {
-	const dontHideOnClick = (e: React.MouseEvent) => {
+	const dontHideOnClick = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation();
-	};
+	}, []);
 
 	return (
 		<div className='calendarContainer' onClick={dontHideOnClick}>
