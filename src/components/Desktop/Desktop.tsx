@@ -21,7 +21,7 @@ type DesktopProps = {
 	hideCalendarWindow: () => void;
 };
 
-const Desktop: React.FC<DesktopProps> = ({ hideUserWindowState, userWindowState, calendarWindowState, hideCalendarWindow }) => {
+const Desktop = ({ hideUserWindowState, userWindowState, calendarWindowState, hideCalendarWindow }: DesktopProps) => {
 	const { background } = useSettingsContext();
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 

@@ -6,6 +6,7 @@ import Calculator from "../Calculator/Calculator";
 import Saper from "../Saper/Saper";
 import Translator from "../Translator/Translator";
 import Paint from "../Paint/Paint";
+import { useCallback } from "react";
 
 type AppContainerProps = {
 	app: {
@@ -17,8 +18,9 @@ type AppContainerProps = {
 };
 
 const AppContainer = ({ app, closeApp }: AppContainerProps) => {
-	const renderAppContent = () => {
-		switch (app.name) {
+	const renderAppContent = useCallback(() => {
+		const { name } = app;
+		switch (name) {
 			case "Settings":
 				return <Settings />;
 			case "Calculator":
@@ -36,7 +38,7 @@ const AppContainer = ({ app, closeApp }: AppContainerProps) => {
 			default:
 				return null;
 		}
-	};
+	}, [app]);
 
 	return (
 		<div className='appContainer'>

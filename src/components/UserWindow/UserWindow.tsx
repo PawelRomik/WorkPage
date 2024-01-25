@@ -1,10 +1,12 @@
 import "./UserWindow.style.scss";
 import { useAuthContext } from "../../providers/AuthContext";
+import { useCallback } from "react";
 
-const dontHideOnClick = (e: React.MouseEvent) => {
-	e.stopPropagation();
-};
 const UserWindow = () => {
+	const dontHideOnClick = useCallback((e: React.MouseEvent) => {
+		e.stopPropagation();
+	}, []);
+
 	const { logout } = useAuthContext();
 	return (
 		<div className='userWindow' onClick={dontHideOnClick}>

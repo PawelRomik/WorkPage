@@ -36,7 +36,7 @@ const LoginProfile = ({ handleLogin, handleKeyPress, error, password, loginInput
 					<i className='fa-solid fa-arrow-right-to-bracket'></i>
 				</button>
 			</div>
-			{error && <p className='loginError'>{error}</p>}
+			<p className='loginError'>{error}</p>
 		</div>
 	);
 };
