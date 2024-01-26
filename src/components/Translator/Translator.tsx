@@ -33,7 +33,7 @@ const Translator = () => {
 
 	useEffect(() => {
 		if (inputValue) {
-			changeTranslated("loading");
+			changeTranslated("Translating... Please wait.");
 		} else {
 			changeTranslated("");
 		}
@@ -47,32 +47,38 @@ const Translator = () => {
 		};
 	}, [inputValue, translation]);
 
-	const handleLanguageFromChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const newLanguageFrom = e.target.value;
-		setSelectedLanguageFrom(newLanguageFrom);
+	const handleLanguageFromChange = useCallback(
+		(e: React.ChangeEvent<HTMLSelectElement>) => {
+			const newLanguageFrom = e.target.value;
+			setSelectedLanguageFrom(newLanguageFrom);
 
-		if (newLanguageFrom === selectedLanguageTo) {
-			setSelectedLanguageTo(selectedLanguageFrom);
-		}
-	};
+			if (newLanguageFrom === selectedLanguageTo) {
+				setSelectedLanguageTo(selectedLanguageFrom);
+			}
+		},
+		[selectedLanguageFrom, selectedLanguageTo]
+	);
 
-	const handleLanguageToChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const newLanguageTo = e.target.value;
-		setSelectedLanguageTo(newLanguageTo);
+	const handleLanguageToChange = useCallback(
+		(e: React.ChangeEvent<HTMLSelectElement>) => {
+			const newLanguageTo = e.target.value;
+			setSelectedLanguageTo(newLanguageTo);
 
-		if (newLanguageTo === selectedLanguageFrom) {
-			setSelectedLanguageFrom(selectedLanguageTo);
-		}
-	};
+			if (newLanguageTo === selectedLanguageFrom) {
+				setSelectedLanguageFrom(selectedLanguageTo);
+			}
+		},
+		[selectedLanguageFrom, selectedLanguageTo]
+	);
 
-	const swapLanguages = () => {
+	const swapLanguages = useCallback(() => {
 		setSelectedLanguageFrom(selectedLanguageTo);
 		setSelectedLanguageTo(selectedLanguageFrom);
-	};
+	}, [selectedLanguageFrom, selectedLanguageTo]);
 
-	const clear = () => {
+	const clear = useCallback(() => {
 		changeInputValue("");
-	};
+	}, []);
 
 	return (
 		<div className='translatorContainer'>
