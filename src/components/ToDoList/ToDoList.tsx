@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./ToDoList.style.scss";
+import ToDoListAddTask from "./ToDoListAddTask/ToDoListAddTask";
+import ToDoListTask from "./ToDoListTask/ToDoListTask";
 
-interface Task {
+export type Task = {
 	taskName: string;
 	taskContent: string;
 	taskPriority: number;
-}
+};
 
 const ToDoList = () => {
 	const [tasks, changeTasks] = useState<Task[]>([]);
@@ -25,12 +27,14 @@ const ToDoList = () => {
 		localStorage.setItem("tasks", JSON.stringify(tasks));
 	}, [tasks]);
 
-	const addNewTask = () => {
-		if (inputValues.taskName && inputValues.taskContent) {
+	const addNewTask = useCallback(() => {
+		const { taskName, taskContent, taskPriority } = inputValues;
+
+		if (taskName && taskContent) {
 			const newTask: Task = {
-				taskName: inputValues.taskName,
-				taskContent: inputValues.taskContent,
-				taskPriority: inputValues.taskPriority,
+				taskName,
+				taskContent,
+				taskPriority,
 			};
 
 			const arr = [...tasks, newTask];
@@ -39,49 +43,77 @@ const ToDoList = () => {
 			changeTasks(arr);
 			changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 		}
-	};
+	}, [tasks, inputValues]);
 
-	const removeTask = (i: number) => {
-		const updatedTasks = [...tasks];
-		updatedTasks.splice(i, 1);
-		changeTasks(updatedTasks);
-	};
+	const removeTask = useCallback(
+		(id: number) => {
+			const updatedTasks = [...tasks];
+			updatedTasks.splice(id, 1);
+			changeTasks(updatedTasks);
+		},
+		[tasks]
+	);
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		changeInputValues((prevValues) => ({
 			...prevValues,
 			[name]: value,
 		}));
-	};
+	}, []);
 
-	const priorityStyling = (priority: number) => {
-		const stars = [];
-
-		for (let i = 0; i < priority; i++) {
-			stars.push(<i key={i} className='fa-solid fa-star'></i>);
+	const priorityStyling = useCallback((taskPriority: number) => {
+		const priority = Number(taskPriority);
+		console.log(typeof priority);
+		switch (priority) {
+			case 1:
+				return (
+					<span>
+						<i className='fa-solid fa-star'></i>
+					</span>
+				);
+			case 2:
+				return (
+					<span>
+						<i className='fa-solid fa-star'></i>
+						<i className='fa-solid fa-star'></i>
+					</span>
+				);
+			case 3:
+				return (
+					<span>
+						<i className='fa-solid fa-star'></i>
+						<i className='fa-solid fa-star'></i>
+						<i className='fa-solid fa-star'></i>
+					</span>
+				);
+			default:
+				return null;
 		}
-		return <span>{stars}</span>;
-	};
+	}, []);
 
-	const startEditing = (index: number) => {
-		setCurrentlyEdited(index);
-		const taskToEdit = tasks[index];
-		changeInputValues({
-			taskName: taskToEdit.taskName,
-			taskContent: taskToEdit.taskContent,
-			taskPriority: taskToEdit.taskPriority,
-		});
-		changeAllowEdit(true);
-	};
+	const startEditing = useCallback(
+		(index: number) => {
+			setCurrentlyEdited(index);
+			const taskToEdit = tasks[index];
+			changeInputValues({
+				taskName: taskToEdit.taskName,
+				taskContent: taskToEdit.taskContent,
+				taskPriority: taskToEdit.taskPriority,
+			});
+			changeAllowEdit(true);
+		},
+		[tasks]
+	);
 
-	const finishEditing = () => {
-		if (inputValues.taskName && inputValues.taskContent && currentlyEdited !== null) {
+	const finishEditing = useCallback(() => {
+		const { taskName, taskContent, taskPriority } = inputValues;
+		if (taskName && taskContent && currentlyEdited !== null) {
 			const updatedTasks = [...tasks];
 			updatedTasks[currentlyEdited] = {
-				taskName: inputValues.taskName,
-				taskContent: inputValues.taskContent,
-				taskPriority: inputValues.taskPriority,
+				taskName,
+				taskContent,
+				taskPriority,
 			};
 			updatedTasks.sort((a, b) => b.taskPriority - a.taskPriority);
 			changeTasks(updatedTasks);
@@ -89,78 +121,27 @@ const ToDoList = () => {
 			changeAllowEdit(false);
 			changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 		}
-	};
+	}, [currentlyEdited, tasks, inputValues]);
 
-	const closeEdit = () => {
+	const closeEdit = useCallback(() => {
 		changeAllowEdit(false);
 		setCurrentlyEdited(null);
 		changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
-	};
-
-	const taskElements = tasks.map((task, i) => (
-		<div className='ToDoListTask' key={i}>
-			<section className='taskContent'>
-				<h2>Title: {task.taskName}</h2>
-				<p>{`Desc: ${task.taskContent}`}</p>
-				<p>Priority: {priorityStyling(task.taskPriority)}</p>
-			</section>
-			<section className='taskOptions'>
-				<button onClick={() => startEditing(i)}>
-					<i className='fa-solid fa-pen'></i>
-				</button>
-				<button onClick={() => removeTask(i)}>
-					<i className='fa-solid fa-trash'></i>
-				</button>
-			</section>
-		</div>
-	));
+	}, []);
 
 	return (
 		<div className='ToDoListContainer'>
-			<section className='ToDoListTasksContainer'>{tasks.length > 0 ? taskElements : <p className='toDoInfo'>No tasks found, create a new one.</p>}</section>
-			<section className='ToDoListAddTask'>
-				{allowEdit ? (
-					<>
-						<button className='hideEditBtn' onClick={closeEdit}>
-							X
-						</button>
-						<div className='ToDoListInputWrapper'>
-							<label htmlFor='taskName'>Title:</label>
-							<input className='ToDoListInput' type='text' id='taskName' name='taskName' value={inputValues.taskName} onChange={handleInputChange}></input>
-						</div>
-						<div className='ToDoListInputWrapper'>
-							<label htmlFor='taskContent'>Description:</label>
-							<input className='ToDoListInput' type='text' id='taskContent' name='taskContent' value={inputValues.taskContent} onChange={handleInputChange}></input>
-						</div>
-						<div className='ToDoListInputWrapper'>
-							<label htmlFor='taskPriority'>Priority (1-3):</label>
-							<input
-								className='ToDoListInput'
-								type='number'
-								min='1'
-								max='3'
-								id='taskPriority'
-								value={inputValues.taskPriority}
-								name='taskPriority'
-								onChange={handleInputChange}
-							></input>
-						</div>
-						{currentlyEdited !== null ? (
-							<button className='ToDoListButton' onClick={() => finishEditing()}>
-								Finish Editing
-							</button>
-						) : (
-							<button className='ToDoListButton' onClick={addNewTask}>
-								Add new task
-							</button>
-						)}
-					</>
-				) : (
-					<button className='allowEditBtn' onClick={() => changeAllowEdit(true)}>
-						+
-					</button>
-				)}
-			</section>
+			<ToDoListTask tasks={tasks} startEditing={startEditing} priorityStyling={priorityStyling} removeTask={removeTask} />
+			<ToDoListAddTask
+				allowEdit={allowEdit}
+				changeAllowEdit={changeAllowEdit}
+				inputValues={inputValues}
+				handleInputChange={handleInputChange}
+				addNewTask={addNewTask}
+				finishEditing={finishEditing}
+				currentlyEdited={currentlyEdited}
+				closeEdit={closeEdit}
+			/>
 		</div>
 	);
 };
