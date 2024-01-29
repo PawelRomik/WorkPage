@@ -1,0 +1,45 @@
+@import "./../../../assets/styles/variables";
+
+.translatorBottomSection {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	gap: 0.25rem;
+}
+
+.translateResult {
+	height: 100%;
+	background-color: white;
+	color: black;
+	flex: 1;
+	padding: 0.5rem;
+	font-size: 1rem;
+	word-break: break-all;
+}
+
+.translateTextArea {
+	height: 100%;
+	background-color: white;
+	color: black;
+	flex: 1;
+	border: 2px solid white;
+	display: flex;
+	vertical-align: top;
+	outline: none;
+	padding: 0.5rem;
+	font-size: 1rem;
+	resize: none;
+
+	&:focus {
+		border: 2px solid $primary-color;
+	}
+}
+
+@media (min-width: 768px) {
+	.translateTextArea,
+	.translateResult {
+		font-size: 1.5rem;
+	}
+}

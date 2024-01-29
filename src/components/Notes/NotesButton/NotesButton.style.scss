@@ -1,0 +1,134 @@
+@import "../../../assets/styles/variables";
+
+.notesSelection {
+	height: 4rem;
+	width: 100%;
+	background-color: $app-background-color;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 0.25rem;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	scrollbar-color: $primary-color;
+	scrollbar-width: thin;
+
+	&::-webkit-scrollbar {
+		margin: 5px;
+		height: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $primary-color;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: black;
+	}
+}
+
+.notesWrapper {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.noteButton {
+	width: 3rem;
+	height: 3rem;
+	background-color: black;
+	border: none;
+	color: white;
+	font-weight: bold;
+	font-size: 1rem;
+	cursor: pointer;
+	border: 2px solid white;
+	transition: 0.1s;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.25rem;
+
+	&:hover,
+	&:focus,
+	&.active {
+		background: black;
+		color: white;
+		border: 2px solid white;
+
+		& .removeNote {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: black;
+			color: white;
+			border: 2px solid white;
+			&:hover,
+			&:focus {
+				color: $primary-color;
+			}
+		}
+	}
+
+	&.active {
+		border: 2px solid $primary-color;
+
+		& .removeNote {
+			background: black;
+			color: white;
+			border: 2px solid $primary-color;
+		}
+	}
+}
+
+.addNewNote {
+	background-color: $primary-color;
+	transition: 0.2s;
+	border-color: white;
+	font-size: 2rem;
+	color: white;
+
+	&:hover,
+	&:focus {
+		background-color: $primary-color;
+		border-color: white;
+		color: white;
+		transform: scale(1.15);
+	}
+}
+
+.removeNote {
+	font-weight: bold;
+	display: none;
+	position: absolute;
+	top: -2px;
+	right: -2px;
+	width: 1.25rem;
+	height: 1.25rem;
+	cursor: pointer;
+	border-color: inherit;
+	transition: 0.1s color;
+}
+
+@media (min-width: 768px) {
+	.noteButton {
+		width: 3.5rem;
+		height: 3.5rem;
+	}
+
+	.notesSelection {
+		height: 5rem;
+		padding: 0.5rem;
+	}
+
+	.notesWrapper {
+		gap: 0.5rem;
+	}
+
+	.removeNote {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+}

@@ -1,4 +1,5 @@
 import languageOptions from "../../../data/language";
+import "./TranslatorLanguages.style.scss";
 
 type translatorLanguagesProps = {
 	passedValue: string;
