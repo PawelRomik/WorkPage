@@ -11,7 +11,7 @@ const NotesTextArea = ({ notesLength, noteValue, updateNote }: NotesTextAreaProp
 	return (
 		<section className='noteEdit'>
 			{notesLength > 0 ? (
-				<textarea className='noteTextArea' maxLength={1000} value={noteValue} onChange={updateNote}></textarea>
+				<textarea className='noteTextArea' maxLength={5000} value={noteValue} onChange={updateNote}></textarea>
 			) : (
 				<p className='notesInfo'>No notes found, make a new one.</p>
 			)}
