@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import translate from "translate";
 import "./Translator.style.scss";
-import TranslatorLanguages from "./TranslatorLanguages/TranslatorLanguages";
+import TranslatorSettings from "./TranslatorSettings/TranslatorSettings";
+import TranslatorTextArea from "./TranslatorTextArea/TranslatorTextArea";
 
 const Translator = () => {
 	const [inputValue, changeInputValue] = useState("");
@@ -80,31 +81,21 @@ const Translator = () => {
 		changeInputValue("");
 	}, []);
 
+	const updateInputValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		changeInputValue(e.target.value);
+	};
+
 	return (
 		<div className='translatorContainer'>
-			<section className='translatorTopSection'>
-				<button onClick={clear} className='translationClearButton'>
-					<i className='fa-solid fa-eraser'></i>
-				</button>
-				<div className='languagesSelection'>
-					<TranslatorLanguages passedValue={selectedLanguageFrom} onValueChange={handleLanguageFromChange} />
-					<button onClick={swapLanguages}>
-						<i className='fa-solid fa-right-left'></i>
-					</button>
-					<TranslatorLanguages passedValue={selectedLanguageTo} onValueChange={handleLanguageToChange} />
-				</div>
-			</section>
-			<section className='translatorBottomSection'>
-				<textarea
-					className='translateTextArea'
-					id='translateTextArea'
-					name='translateTextArea'
-					value={inputValue}
-					maxLength={1000}
-					onChange={(e) => changeInputValue(e.target.value)}
-				></textarea>
-				<p className='translateResult'>{translated}</p>
-			</section>
+			<TranslatorSettings
+				selectedLanguageFrom={selectedLanguageFrom}
+				handleLanguageToChange={handleLanguageToChange}
+				handleLanguageFromChange={handleLanguageFromChange}
+				selectedLanguageTo={selectedLanguageTo}
+				swapLanguages={swapLanguages}
+				clear={clear}
+			/>
+			<TranslatorTextArea inputValue={inputValue} updateInputValue={updateInputValue} translated={translated} />
 		</div>
 	);
 };

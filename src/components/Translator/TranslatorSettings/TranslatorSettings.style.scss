@@ -1,0 +1,58 @@
+@import "./../../../assets/styles/variables";
+.translatorTopSection {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+	align-items: center;
+	background-color: rgb(27, 27, 27);
+	height: 3rem;
+	position: relative;
+}
+
+.languagesSelection {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.translatorTopSection button {
+	background-color: black;
+	color: white;
+	border: none;
+	padding: 0.25rem 0.5rem;
+	border: 2px solid white;
+	font-size: 1rem;
+	height: 2rem;
+	cursor: pointer;
+	transition: 0.1s;
+
+	&:focus,
+	&:hover {
+		border: 2px solid $primary-color;
+		color: $primary-color;
+	}
+}
+
+@media (min-width: 768px) {
+	.translationClearButton {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		left: 1rem;
+	}
+
+	.translatorTopSection {
+		height: 5rem;
+	}
+
+	.languagesSelection {
+		gap: 1rem;
+	}
+
+	.translatorTopSection button {
+		height: 3rem;
+		font-size: 1.5rem;
+	}
+}
