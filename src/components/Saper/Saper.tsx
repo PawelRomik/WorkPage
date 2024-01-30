@@ -1,14 +1,10 @@
 import "./Saper.style.scss";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import Confetti from "react-confetti";
+import SaperBoard from "./SaperBoard/SaperBoard";
+import config from "./saper.config";
 
-const rows = 8;
-const columns = 8;
-const totalBombs = 12;
-
-const colors = ["white", "blue", "green", "red", "purple", "orange", "cyan", "darkgreen", "darkred"];
-
-type Cell = {
+export type Cell = {
 	isBomb: boolean;
 	isRevealed: boolean;
 	neighborBombs: number;
@@ -20,12 +16,10 @@ const Saper = () => {
 	const [gameOver, setGameOver] = useState(false);
 	const [revealedCount, setRevealedCount] = useState(0);
 	const [firstClick, changeFirstClick] = useState(true);
+	const { rows, columns, totalBombs } = useMemo(() => config, []);
+	const victory = useMemo(() => revealedCount === rows * columns - totalBombs, [revealedCount, columns, rows, totalBombs]);
 
-	useEffect(() => {
-		setBoard(initializeBoard());
-	}, []);
-
-	const initializeBoard = () => {
+	const initializeBoard = useCallback(() => {
 		const newBoard: Cell[][] = [];
 
 		for (let i = 0; i < rows; i++) {
@@ -48,39 +42,52 @@ const Saper = () => {
 			}
 		}
 		return newBoard;
-	};
+	}, [columns, rows, totalBombs]);
 
-	const placeFlag = (row: number, col: number) => {
-		if (gameOver || board[row][col].isRevealed || firstClick) {
-			return;
-		}
-		const newBoard = [...board];
-		newBoard[row][col].isFlagged = !newBoard[row][col].isFlagged;
-		setBoard(newBoard);
-	};
+	useEffect(() => {
+		setBoard(initializeBoard());
+	}, [initializeBoard]);
 
-	const handleTouchStart = (row: number, col: number) => {
-		const touchTimer = setTimeout(() => placeFlag(row, col), 500);
+	const placeFlag = useCallback(
+		(row: number, col: number) => {
+			if (gameOver || board[row][col].isRevealed || firstClick) {
+				return;
+			}
+			const newBoard = [...board];
+			newBoard[row][col].isFlagged = !newBoard[row][col].isFlagged;
+			setBoard(newBoard);
+		},
+		[board, firstClick, gameOver]
+	);
 
-		return clearTimeout(touchTimer);
-	};
+	const handleTouchStart = useCallback(
+		(row: number, col: number) => {
+			const touchTimer = setTimeout(() => placeFlag(row, col), 500);
 
-	const getNeighbors = (row: number, col: number): [number, number][] => {
-		const neighbors: [number, number][] = [];
+			return clearTimeout(touchTimer);
+		},
+		[placeFlag]
+	);
 
-		for (let i = -1; i <= 1; i++) {
-			for (let j = -1; j <= 1; j++) {
-				const newRow = row + i;
-				const newCol = col + j;
+	const getNeighbors = useCallback(
+		(row: number, col: number): [number, number][] => {
+			const neighbors: [number, number][] = [];
 
-				if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns && !(i === 0 && j === 0)) {
-					neighbors.push([newRow, newCol]);
+			for (let i = -1; i <= 1; i++) {
+				for (let j = -1; j <= 1; j++) {
+					const newRow = row + i;
+					const newCol = col + j;
+
+					if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns && !(i === 0 && j === 0)) {
+						neighbors.push([newRow, newCol]);
+					}
 				}
 			}
-		}
 
-		return neighbors;
-	};
+			return neighbors;
+		},
+		[columns, rows]
+	);
 
 	const revealHelper = useMemo(
 		() => (newBoard: Cell[][], startRow: number, startCol: number) => {
@@ -111,7 +118,7 @@ const Saper = () => {
 
 			setBoard(newBoard);
 		},
-		[setRevealedCount, setGameOver]
+		[getNeighbors]
 	);
 
 	const revealCell = useCallback(
@@ -137,59 +144,33 @@ const Saper = () => {
 				setBoard(newBoard);
 			}
 		},
-		[gameOver, board, firstClick, setBoard, revealHelper]
+		[board, firstClick, gameOver, initializeBoard, revealHelper]
 	);
 
 	useEffect(() => {
-		if (revealedCount === rows * columns - totalBombs) {
+		if (victory) {
 			setGameOver(true);
 		}
-	}, [revealedCount]);
+	}, [victory]);
 
-	const playAgain = () => {
+	const playAgain = useCallback(() => {
 		setBoard(initializeBoard());
 		setGameOver(false);
 		setRevealedCount(0);
 		changeFirstClick(true);
-	};
+	}, [initializeBoard]);
 
-	const renderBoard = () => (
-		<div className='saperBoard'>
-			{board.map((row, rowIndex) => (
-				<div key={rowIndex} className='saperRow'>
-					{row.map((cell, colIndex) => (
-						<div
-							key={colIndex}
-							className={`saperCell${cell.isRevealed ? " saperCellRevealed" : ""}${gameOver && cell.isBomb && revealedCount !== rows * columns - totalBombs ? " saperBomb" : ""}${
-								cell.isFlagged ? " saperFlagged" : ""
-							}`}
-							onClick={() => revealCell(rowIndex, colIndex)}
-							onContextMenu={(e) => {
-								e.preventDefault();
-								placeFlag(rowIndex, colIndex);
-							}}
-							onTouchStart={() => handleTouchStart(rowIndex, colIndex)}
-							style={{ color: colors[cell.neighborBombs] }}
-						>
-							{cell.isRevealed && !cell.isBomb ? cell.neighborBombs || "" : ""}
-							{gameOver && revealedCount !== rows * columns - totalBombs && cell.isBomb && !cell.isFlagged ? "💣" : ""}
-							{cell.isFlagged && !cell.isRevealed ? "🚩" : ""}
-						</div>
-					))}
-				</div>
-			))}
-		</div>
-	);
-
+	const gameOverText = useMemo(() => (gameOver ? (victory ? "You won!" : "Game Over!") : ""), [gameOver, victory]);
+	const gameOverButtonText = useMemo(() => (gameOver ? "Play again" : "Restart"), [gameOver]);
 	return (
 		<div className='saperContainer'>
-			{gameOver && revealedCount === rows * columns - totalBombs && <Confetti />}
+			{victory && <Confetti />}
 			<h1>Minesweeper</h1>
-			{renderBoard()}
+			<SaperBoard board={board} victory={victory} gameOver={gameOver} placeFlag={placeFlag} revealCell={revealCell} handleTouchStart={handleTouchStart} />
 			<div className='saperEndScreen'>
-				<p className='game-over'>{gameOver ? (revealedCount === rows * columns - totalBombs ? "You won!" : "Game Over!") : ""}</p>
+				<p className='game-over'>{gameOverText}</p>
 				<button className='saperButton' onClick={playAgain}>
-					{gameOver ? "Play again" : "Restart"}
+					{gameOverButtonText}
 				</button>
 			</div>
 		</div>

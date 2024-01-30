@@ -1,5 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import "./Paint.style.scss";
+import PaintTools from "./PaintTools/PaintTools";
+import PaintBoard from "./PaintBoard/PaintBoard";
 
 enum BrushShape {
 	Square = "square",
@@ -39,6 +41,10 @@ const Paint = () => {
 		if (savedBgc) setBackgroundColor(JSON.parse(savedBgc));
 	}, []);
 
+	const saveToLocalStorage = useCallback(() => {
+		localStorage.setItem("paintCanvas", JSON.stringify(canvasRef.current!.toDataURL("image/png")));
+	}, []);
+
 	useEffect(() => {
 		const handleResize = () => {
 			const canvas = canvasRef.current;
@@ -66,39 +72,39 @@ const Paint = () => {
 		return () => {
 			window.removeEventListener("resize", handleResize);
 		};
+	}, [saveToLocalStorage]);
+
+	const handleColorChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+		setColor(event.target.value);
 	}, []);
 
-	const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setColor(event.target.value);
-	};
-
-	const handleThicknessChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleThicknessChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
 		setThickness(Number(event.target.value));
-	};
+	}, []);
 
-	const handleBackgroundColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleBackgroundColorChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
 		setBackgroundColor(event.target.value);
 		localStorage.setItem("paintBgc", JSON.stringify(event.target.value));
-	};
+	}, []);
 
-	const toggleEraser = () => {
+	const toggleEraser = useCallback(() => {
 		setIsEraserOn(!isEraserOn);
-	};
+	}, [isEraserOn]);
 
-	const clearCanvas = () => {
+	const clearCanvas = useCallback(() => {
 		const canvas = canvasRef.current;
 		const ctx = ctxRef.current;
 		if (canvas && ctx) {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 		}
 		saveToLocalStorage();
-	};
+	}, [saveToLocalStorage]);
 
-	const toggleBrushShape = () => {
+	const toggleBrushShape = useCallback(() => {
 		setBrushShape((prevShape) => (prevShape === BrushShape.Square ? BrushShape.Circle : BrushShape.Square));
-	};
+	}, []);
 
-	const startPaint = (event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+	const startPaint = useCallback((event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
 		event.stopPropagation();
 		const ctx = ctxRef.current;
 		if (!ctx) return;
@@ -113,44 +119,47 @@ const Paint = () => {
 		}
 
 		setIsPainting(true);
-	};
+	}, []);
 
-	const paint = (event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
-		event.stopPropagation();
-		if (!isPainting) return;
+	const paint = useCallback(
+		(event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+			event.stopPropagation();
+			if (!isPainting) return;
 
-		const ctx = ctxRef.current;
-		if (!ctx) return;
+			const ctx = ctxRef.current;
+			if (!ctx) return;
 
-		if ("touches" in event) {
-			const rect = canvasRef.current!.getBoundingClientRect();
-			ctx.lineTo(event.touches[0].pageX - rect.left, event.touches[0].pageY - rect.top);
-		} else {
-			ctx.lineTo(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
-		}
+			if ("touches" in event) {
+				const rect = canvasRef.current!.getBoundingClientRect();
+				ctx.lineTo(event.touches[0].pageX - rect.left, event.touches[0].pageY - rect.top);
+			} else {
+				ctx.lineTo(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
+			}
 
-		if (isEraserOn) {
-			ctx.globalCompositeOperation = "destination-out";
-		} else {
-			ctx.globalCompositeOperation = "source-over";
-			ctx.lineWidth = thickness;
-			ctx.strokeStyle = color;
-			ctx.lineCap = brushShape === BrushShape.Circle ? "round" : "square";
-		}
+			if (isEraserOn) {
+				ctx.globalCompositeOperation = "destination-out";
+			} else {
+				ctx.globalCompositeOperation = "source-over";
+				ctx.lineWidth = thickness;
+				ctx.strokeStyle = color;
+				ctx.lineCap = brushShape === BrushShape.Circle ? "round" : "square";
+			}
 
-		ctx.stroke();
-	};
+			ctx.stroke();
+		},
+		[brushShape, color, isEraserOn, isPainting, thickness]
+	);
 
-	const endPaint = () => {
+	const endPaint = useCallback(() => {
 		const ctx = ctxRef.current;
 		if (ctx) {
 			ctx.closePath();
 			setIsPainting(false);
 		}
 		saveToLocalStorage();
-	};
+	}, [saveToLocalStorage]);
 
-	const saveImage = () => {
+	const saveImage = useCallback(() => {
 		const canvas = canvasRef.current;
 		const ctx = ctxRef.current;
 
@@ -175,61 +184,25 @@ const Paint = () => {
 				}
 			}, "image/png");
 		}
-	};
-
-	const saveToLocalStorage = () => {
-		localStorage.setItem("paintCanvas", JSON.stringify(canvasRef.current!.toDataURL("image/png")));
-	};
+	}, [backgroundColor]);
 
 	return (
 		<div className='paintContainer'>
-			<section className='paintTools'>
-				<div className='paintToolsWrapper'>
-					<div className='paintToolsGroup'>
-						<div className='paintInputContainer'>
-							<p>Color: </p>
-							<input className='paintInputColor' type='color' value={color} onChange={handleColorChange} />
-						</div>
-						<div className='paintInputContainer'>
-							<p>Thickness: </p>
-							<input className='paintInputText' min={1} max={20} type='number' value={thickness} onChange={handleThicknessChange} />
-						</div>
-						<button className='paintButton' onClick={toggleBrushShape}>
-							{brushShape === BrushShape.Square ? <i className='fa-regular fa-square'></i> : <i className='fa-regular fa-circle'></i>}
-						</button>
-						<button className={`paintButton${isEraserOn ? " paintEraserActive" : ""}`} onClick={toggleEraser}>
-							<i className='fa-solid fa-eraser'></i>
-						</button>
-					</div>
-					<div className='paintToolsGroup'>
-						<div className='paintInputContainer'>
-							<p>Background Color: </p>
-							<input className='paintInputColor' type='color' value={backgroundColor} onChange={handleBackgroundColorChange} />
-						</div>
-						<div className='paintButtons'>
-							<button className='paintButton' onClick={clearCanvas}>
-								<i className='fa-solid fa-trash'></i>
-							</button>
-							<button className='paintButton' onClick={saveImage}>
-								<i className='fa-solid fa-download'></i>
-							</button>
-						</div>
-					</div>
-				</div>
-			</section>
-			<section className='paintBoard'>
-				<canvas
-					ref={canvasRef}
-					className='paintCanvas'
-					style={{ backgroundColor: backgroundColor }}
-					onMouseDown={startPaint}
-					onMouseMove={paint}
-					onMouseUp={endPaint}
-					onTouchStart={startPaint}
-					onTouchMove={paint}
-					onTouchEnd={endPaint}
-				></canvas>
-			</section>
+			<PaintTools
+				color={color}
+				handleColorChange={handleColorChange}
+				thickness={thickness}
+				handleThicknessChange={handleThicknessChange}
+				brushShape={brushShape}
+				toggleBrushShape={toggleBrushShape}
+				isEraserOn={isEraserOn}
+				toggleEraser={toggleEraser}
+				backgroundColor={backgroundColor}
+				handleBackgroundColorChange={handleBackgroundColorChange}
+				clearCanvas={clearCanvas}
+				saveImage={saveImage}
+			/>
+			<PaintBoard canvasRef={canvasRef} backgroundColor={backgroundColor} startPaint={startPaint} paint={paint} endPaint={endPaint} />
 		</div>
 	);
 };
