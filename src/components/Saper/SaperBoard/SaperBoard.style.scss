@@ -1,5 +1,7 @@
+@import "../../../assets/styles/variables";
 .saperBoard {
-	width: 80%;
+	padding: 0.25rem;
+	border: 5px solid white;
 }
 
 .saperCell {
@@ -23,7 +25,7 @@
 }
 
 .saperBomb {
-	background-color: rgb(255, 0, 234);
+	background-color: $primary-color;
 }
 
 @media (min-width: 768px) {
