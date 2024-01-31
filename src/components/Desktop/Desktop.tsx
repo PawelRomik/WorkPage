@@ -7,6 +7,8 @@ import Weather from "../Weather/Weather";
 import UserWindow from "../UserWindow/UserWindow";
 import CalendarWindow from "../CalendarWindow/CalendarWindow";
 import DesktopApps from "./DesktopApps/DesktopApps";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export type App = {
 	id: number;
@@ -49,6 +51,19 @@ const Desktop = ({ hideUserWindowState, userWindowState, calendarWindowState, hi
 
 	return (
 		<main className='desktop' style={{ backgroundImage: `url(${background})` }} onClick={hidePanels}>
+			<ToastContainer
+				position='top-right'
+				limit={1}
+				autoClose={3000}
+				hideProgressBar={false}
+				newestOnTop
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme='dark'
+			/>
 			{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} />}
 			{userWindowState && <UserWindow />}
 			{calendarWindowState && <CalendarWindow />}

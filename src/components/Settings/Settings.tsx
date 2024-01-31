@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import SettingsWallpaperSection from "./SettingsWallpaperSection/SettingsWallpaperSection";
 import SettingsPasswordSection from "./SettingsPasswordSection/SettingsPasswordSection";
+import { toast } from "react-toastify";
 
 const Settings = () => {
 	const { setBackground, password, setPassword } = useSettingsContext();
@@ -17,6 +18,7 @@ const Settings = () => {
 				if (firstChild instanceof HTMLImageElement) {
 					const imageSrc = firstChild.src;
 					setBackground(imageSrc);
+					toast.success("Success!");
 				}
 			}
 		},
@@ -30,6 +32,7 @@ const Settings = () => {
 			img.onload = () => {
 				setBackground(backgroundInputValue);
 				setBackgroundInputValue("");
+				toast.success("Success!");
 			};
 		}
 	}, [backgroundInputValue, setBackground]);
@@ -49,11 +52,11 @@ const Settings = () => {
 				if (newPassword) {
 					setPassword(newPassword);
 					setNewPassword("");
-					//toasty
+					toast.success("Success!");
 					e.currentTarget.blur();
 				}
 			} else {
-				//toasty
+				toast.error("Please provide the password!");
 			}
 		},
 		[newPassword, setPassword]
@@ -61,13 +64,14 @@ const Settings = () => {
 
 	const changePass = useCallback(() => {
 		if (newPassword.length <= 0 || oldPassword.length <= 0) {
-			//toasty
+			toast.error("Please provide the password!");
 		} else if (oldPassword != password) {
-			//toasty
+			toast.error("Passwords doesn't match!");
 		} else {
 			setPassword(newPassword);
 			setNewPassword("");
 			setOldPassword("");
+			toast.success("Success!");
 		}
 	}, [newPassword, oldPassword, password, setPassword]);
 
