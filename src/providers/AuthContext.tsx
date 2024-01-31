@@ -1,14 +1,14 @@
-import React, { createContext, useContext, useEffect, ReactNode, useState } from "react";
+import { createContext, useContext, useEffect, ReactNode, useState, useCallback } from "react";
 
-interface AuthContextProps {
+type AuthContextProps = {
 	loggedIn: boolean;
 	login: () => void;
 	logout: () => void;
-}
+};
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	useEffect(() => {
@@ -16,15 +16,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 		setLoggedIn(loginStatus);
 	}, []);
 
-	const login = () => {
+	const login = useCallback(() => {
 		setLoggedIn(true);
 		localStorage.setItem("loggedIn", JSON.stringify(true));
-	};
+	}, []);
 
-	const logout = () => {
+	const logout = useCallback(() => {
 		setLoggedIn(false);
 		localStorage.setItem("loggedIn", JSON.stringify(false));
-	};
+	}, []);
 
 	return <AuthContext.Provider value={{ loggedIn, login, logout }}>{children}</AuthContext.Provider>;
 };

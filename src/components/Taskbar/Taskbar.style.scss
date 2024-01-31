@@ -1,3 +1,5 @@
+@import "../../assets/styles/variables";
+
 .taskbar {
 	background-color: black;
 	display: flex;
@@ -17,7 +19,7 @@
 
 	&:hover,
 	&:focus {
-		color: rgb(214, 23, 214);
+		color: $primary-color;
 	}
 }
 

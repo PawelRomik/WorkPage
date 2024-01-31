@@ -1,0 +1,93 @@
+@import "../../../assets/styles/variables";
+
+.changeWallpaperSection {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	flex: 1;
+}
+
+.wallpaperConfirmButton {
+	transition: 0.1s;
+	background-color: black;
+	color: white;
+	padding: 0.75rem 1.5rem;
+	border: 2px solid rgb(0, 0, 0);
+	border-left: none;
+	border-radius: 0 30px 30px 0;
+	outline: none;
+	cursor: pointer;
+
+	&:hover,
+	&:focus {
+		color: $primary-color;
+	}
+}
+
+.wallpaperInput {
+	background-color: black;
+	color: white;
+	padding: 0.75rem 1.5rem;
+	border: 2px solid black;
+	border-right: none;
+	border-radius: 30px 0 0 30px;
+	outline: none;
+	transition: 0.1s;
+
+	&:focus {
+		background-color: white;
+		color: black;
+
+		& ~ .wallpaperConfirmButton {
+			background-color: white;
+			color: black;
+		}
+	}
+}
+
+.wallpaperPanel {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+}
+.wallpaperInput {
+	border-radius: 30px 0 0 30px;
+}
+
+.wallpapersSelection {
+	width: 100%;
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+
+	& button {
+		width: 25%;
+		cursor: pointer;
+		border: 2px solid white;
+		background-color: transparent;
+		& img {
+			width: 100%;
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	.changeWallpaperSection h2 {
+		font-size: 2.25rem;
+	}
+
+	.wallpaperInput,
+	.wallpaperConfirmButton {
+		font-size: 1.5rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	.wallpapersSelection {
+		width: 60%;
+	}
+}
