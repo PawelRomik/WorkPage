@@ -1,3 +1,5 @@
+@import "../../assets/styles/variables";
+
 .userWindow {
 	position: absolute;
 	bottom: 0;
@@ -26,6 +28,6 @@
 
 	&:hover,
 	&:focus {
-		background-color: rgb(214, 23, 214);
+		background-color: $primary-color;
 	}
 }
