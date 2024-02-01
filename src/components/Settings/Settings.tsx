@@ -66,7 +66,7 @@ const Settings = () => {
 		if (newPassword.length <= 0 || oldPassword.length <= 0) {
 			toast.error("Please provide the password!");
 		} else if (oldPassword != password) {
-			toast.error("Passwords doesn't match!");
+			toast.error("Old password doesn't match!");
 		} else {
 			setPassword(newPassword);
 			setNewPassword("");
@@ -89,6 +89,7 @@ const Settings = () => {
 
 	const unsetPass = useCallback(() => {
 		setPassword("");
+		toast.success("Success!");
 	}, [setPassword]);
 
 	return (
