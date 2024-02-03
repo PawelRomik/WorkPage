@@ -1,6 +1,8 @@
 import wallpaperData from "../../../data/wallpapers";
 import { useMemo } from "react";
 import "./SettingsWallpaperSection.style.scss";
+import { useSettingsContext } from "../../../providers/SettingsContext";
+import { css } from "@emotion/react";
 
 type SettingsWallpaperSectionProps = {
 	changeBackground: (e: React.MouseEvent) => void;
@@ -17,6 +19,18 @@ const SettingsWallpaperSection = ({
 	handleCustomWallpaper,
 	handleBackgroundInputChange,
 }: SettingsWallpaperSectionProps) => {
+	const { color } = useSettingsContext();
+
+	const wallpaperConfirmButtonStyles = useMemo(
+		() => css`
+			&:focus,
+			&:hover {
+				color: ${color};
+			}
+		`,
+		[color]
+	);
+
 	const wallpapers = useMemo(
 		() =>
 			wallpaperData.map((el, i) => (
@@ -42,7 +56,7 @@ const SettingsWallpaperSection = ({
 					placeholder={`Custom wallpaper: (url)`}
 					onKeyDown={handleInputKeyDown}
 				></input>
-				<button className='wallpaperConfirmButton' onClick={handleCustomWallpaper}>
+				<button className='wallpaperConfirmButton' css={wallpaperConfirmButtonStyles} onClick={handleCustomWallpaper}>
 					<i className='fa-solid fa-arrow-right-to-bracket'></i>
 				</button>
 			</div>

@@ -1,4 +1,7 @@
 import "./PaintTools.style.scss";
+import { useSettingsContext } from "../../../providers/SettingsContext";
+import { useMemo } from "react";
+import { css } from "@emotion/react";
 
 enum BrushShape {
 	Square = "square",
@@ -6,7 +9,7 @@ enum BrushShape {
 }
 
 type PaintToolsProps = {
-	color: string;
+	brushColor: string;
 	handleColorChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	thickness: number;
 	handleThicknessChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -21,7 +24,7 @@ type PaintToolsProps = {
 };
 
 const PaintTools = ({
-	color,
+	brushColor,
 	handleColorChange,
 	thickness,
 	handleThicknessChange,
@@ -34,17 +37,57 @@ const PaintTools = ({
 	clearCanvas,
 	saveImage,
 }: PaintToolsProps) => {
+	const { color } = useSettingsContext();
+
+	const paintInputColorStyles = useMemo(
+		() => css`
+			&:focus-within::-webkit-color-swatch {
+				border: 2px solid ${color};
+			}
+
+			&:focus-within::-moz-color-swatch {
+				border: 2px solid ${color};
+			}
+		`,
+		[color]
+	);
+
+	const paintInputThicknessStyles = useMemo(
+		() => css`
+			&:focus::-webkit-slider-thumb {
+				border: 2px solid ${color};
+			}
+
+			&:focus {
+				border: 2px solid ${color};
+				color: ${color};
+			}
+		`,
+		[color]
+	);
+
+	const paintButtonStyles = useMemo(
+		() => css`
+			& .paintButton:hover,
+			& .paintButton:focus {
+				border: 2px solid ${color};
+				color: ${color};
+			}
+		`,
+		[color]
+	);
+
 	return (
 		<section className='paintTools'>
-			<div className='paintToolsWrapper'>
+			<div className='paintToolsWrapper' css={paintButtonStyles}>
 				<div className='paintToolsGroup'>
 					<div className='paintInputContainer'>
 						<p>Color: </p>
-						<input className='paintInputColor' type='color' value={color} onChange={handleColorChange} />
+						<input className='paintInputColor' css={paintInputColorStyles} type='color' value={brushColor} onChange={handleColorChange} />
 					</div>
 					<div className='paintInputContainer'>
 						<p className='paintSizeParagraph'>Size: {thickness}</p>
-						<input className='paintInputThickness' min={1} max={20} type='range' value={thickness} onChange={handleThicknessChange} />
+						<input className='paintInputThickness' min={1} max={20} css={paintInputThicknessStyles} type='range' value={thickness} onChange={handleThicknessChange} />
 					</div>
 					<button className='paintButton' onClick={toggleBrushShape}>
 						{brushShape === BrushShape.Square ? <i className='fa-regular fa-square'></i> : <i className='fa-regular fa-circle'></i>}
@@ -56,7 +99,7 @@ const PaintTools = ({
 				<div className='paintToolsGroup'>
 					<div className='paintInputContainer'>
 						<p>Background Color: </p>
-						<input className='paintInputColor' type='color' value={backgroundColor} onChange={handleBackgroundColorChange} />
+						<input className='paintInputColor' css={paintInputColorStyles} type='color' value={backgroundColor} onChange={handleBackgroundColorChange} />
 					</div>
 					<div className='paintButtons'>
 						<button className='paintButton' onClick={clearCanvas}>

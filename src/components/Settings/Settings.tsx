@@ -1,15 +1,22 @@
 import "./Settings.style.scss";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import SettingsWallpaperSection from "./SettingsWallpaperSection/SettingsWallpaperSection";
 import SettingsPasswordSection from "./SettingsPasswordSection/SettingsPasswordSection";
 import { toast } from "react-toastify";
+import SettingsColorSection from "./SettingsColorsSection/SettingsColorsSection";
 
 const Settings = () => {
-	const { setBackground, password, setPassword } = useSettingsContext();
+	const { setBackground, password, setPassword, setColor, color } = useSettingsContext();
 	const [backgroundInputValue, setBackgroundInputValue] = useState("");
+	const [colorInputValue, setColorInputValue] = useState(color);
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
+
+	useEffect(() => {
+		const color = localStorage.getItem("color");
+		if (color) setColorInputValue(color);
+	}, []);
 
 	const changeBackground = useCallback(
 		(e: React.MouseEvent) => {
@@ -75,6 +82,14 @@ const Settings = () => {
 		}
 	}, [newPassword, oldPassword, password, setPassword]);
 
+	const handleColorChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			setColorInputValue(e.target.value);
+			setColor(colorInputValue);
+		},
+		[colorInputValue, setColor]
+	);
+
 	const handleBackgroundInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setBackgroundInputValue(e.target.value);
 	}, []);
@@ -104,6 +119,8 @@ const Settings = () => {
 				handleNewPasswordChange={handleNewPasswordChange}
 				handleOldPasswordChange={handleOldPasswordChange}
 			/>
+
+			<SettingsColorSection colorInputValue={colorInputValue} handleColorChange={handleColorChange} />
 			<SettingsWallpaperSection
 				changeBackground={changeBackground}
 				backgroundInputValue={backgroundInputValue}

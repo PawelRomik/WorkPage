@@ -1,0 +1,59 @@
+.changeColorsSection {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	flex: 1;
+	width: 100%;
+	min-height: 40%;
+	border-bottom: 0.25rem rgb(221, 222, 223) dashed;
+}
+
+.colorsPanel {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+}
+.colorsGroup {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	align-items: center;
+	width: 60%;
+	font-weight: bold;
+}
+
+.colorInput {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color: transparent;
+	width: 4.5rem;
+	height: 2.5rem;
+	border: none;
+	cursor: pointer;
+	outline: none;
+
+	&::-webkit-color-swatch {
+		border-radius: 20px;
+		border: 2px solid #000000;
+	}
+
+	&::-moz-color-swatch {
+		border-radius: 20px;
+		border: 2px solid #000000;
+	}
+}
+
+@media (min-width: 768px) {
+	.colorsGroup {
+		width: 20%;
+	}
+
+	.changeColorsSection h2 {
+		font-size: 2.25rem;
+	}
+}

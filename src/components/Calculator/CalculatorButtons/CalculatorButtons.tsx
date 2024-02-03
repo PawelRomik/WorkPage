@@ -1,4 +1,6 @@
 import "./CalculatorButtons.style.scss";
+import { useSettingsContext } from "../../../providers/SettingsContext";
+import { css } from "@emotion/react";
 
 type CalculatorButtonsProps = {
 	handleOperation: (operation: string) => void;
@@ -11,8 +13,17 @@ type CalculatorButtonsProps = {
 };
 
 const CalculatorButtons = ({ handleOperation, handleAddNumber, handleAddOperator, handleAddDot, handleClear, handleClearEntry, handleCalculate }: CalculatorButtonsProps) => {
+	const { color } = useSettingsContext();
+
+	const buttonStyles = css`
+		& > button:hover,
+		& > button:focus {
+			color: ${color};
+		}
+	`;
+
 	return (
-		<section className='calculatorButtons'>
+		<section className='calculatorButtons' css={buttonStyles}>
 			<button className='calculatorButton' onClick={() => handleOperation("percent")}>
 				<i className='fa-solid fa-percent'></i>
 			</button>

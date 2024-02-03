@@ -189,7 +189,7 @@ const Paint = () => {
 	return (
 		<div className='paintContainer'>
 			<PaintTools
-				color={color}
+				brushColor={color}
 				handleColorChange={handleColorChange}
 				thickness={thickness}
 				handleThicknessChange={handleThicknessChange}
