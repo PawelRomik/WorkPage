@@ -1,6 +1,9 @@
 import React from "react";
 import { Task } from "../ToDoList";
 import "./ToDoListAddTask.style.scss";
+import { useMemo } from "react";
+import { useSettingsContext } from "../../../providers/SettingsContext";
+import { css } from "@emotion/react";
 
 type ToDoListAddTaskProps = {
 	allowEdit: boolean;
@@ -14,11 +17,23 @@ type ToDoListAddTaskProps = {
 };
 
 const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputChange, addNewTask, finishEditing, currentlyEdited, closeEdit }: ToDoListAddTaskProps) => {
+	const { color } = useSettingsContext();
+
+	const editButtonStyles = useMemo(
+		() => css`
+			&:focus,
+			&:hover {
+				color: ${color};
+			}
+		`,
+		[color]
+	);
+
 	return (
 		<>
 			{allowEdit ? (
 				<section className='ToDoListAddTask'>
-					<button className='hideEditBtn' onClick={closeEdit}>
+					<button className='hideEditBtn' onClick={closeEdit} css={editButtonStyles}>
 						X
 					</button>
 					<div className='ToDoListInputWrapper'>
@@ -65,7 +80,7 @@ const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputC
 					)}
 				</section>
 			) : (
-				<button className='allowEditBtn' onClick={() => changeAllowEdit(true)}>
+				<button className='allowEditBtn' css={editButtonStyles} onClick={() => changeAllowEdit(true)}>
 					+
 				</button>
 			)}

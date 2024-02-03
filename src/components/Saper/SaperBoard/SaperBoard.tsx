@@ -1,6 +1,8 @@
 import config from "../saper.config";
 import { Cell } from "../Saper";
 import { useMemo } from "react";
+import { useSettingsContext } from "../../../providers/SettingsContext";
+import { css } from "@emotion/react";
 import "./SaperBoard.style.scss";
 
 type SaperBoardProps = {
@@ -13,6 +15,17 @@ type SaperBoardProps = {
 };
 
 const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTouchStart }: SaperBoardProps) => {
+	const { color } = useSettingsContext();
+
+	const saperBombStyles = useMemo(
+		() => css`
+			&.saperBomb {
+				background-color: ${color};
+			}
+		`,
+		[color]
+	);
+
 	const { colors } = useMemo(() => config, []);
 
 	const renderedBoard = useMemo(
@@ -21,6 +34,7 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 				<div key={rowIndex} className='saperRow'>
 					{row.map((cell, colIndex) => (
 						<div
+							css={saperBombStyles}
 							key={colIndex}
 							className={`saperCell${cell.isRevealed ? " saperCellRevealed" : ""}${gameOver && cell.isBomb && !victory ? " saperBomb" : ""}${
 								cell.isFlagged ? " saperFlagged" : ""
@@ -40,7 +54,7 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 					))}
 				</div>
 			)),
-		[board, colors, gameOver, handleTouchStart, placeFlag, revealCell, victory]
+		[board, colors, gameOver, handleTouchStart, placeFlag, revealCell, victory, saperBombStyles]
 	);
 
 	return <div className='saperBoard'>{renderedBoard}</div>;

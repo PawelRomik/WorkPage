@@ -31,10 +31,6 @@
 	padding: 0.5rem;
 	font-size: 1rem;
 	resize: none;
-
-	&:focus {
-		border: 2px solid $primary-color;
-	}
 }
 
 @media (min-width: 768px) {

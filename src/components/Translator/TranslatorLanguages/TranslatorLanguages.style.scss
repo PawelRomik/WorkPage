@@ -9,10 +9,6 @@
 	border: 2px solid white;
 	height: 2rem;
 	outline: none;
-
-	&:focus {
-		border: 2px solid $primary-color;
-	}
 }
 
 @media (min-width: 768px) {

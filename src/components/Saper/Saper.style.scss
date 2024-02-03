@@ -20,12 +20,6 @@
 	border-radius: 30px;
 	outline: none;
 	cursor: pointer;
-
-	&:hover,
-	&:focus {
-		background-color: $primary-color;
-		color: white;
-	}
 }
 
 .saperEndScreen {

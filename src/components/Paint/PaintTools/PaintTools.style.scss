@@ -48,17 +48,9 @@
 		border: 2px solid #ffffff;
 	}
 
-	&:focus-within::-webkit-color-swatch {
-		border: 2px solid $primary-color;
-	}
-
 	&::-moz-color-swatch {
 		border-radius: 50%;
 		border: 2px solid #ffffff;
-	}
-
-	&:focus-within::-moz-color-swatch {
-		border: 2px solid $primary-color;
 	}
 }
 
@@ -69,42 +61,6 @@
 	border-radius: 30px;
 	outline: none;
 
-	&:focus {
-		border: 2px solid $primary-color;
-	}
-}
-
-.paintButton {
-	background-color: black;
-	color: white;
-	padding: 0.25rem;
-	border: 2px solid white;
-	border-radius: 30px;
-	width: 2rem;
-	height: 2rem;
-
-	cursor: pointer;
-
-	&:hover,
-	&:focus {
-		border: 2px solid $primary-color;
-		color: $primary-color;
-	}
-}
-
-.paintEraserActive {
-	color: black;
-	background-color: white;
-}
-
-.paintButtons {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 0.5rem;
-}
-
-.paintInputThickness {
 	-webkit-appearance: none;
 	appearance: none;
 	outline: none;
@@ -118,10 +74,33 @@
 		border-radius: 30px;
 		width: 25px;
 		height: 25px;
-		background: transparent;
 		border: 2px solid white;
 		cursor: pointer;
 	}
+}
+
+.paintButton {
+	background-color: black;
+	color: white;
+	padding: 0.25rem;
+	border: 2px solid white;
+	border-radius: 30px;
+	width: 2rem;
+	height: 2rem;
+
+	cursor: pointer;
+}
+
+.paintEraserActive {
+	color: black;
+	background-color: white;
+}
+
+.paintButtons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
 }
 
 @media (min-width: 768px) {

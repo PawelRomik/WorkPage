@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import "./SettingsPasswordSection.style.scss";
+import { css } from "@emotion/react";
+import { useSettingsContext } from "../../../providers/SettingsContext";
 
 type SettingsPasswordSectionProps = {
 	password: string;
@@ -22,6 +24,18 @@ const SettingsPasswordSection = ({
 	handleNewPasswordChange,
 	handleOldPasswordChange,
 }: SettingsPasswordSectionProps) => {
+	const { color } = useSettingsContext();
+
+	const passwordButtonsStyles = useMemo(
+		() => css`
+			& > button:focus,
+			& > button:hover {
+				background-color: ${color};
+			}
+		`,
+		[color]
+	);
+
 	const sectionTitle = useMemo(() => (password ? "CHANGE YOUR PASSWORD" : "SET YOUR PASSWORD"), [password]);
 	return (
 		<section className='changePasswordSection'>
@@ -48,7 +62,7 @@ const SettingsPasswordSection = ({
 					placeholder='New Password'
 				/>
 
-				<div className='changePasswordButtons'>
+				<div className='changePasswordButtons' css={passwordButtonsStyles}>
 					{password ? (
 						<>
 							<button className='unlockButton' onClick={changePass}>

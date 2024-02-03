@@ -3,6 +3,8 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import Confetti from "react-confetti";
 import SaperBoard from "./SaperBoard/SaperBoard";
 import config from "./saper.config";
+import { css } from "@emotion/react";
+import { useSettingsContext } from "../../providers/SettingsContext";
 
 export type Cell = {
 	isBomb: boolean;
@@ -12,6 +14,19 @@ export type Cell = {
 };
 
 const Saper = () => {
+	const { color } = useSettingsContext();
+
+	const resetButtonStyles = useMemo(
+		() => css`
+			&:hover,
+			&:focus {
+				background-color: ${color};
+				color: white;
+			}
+		`,
+		[color]
+	);
+
 	const [board, setBoard] = useState<Cell[][]>([]);
 	const [gameOver, setGameOver] = useState(false);
 	const [revealedCount, setRevealedCount] = useState(0);
@@ -162,6 +177,7 @@ const Saper = () => {
 
 	const gameOverText = useMemo(() => (gameOver ? (victory ? "You won!" : "Game Over!") : ""), [gameOver, victory]);
 	const gameOverButtonText = useMemo(() => (gameOver ? "Play again" : "Restart"), [gameOver]);
+
 	return (
 		<div className='saperContainer'>
 			{victory && <Confetti />}
@@ -169,7 +185,7 @@ const Saper = () => {
 			<SaperBoard board={board} victory={victory} gameOver={gameOver} placeFlag={placeFlag} revealCell={revealCell} handleTouchStart={handleTouchStart} />
 			<div className='saperEndScreen'>
 				<p className='game-over'>{gameOverText}</p>
-				<button className='saperButton' onClick={playAgain}>
+				<button className='saperButton' css={resetButtonStyles} onClick={playAgain}>
 					{gameOverButtonText}
 				</button>
 			</div>

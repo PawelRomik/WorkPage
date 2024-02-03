@@ -6,7 +6,9 @@ import Calculator from "../Calculator/Calculator";
 import Saper from "../Saper/Saper";
 import Translator from "../Translator/Translator";
 import Paint from "../Paint/Paint";
-import { useCallback } from "react";
+import { useSettingsContext } from "../../providers/SettingsContext";
+import { useCallback, useMemo } from "react";
+import { css } from "@emotion/react";
 
 type AppContainerProps = {
 	app: {
@@ -18,6 +20,18 @@ type AppContainerProps = {
 };
 
 const AppContainer = ({ app, closeApp }: AppContainerProps) => {
+	const { color } = useSettingsContext();
+
+	const buttonStyles = useMemo(
+		() => css`
+			&:hover,
+			&:focus {
+				background-color: ${color};
+			}
+		`,
+		[color]
+	);
+
 	const renderAppContent = useCallback(() => {
 		const { name } = app;
 		switch (name) {
@@ -44,7 +58,7 @@ const AppContainer = ({ app, closeApp }: AppContainerProps) => {
 		<div className='appContainer'>
 			<header className='appContainerHeader'>
 				<h3 className='appContainerTitle'>{app.name}</h3>
-				<button className='closeButton' onClick={closeApp}>
+				<button className='closeButton' onClick={closeApp} css={buttonStyles}>
 					X
 				</button>
 			</header>

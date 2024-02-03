@@ -5,6 +5,8 @@ type SettingsContextProps = {
 	setBackground: (newBackground: string) => void;
 	password: string;
 	setPassword: (newPassword: string) => void;
+	color: string;
+	setColor: (newColor: string) => void;
 };
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(undefined);
@@ -12,6 +14,7 @@ const SettingsContext = createContext<SettingsContextProps | undefined>(undefine
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 	const [background, setBackground] = useState("https://uhdwallpapers.org/uploads/converted/19/07/07/windows-10-hero-redesign-wallpaper-1920x1080_899885-mm-90.jpg");
 	const [password, setPassword] = useState("");
+	const [color, setColor] = useState("#CE17C5");
 
 	useEffect(() => {
 		const storedBackground = localStorage.getItem("background");
@@ -23,6 +26,11 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 		if (storedPassword) {
 			setPassword(storedPassword);
 		}
+
+		const storedColor = localStorage.getItem("color");
+		if (storedColor) {
+			setColor(storedColor);
+		}
 	}, []);
 
 	useEffect(() => {
@@ -33,7 +41,11 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 		localStorage.setItem("password", password);
 	}, [password]);
 
-	return <SettingsContext.Provider value={{ background, setBackground, password, setPassword }}>{children}</SettingsContext.Provider>;
+	useEffect(() => {
+		localStorage.setItem("color", color);
+	}, [color]);
+
+	return <SettingsContext.Provider value={{ background, setBackground, password, setPassword, setColor, color }}>{children}</SettingsContext.Provider>;
 };
 
 export const useSettingsContext = () => {

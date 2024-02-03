@@ -6,6 +6,8 @@
 	align-items: center;
 	flex-direction: column;
 	flex: 1;
+
+	min-height: 50%;
 }
 
 .wallpaperConfirmButton {
@@ -18,11 +20,6 @@
 	border-radius: 0 30px 30px 0;
 	outline: none;
 	cursor: pointer;
-
-	&:hover,
-	&:focus {
-		color: $primary-color;
-	}
 }
 
 .wallpaperInput {
