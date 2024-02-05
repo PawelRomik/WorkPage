@@ -21,6 +21,18 @@ const Settings = () => {
 			&.settingsContainer {
 				background-color: ${darkMode ? "lightgray" : "rgb(27, 27, 27)"};
 				color: ${darkMode ? "black" : "white"};
+
+				&::-webkit-scrollbar {
+					width: 8px;
+				}
+
+				&::-webkit-scrollbar-thumb {
+					background-color: ${darkMode ? "darkgray" : "black"};
+				}
+
+				&::-webkit-scrollbar-track {
+					background-color: ${darkMode ? "white" : "rgb(12, 12, 12)"};
+				}
 			}
 		`,
 		[darkMode]
