@@ -5,16 +5,32 @@ import { css } from "@emotion/react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 
 const UserWindow = () => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const userWindowButtonStyles = useMemo(
 		() => css`
 			&:hover,
 			&:focus {
-				background-color: ${color};
+				background-color: ${color} !important;
+				color: white !important;
 			}
 		`,
 		[color]
+	);
+
+	const darkModeStyles = useMemo(
+		() => css`
+			&.userWindow {
+				background-color: ${darkMode ? "white" : "black"};
+				color: ${darkMode ? "black" : "white"};
+
+				button {
+					background-color: ${darkMode ? "lightgray" : "rgb(29, 29, 29)"};
+					color: ${darkMode ? "black" : "white"};
+				}
+			}
+		`,
+		[darkMode]
 	);
 
 	const dontHideOnClick = useCallback((e: React.MouseEvent) => {
@@ -23,7 +39,7 @@ const UserWindow = () => {
 
 	const { logout } = useAuthContext();
 	return (
-		<div className='userWindow' onClick={dontHideOnClick}>
+		<div className='userWindow' css={darkModeStyles} onClick={dontHideOnClick}>
 			<p>Logged as: User</p>
 			<button css={userWindowButtonStyles} onClick={logout}>
 				Logout

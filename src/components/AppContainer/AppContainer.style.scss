@@ -1,7 +1,6 @@
 @import "./../../assets/styles/variables";
 
 .appContainer {
-	background-color: rgb(39, 39, 39);
 	position: absolute;
 	top: 50%;
 	display: flex;
@@ -12,14 +11,11 @@
 	width: 95%;
 	height: 95%;
 	z-index: 3;
-	border: 6px solid black;
 	overflow: hidden;
 }
 
 .appContainerHeader {
 	display: flex;
-	background-color: black;
-	color: white;
 	justify-content: space-between;
 	align-items: center;
 	padding-left: 1rem;
@@ -27,7 +23,6 @@
 
 .closeButton {
 	background-color: transparent;
-	color: white;
 	width: 3.5rem;
 	height: 2.5rem;
 	padding: 0.5rem;
@@ -35,11 +30,6 @@
 	font-weight: bold;
 	font-size: 1rem;
 	cursor: pointer;
-
-	&:hover,
-	&:focus {
-		color: white;
-	}
 }
 
 .appContainerContent {

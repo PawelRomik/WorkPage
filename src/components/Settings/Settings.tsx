@@ -7,8 +7,9 @@ import { toast } from "react-toastify";
 import SettingsColorSection from "./SettingsColorsSection/SettingsColorsSection";
 
 const Settings = () => {
-	const { setBackground, password, setPassword, setColor, color } = useSettingsContext();
+	const { setBackground, password, setPassword, setColor, color, darkMode, changeDarkMode } = useSettingsContext();
 	const [backgroundInputValue, setBackgroundInputValue] = useState("");
+	const [darkModeInputValue, changeDarkModeInputValue] = useState("true");
 	const [colorInputValue, setColorInputValue] = useState(color);
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
@@ -16,6 +17,11 @@ const Settings = () => {
 	useEffect(() => {
 		const color = localStorage.getItem("color");
 		if (color) setColorInputValue(color);
+	}, []);
+
+	useEffect(() => {
+		const mode = localStorage.getItem("darkMode");
+		if (mode) changeDarkModeInputValue(JSON.parse(mode));
 	}, []);
 
 	const changeBackground = useCallback(
@@ -90,6 +96,15 @@ const Settings = () => {
 		[colorInputValue, setColor]
 	);
 
+	const handleDarkModeChange = useCallback(() => {
+		changeDarkModeInputValue((prevValue) => {
+			const newValue = !JSON.parse(prevValue);
+			return JSON.stringify(newValue);
+		});
+		const mode: boolean = !darkMode;
+		changeDarkMode(mode);
+	}, [changeDarkMode, changeDarkModeInputValue, darkMode]);
+
 	const handleBackgroundInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setBackgroundInputValue(e.target.value);
 	}, []);
@@ -120,7 +135,12 @@ const Settings = () => {
 				handleOldPasswordChange={handleOldPasswordChange}
 			/>
 
-			<SettingsColorSection colorInputValue={colorInputValue} handleColorChange={handleColorChange} />
+			<SettingsColorSection
+				colorInputValue={colorInputValue}
+				handleColorChange={handleColorChange}
+				handleDarkModeChange={handleDarkModeChange}
+				darkModeInputValue={darkModeInputValue}
+			/>
 			<SettingsWallpaperSection
 				changeBackground={changeBackground}
 				backgroundInputValue={backgroundInputValue}

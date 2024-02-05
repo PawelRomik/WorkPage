@@ -5,9 +5,11 @@ import "./SettingsColorsSection.style.scss";
 type SettingsColorSectionProps = {
 	colorInputValue: string;
 	handleColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	darkModeInputValue: string;
+	handleDarkModeChange: () => void;
 };
 
-const SettingsColorSection = ({ handleColorChange, colorInputValue }: SettingsColorSectionProps) => {
+const SettingsColorSection = ({ handleColorChange, colorInputValue, darkModeInputValue, handleDarkModeChange }: SettingsColorSectionProps) => {
 	return (
 		<section className='changeColorsSection'>
 			<h2>CHANGE COLORS</h2>
@@ -19,7 +21,7 @@ const SettingsColorSection = ({ handleColorChange, colorInputValue }: SettingsCo
 				</div>
 				<div className='colorsGroup'>
 					<label htmlFor='colorInput'>Mode:</label>
-					<SettingsSwitch />
+					<SettingsSwitch darkModeInputValue={darkModeInputValue} handleDarkModeChange={handleDarkModeChange} />
 				</div>
 				<div className='colorsGroup'>
 					<label htmlFor='colorInput'>Language:</label>

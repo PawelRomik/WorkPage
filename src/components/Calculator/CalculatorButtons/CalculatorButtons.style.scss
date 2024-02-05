@@ -11,8 +11,6 @@
 }
 
 .calculatorButton {
-	background-color: rgb(77, 77, 77);
-	border: 2px solid black;
 	font-weight: bold;
 	font-size: 1.25rem;
 	width: 100%;
@@ -34,11 +32,5 @@
 
 	.calculatorResult {
 		font-size: 3.5rem;
-	}
-}
-
-@media (min-width: 1200px) {
-	.calculatorButtons {
-		width: 40%;
 	}
 }
