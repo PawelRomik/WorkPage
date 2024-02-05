@@ -37,7 +37,7 @@ const PaintTools = ({
 	clearCanvas,
 	saveImage,
 }: PaintToolsProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const paintInputColorStyles = useMemo(
 		() => css`
@@ -77,8 +77,49 @@ const PaintTools = ({
 		[color]
 	);
 
+	const darkModeStyles = useMemo(
+		() => css`
+			&.paintTools {
+				background-color: ${darkMode ? "lightgray" : "rgb(27,27,27)"};
+				color: ${darkMode ? "black" : "white"};
+
+				.paintInputColor {
+					&::-webkit-color-swatch {
+						border: 2px solid ${darkMode ? "black" : "white"};
+					}
+
+					&::-moz-color-swatch {
+						border: 2px solid ${darkMode ? "black" : "white"};
+					}
+				}
+
+				.paintInputThickness {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+					border: 2px solid ${darkMode ? "black" : "white"};
+
+					&::-webkit-slider-thumb {
+						border: 2px solid ${darkMode ? "black" : "white"};
+					}
+				}
+
+				.paintButton {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+					border: 2px solid ${darkMode ? "black" : "white"};
+
+					&.paintEraserActive {
+						color: ${darkMode ? "white" : "black"};
+						background-color: ${darkMode ? "black" : "white"};
+					}
+				}
+			}
+		`,
+		[darkMode]
+	);
+
 	return (
-		<section className='paintTools'>
+		<section className='paintTools' css={darkModeStyles}>
 			<div className='paintToolsWrapper' css={paintButtonStyles}>
 				<div className='paintToolsGroup'>
 					<div className='paintInputContainer'>

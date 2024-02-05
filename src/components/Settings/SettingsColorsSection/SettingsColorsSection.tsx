@@ -1,15 +1,31 @@
 import SettingsLanguageSelect from "../SettingsLanguageSelect/SettingsLanguageSelect";
 import SettingsSwitch from "../SettingsSwitch/SettingsSwitch";
 import "./SettingsColorsSection.style.scss";
+import { useMemo } from "react";
+import { css } from "@emotion/react";
+import { useSettingsContext } from "../../../providers/SettingsContext";
 
 type SettingsColorSectionProps = {
 	colorInputValue: string;
 	handleColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	darkModeInputValue: string;
+	handleDarkModeChange: () => void;
 };
 
-const SettingsColorSection = ({ handleColorChange, colorInputValue }: SettingsColorSectionProps) => {
+const SettingsColorSection = ({ handleColorChange, colorInputValue, darkModeInputValue, handleDarkModeChange }: SettingsColorSectionProps) => {
+	const { darkMode } = useSettingsContext();
+
+	const darkModeStyles = useMemo(
+		() => css`
+			&.changeColorsSection {
+				border-bottom: 0.25rem ${darkMode ? "rgb(221, 222, 223)" : "black"} dashed;
+			}
+		`,
+		[darkMode]
+	);
+
 	return (
-		<section className='changeColorsSection'>
+		<section className='changeColorsSection' css={darkModeStyles}>
 			<h2>CHANGE COLORS</h2>
 
 			<div className='colorsPanel'>
@@ -19,7 +35,7 @@ const SettingsColorSection = ({ handleColorChange, colorInputValue }: SettingsCo
 				</div>
 				<div className='colorsGroup'>
 					<label htmlFor='colorInput'>Mode:</label>
-					<SettingsSwitch />
+					<SettingsSwitch darkModeInputValue={darkModeInputValue} handleDarkModeChange={handleDarkModeChange} />
 				</div>
 				<div className='colorsGroup'>
 					<label htmlFor='colorInput'>Language:</label>

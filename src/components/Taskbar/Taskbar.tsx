@@ -10,20 +10,41 @@ type TaskbarProps = {
 };
 
 const Taskbar = ({ displayUserWindowState, displayCalendarWindow }: TaskbarProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const systemButtonStyles = useMemo(
 		() => css`
 			&:focus,
 			&:hover {
-				color: ${color};
+				color: ${color} !important;
 			}
 		`,
 		[color]
 	);
 
+	const darkModeStyles = useMemo(
+		() => css`
+			&.taskbar {
+				background-color: ${darkMode ? "white" : "black"};
+
+				.rightTaskbarContainer {
+					color: ${darkMode ? "black" : "white"};
+				}
+
+				.systemButton {
+					color: ${darkMode ? "black" : "white"};
+				}
+
+				.taskbarTimer {
+					color: ${darkMode ? "black" : "white"};
+				}
+			}
+		`,
+		[darkMode]
+	);
+
 	return (
-		<footer className='taskbar'>
+		<footer className='taskbar' css={darkModeStyles}>
 			<button className='systemButton' css={systemButtonStyles} onClick={displayUserWindowState}>
 				<i className='fa-solid fa-fire'></i>
 			</button>

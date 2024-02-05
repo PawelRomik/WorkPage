@@ -24,7 +24,7 @@ type DesktopProps = {
 };
 
 const Desktop = ({ hideUserWindowState, userWindowState, calendarWindowState, hideCalendarWindow }: DesktopProps) => {
-	const { background } = useSettingsContext();
+	const { background, darkMode } = useSettingsContext();
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 
 	const launchApp = useCallback((e: React.MouseEvent) => {
@@ -62,7 +62,7 @@ const Desktop = ({ hideUserWindowState, userWindowState, calendarWindowState, hi
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
-				theme='dark'
+				theme={darkMode ? "light" : "dark"}
 			/>
 			{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} />}
 			{userWindowState && <UserWindow />}

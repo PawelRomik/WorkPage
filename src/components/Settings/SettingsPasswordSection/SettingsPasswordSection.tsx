@@ -24,21 +24,49 @@ const SettingsPasswordSection = ({
 	handleNewPasswordChange,
 	handleOldPasswordChange,
 }: SettingsPasswordSectionProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const passwordButtonsStyles = useMemo(
 		() => css`
-			& > button:focus,
-			& > button:hover {
-				background-color: ${color};
+			& .changePasswordButtons > button:focus,
+			& .changePasswordButtons > button:hover {
+				background-color: ${color} !important;
+				color: white !important;
+			}
+
+			& .changePasswordInput {
+				&:focus {
+					border: 2px solid ${color} !important;
+				}
 			}
 		`,
 		[color]
 	);
 
+	const darkModeStyles = useMemo(
+		() => css`
+			&.changePasswordSection {
+				border-bottom: 0.25rem ${darkMode ? "rgb(221, 222, 223)" : "black"} dashed;
+
+				.changePasswordInput {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+					border: 2px solid ${darkMode ? "white" : "black"};
+				}
+
+				.unlockButton,
+				.removeButton {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+				}
+			}
+		`,
+		[darkMode]
+	);
+
 	const sectionTitle = useMemo(() => (password ? "CHANGE YOUR PASSWORD" : "SET YOUR PASSWORD"), [password]);
 	return (
-		<section className='changePasswordSection'>
+		<section className='changePasswordSection' css={[passwordButtonsStyles, darkModeStyles]}>
 			<h2>{sectionTitle}</h2>
 			<div className='passContainer'>
 				{password && (
@@ -62,7 +90,7 @@ const SettingsPasswordSection = ({
 					placeholder='New Password'
 				/>
 
-				<div className='changePasswordButtons' css={passwordButtonsStyles}>
+				<div className='changePasswordButtons'>
 					{password ? (
 						<>
 							<button className='unlockButton' onClick={changePass}>

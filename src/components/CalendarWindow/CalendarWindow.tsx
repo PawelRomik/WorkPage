@@ -12,7 +12,7 @@ const CalendarWindow = () => {
 		e.stopPropagation();
 	}, []);
 
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const calendarStyles = useMemo(
 		() => css`
@@ -37,8 +37,59 @@ const CalendarWindow = () => {
 		[color]
 	);
 
+	const darkModeStyles = useMemo(
+		() => css`
+			&.calendarContainer {
+				background-color: ${darkMode ? "white" : "black"};
+				color: ${darkMode ? "black" : "white"};
+
+				.currentDateSection .clockValue {
+					color: ${darkMode ? "black" : "white"};
+				}
+
+				.react-calendar {
+					background-color: ${darkMode ? "white !important" : "black !important"};
+
+					& .react-calendar__month-view__weekdays__weekday {
+						color: ${darkMode ? "black" : "white"};
+					}
+
+					& .react-calendar__month-view__days__day,
+					& .react-calendar__navigation__label,
+					& .react-calendar__navigation__arrow,
+					.react-calendar__tile {
+						color: ${darkMode ? "black" : "white"};
+					}
+
+					& .react-calendar__navigation {
+						border-top: 2px solid ${darkMode ? "black" : "white"};
+						border-bottom: 2px solid ${darkMode ? "black" : "white"};
+					}
+
+					& .react-calendar__tile--active:enabled:hover,
+					.react-calendar__tile--active:enabled:focus,
+					.react-calendar__tile:enabled:hover,
+					.react-calendar__tile:enabled:focus,
+					.react-calendar__navigation button:enabled:hover,
+					.react-calendar__navigation button:enabled:focus,
+					.react-calendar__navigation button:disabled {
+						background-color: ${darkMode ? "black" : "white"};
+						color: ${darkMode ? "white" : "black"};
+					}
+
+					& .react-calendar__month-view__days__day--neighboringMonth,
+					.react-calendar__decade-view__years__year--neighboringDecade,
+					.react-calendar__century-view__decades__decade--neighboringCentury {
+						color: ${darkMode ? "lightgray" : "gray"};
+					}
+				}
+			}
+		`,
+		[darkMode]
+	);
+
 	return (
-		<div className='calendarContainer' onClick={dontHideOnClick}>
+		<div className='calendarContainer' onClick={dontHideOnClick} css={darkModeStyles}>
 			<section className='currentDateSection' css={timeStyles}>
 				<Clock />
 				<CurrentDate />

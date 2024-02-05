@@ -14,7 +14,7 @@ type NotesButtonProps = {
 };
 
 const NotesButton = ({ notes, selectedNoteId, changeNote, removeNote, createNewNote }: NotesButtonProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 	const notesSelectionScrollbarStyles = useMemo(
 		() => css`
 			& {
@@ -36,16 +36,16 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, removeNote, createNewN
 				& .removeNote {
 					&:hover,
 					&:focus {
-						color: ${color};
+						color: ${color} !important;
 					}
 				}
 			}
 
 			&.active {
-				border: 2px solid ${color};
+				border: 2px solid ${color} !important;
 
 				& .removeNote {
-					border: 2px solid ${color};
+					border: 2px solid ${color} !important;
 				}
 			}
 		`,
@@ -55,15 +55,44 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, removeNote, createNewN
 	const addNewNoteStyles = useMemo(
 		() => css`
 			& {
-				background-color: ${color};
+				background-color: ${color} !important;
 			}
 
 			&:hover,
 			&:focus {
-				background-color: ${color};
+				background-color: ${color} !important;
 			}
 		`,
 		[color]
+	);
+
+	const darkModeStyles = useMemo(
+		() => css`
+			&.notesSelection {
+				background-color: ${darkMode ? "lightgray" : "rgb(27, 27, 27)"};
+
+				&::-webkit-scrollbar-track {
+					background-color: ${darkMode ? "gray" : "black"};
+				}
+
+				.noteButton {
+					background-color: ${darkMode ? "white" : "black"};
+					border: 2px solid ${darkMode ? "black" : "white"};
+					color: ${darkMode ? "black" : "white"};
+
+					&:hover,
+					&:focus,
+					&.active {
+						& .removeNote {
+							background-color: ${darkMode ? "white" : "black"};
+							border: 2px solid ${darkMode ? "black" : "white"};
+							color: ${darkMode ? "black" : "white"};
+						}
+					}
+				}
+			}
+		`,
+		[darkMode]
 	);
 
 	const noteElements = useMemo(
@@ -80,7 +109,7 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, removeNote, createNewN
 	);
 
 	return (
-		<section className='notesSelection' css={notesSelectionScrollbarStyles}>
+		<section className='notesSelection' css={[notesSelectionScrollbarStyles, darkModeStyles]}>
 			<div className='notesWrapper'>
 				{noteElements}
 				<button className='noteButton addNewNote' css={addNewNoteStyles} onClick={createNewNote}>

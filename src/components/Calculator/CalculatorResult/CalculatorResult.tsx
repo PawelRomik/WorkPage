@@ -11,7 +11,7 @@ type CalculatorResultProps = {
 };
 
 const CalculatorResult = ({ firstNumber, operator, secondNumber, copyContent }: CalculatorResultProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const paragraphStyles = useMemo(
 		() => css`
@@ -20,11 +20,20 @@ const CalculatorResult = ({ firstNumber, operator, secondNumber, copyContent }: 
 		[color]
 	);
 
+	const darkModeStyles = useMemo(
+		() => css`
+			&.calculatorResult {
+				background-color: ${darkMode ? "rgb(201, 201, 201)" : "white"};
+			}
+		`,
+		[darkMode]
+	);
+
 	const topContent = useMemo(() => (operator ? (firstNumber !== undefined ? firstNumber : "0") + operator : ""), [firstNumber, operator]);
 	const bottomContent = useMemo(() => (operator ? (secondNumber ? secondNumber : "0") : firstNumber !== undefined ? firstNumber : "0"), [firstNumber, operator, secondNumber]);
 
 	return (
-		<section className='calculatorResult' onClick={copyContent}>
+		<section className='calculatorResult' onClick={copyContent} css={darkModeStyles}>
 			<p className='calculatorTop' css={paragraphStyles}>
 				{topContent}
 			</p>

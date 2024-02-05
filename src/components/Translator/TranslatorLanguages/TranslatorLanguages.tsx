@@ -10,7 +10,7 @@ type translatorLanguagesProps = {
 };
 
 const TranslatorLanguages = ({ passedValue, onValueChange }: translatorLanguagesProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const translatorLanguagesSelectStyles = useMemo(
 		() => css`
@@ -21,8 +21,19 @@ const TranslatorLanguages = ({ passedValue, onValueChange }: translatorLanguages
 		[color]
 	);
 
+	const darkModeStyles = useMemo(
+		() => css`
+			& {
+				background-color: ${darkMode ? "white" : "black"};
+				color: ${darkMode ? "black" : "white"};
+				border: 2px solid ${darkMode ? "black" : "white"};
+			}
+		`,
+		[darkMode]
+	);
+
 	return (
-		<select value={passedValue} onChange={onValueChange} css={translatorLanguagesSelectStyles}>
+		<select value={passedValue} onChange={onValueChange} css={[translatorLanguagesSelectStyles, darkModeStyles]}>
 			{languageOptions.map((option) => (
 				<option key={option.code} value={option.code}>
 					{option.label}

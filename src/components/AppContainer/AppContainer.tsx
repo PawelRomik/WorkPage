@@ -20,7 +20,7 @@ type AppContainerProps = {
 };
 
 const AppContainer = ({ app, closeApp }: AppContainerProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const buttonStyles = useMemo(
 		() => css`
@@ -30,6 +30,30 @@ const AppContainer = ({ app, closeApp }: AppContainerProps) => {
 			}
 		`,
 		[color]
+	);
+
+	const darkModeStyles = useMemo(
+		() => css`
+			&.appContainer {
+				background-color: ${darkMode ? "rgb(212, 212, 212)" : "rgb(39, 39, 39);"};
+				border: ${darkMode ? "6px solid white" : "6px solid black"};
+
+				.appContainerHeader {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+
+					.closeButton {
+						color: ${darkMode ? "black" : "white"};
+
+						&:hover,
+						&:focus {
+							color: white;
+						}
+					}
+				}
+			}
+		`,
+		[darkMode]
 	);
 
 	const renderAppContent = useCallback(() => {
@@ -55,7 +79,7 @@ const AppContainer = ({ app, closeApp }: AppContainerProps) => {
 	}, [app]);
 
 	return (
-		<div className='appContainer'>
+		<div className='appContainer' css={darkModeStyles}>
 			<header className='appContainerHeader'>
 				<h3 className='appContainerTitle'>{app.name}</h3>
 				<button className='closeButton' onClick={closeApp} css={buttonStyles}>
