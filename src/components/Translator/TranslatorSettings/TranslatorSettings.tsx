@@ -14,7 +14,7 @@ type TranslatorSettingsProps = {
 };
 
 const TranslatorSettings = ({ selectedLanguageFrom, selectedLanguageTo, clear, swapLanguages, handleLanguageFromChange, handleLanguageToChange }: TranslatorSettingsProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const translatorTopSectionButtonStyles = useMemo(
 		() => css`
@@ -27,8 +27,23 @@ const TranslatorSettings = ({ selectedLanguageFrom, selectedLanguageTo, clear, s
 		[color]
 	);
 
+	const darkModeStyles = useMemo(
+		() => css`
+			&.translatorTopSection {
+				background-color: ${darkMode ? "lightgray" : "rgb(27,27,27)"};
+
+				button {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+					border: 2px solid ${darkMode ? "black" : "white"};
+				}
+			}
+		`,
+		[darkMode]
+	);
+
 	return (
-		<section className='translatorTopSection' css={translatorTopSectionButtonStyles}>
+		<section className='translatorTopSection' css={[darkModeStyles, translatorTopSectionButtonStyles]}>
 			<button onClick={clear} className='translationClearButton'>
 				<i className='fa-solid fa-eraser'></i>
 			</button>

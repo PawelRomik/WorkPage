@@ -5,6 +5,8 @@ import SettingsWallpaperSection from "./SettingsWallpaperSection/SettingsWallpap
 import SettingsPasswordSection from "./SettingsPasswordSection/SettingsPasswordSection";
 import { toast } from "react-toastify";
 import SettingsColorSection from "./SettingsColorsSection/SettingsColorsSection";
+import { useMemo } from "react";
+import { css } from "@emotion/react";
 
 const Settings = () => {
 	const { setBackground, password, setPassword, setColor, color, darkMode, changeDarkMode } = useSettingsContext();
@@ -13,6 +15,16 @@ const Settings = () => {
 	const [colorInputValue, setColorInputValue] = useState(color);
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
+
+	const darkModeStyles = useMemo(
+		() => css`
+			&.settingsContainer {
+				background-color: ${darkMode ? "lightgray" : "rgb(27, 27, 27)"};
+				color: ${darkMode ? "black" : "white"};
+			}
+		`,
+		[darkMode]
+	);
 
 	useEffect(() => {
 		const color = localStorage.getItem("color");
@@ -123,7 +135,7 @@ const Settings = () => {
 	}, [setPassword]);
 
 	return (
-		<div className='settingsContainer'>
+		<div className='settingsContainer' css={darkModeStyles}>
 			<SettingsPasswordSection
 				password={password}
 				newPassword={newPassword}

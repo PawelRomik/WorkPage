@@ -17,22 +17,68 @@ type ToDoListAddTaskProps = {
 };
 
 const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputChange, addNewTask, finishEditing, currentlyEdited, closeEdit }: ToDoListAddTaskProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const editButtonStyles = useMemo(
 		() => css`
+			,
+			& .ToDoListInput:focus {
+				border: 2px solid ${color} !important;
+			}
+
+			& .ToDoListButton:focus,
+			& .ToDoListButton:hover {
+				background-color: ${color} !important;
+				color: white !important;
+			}
 			&:focus,
 			&:hover {
-				color: ${color};
+				color: ${color} !important;
 			}
 		`,
 		[color]
 	);
 
+	const darkModeStyles = useMemo(
+		() => css`
+			&.allowEditBtn {
+				background-color: ${darkMode ? "lightgray" : "black"};
+				color: ${darkMode ? "black" : "white"};
+				border: 2px solid ${darkMode ? "lightgray" : "black"};
+			}
+
+			&.ToDoListAddTask {
+				background-color: ${darkMode ? "lightgray" : "black"};
+				border: 2px solid ${darkMode ? "lightgray" : "black"};
+
+				label {
+					color: ${darkMode ? "black" : "white"};
+				}
+
+				.hideEditBtn {
+					background-color: ${darkMode ? "lightgray" : "black"};
+					color: ${darkMode ? "black" : "white"};
+				}
+
+				.ToDoListInput {
+					border: 2px solid ${darkMode ? "black" : "white"};
+					background-color: ${darkMode ? "white" : "black"};
+				}
+
+				.ToDoListButton {
+					border: 2px solid ${darkMode ? "black" : "white"};
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+				}
+			}
+		`,
+		[darkMode]
+	);
+
 	return (
 		<>
 			{allowEdit ? (
-				<section className='ToDoListAddTask'>
+				<section className='ToDoListAddTask' css={[darkModeStyles, editButtonStyles]}>
 					<button className='hideEditBtn' onClick={closeEdit} css={editButtonStyles}>
 						X
 					</button>
@@ -80,7 +126,7 @@ const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputC
 					)}
 				</section>
 			) : (
-				<button className='allowEditBtn' css={editButtonStyles} onClick={() => changeAllowEdit(true)}>
+				<button className='allowEditBtn' css={[darkModeStyles, editButtonStyles]} onClick={() => changeAllowEdit(true)}>
 					+
 				</button>
 			)}

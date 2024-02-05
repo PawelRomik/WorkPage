@@ -19,16 +19,51 @@ const SettingsWallpaperSection = ({
 	handleCustomWallpaper,
 	handleBackgroundInputChange,
 }: SettingsWallpaperSectionProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const wallpaperConfirmButtonStyles = useMemo(
 		() => css`
-			&:focus,
-			&:hover {
-				color: ${color};
+			& button:focus,
+			& button:hover {
+				color: ${color} !important;
+			}
+
+			& .wallpaperInput:focus {
+				border: 2px solid ${color} !important;
+				border-right: none !important;
+
+				& ~ .wallpaperConfirmButton {
+					border: 2px solid ${color} !important;
+					border-left: none !important;
+				}
 			}
 		`,
 		[color]
+	);
+
+	const darkModeStyles = useMemo(
+		() => css`
+			&.changeWallpaperSection {
+				.wallpaperConfirmButton {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+					border: 2px solid ${darkMode ? "white" : "black"};
+				}
+
+				.wallpaperInput {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+					border: 2px solid ${darkMode ? "white" : "black"};
+				}
+
+				.wallpapersSelection {
+					& button {
+						border: 2px solid ${darkMode ? "white" : "black"};
+					}
+				}
+			}
+		`,
+		[darkMode]
 	);
 
 	const wallpapers = useMemo(
@@ -42,10 +77,10 @@ const SettingsWallpaperSection = ({
 	);
 
 	return (
-		<section className='changeWallpaperSection'>
+		<section className='changeWallpaperSection' css={darkModeStyles}>
 			<h2>SET YOUR WALLPAPER</h2>
 
-			<div className='wallpaperPanel'>
+			<div className='wallpaperPanel' css={wallpaperConfirmButtonStyles}>
 				<input
 					className='wallpaperInput'
 					type='text'

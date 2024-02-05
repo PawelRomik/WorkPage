@@ -36,8 +36,10 @@
 .ToDoListTask {
 	width: 100%;
 	display: flex;
-	border: 2px solid black;
+
 	border-top: none;
+	border-left: none;
+	border-right: none;
 	padding: 0.25rem;
 	justify-content: space-between;
 	align-items: center;
@@ -49,6 +51,8 @@
 	padding: 0.25rem;
 	width: 3rem;
 	height: 3rem;
+	background-color: rgb(51, 51, 51);
+	color: white;
 	transition: 0.1s;
 
 	&:focus,
@@ -85,6 +89,7 @@
 .taskContent h2 {
 	max-width: 100%;
 	text-overflow: ellipsis;
+	margin: 0.25rem;
 }
 
 .taskOptions {

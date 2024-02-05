@@ -14,17 +14,33 @@ export type Cell = {
 };
 
 const Saper = () => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const resetButtonStyles = useMemo(
 		() => css`
 			&:hover,
 			&:focus {
-				background-color: ${color};
-				color: white;
+				background-color: ${color} !important;
+				color: white !important;
 			}
 		`,
 		[color]
+	);
+
+	const darkModeStyles = useMemo(
+		() => css`
+			&.saperContainer {
+				background-color: ${darkMode ? "lightgray" : "rgb(27,27,27)"};
+				color: ${darkMode ? "black" : "white"};
+
+				.saperButton {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+					border: 2px solid ${darkMode ? "white" : "black"};
+				}
+			}
+		`,
+		[darkMode]
 	);
 
 	const [board, setBoard] = useState<Cell[][]>([]);
@@ -179,7 +195,7 @@ const Saper = () => {
 	const gameOverButtonText = useMemo(() => (gameOver ? "Play again" : "Restart"), [gameOver]);
 
 	return (
-		<div className='saperContainer'>
+		<div className='saperContainer' css={darkModeStyles}>
 			{victory && <Confetti />}
 			<h1>Minesweeper</h1>
 			<SaperBoard board={board} victory={victory} gameOver={gameOver} placeFlag={placeFlag} revealCell={revealCell} handleTouchStart={handleTouchStart} />
