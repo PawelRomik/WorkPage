@@ -42,7 +42,7 @@ const ToDoList = () => {
 	const addNewTask = useCallback(() => {
 		const { taskName, taskContent, taskPriority } = inputValues;
 
-		if (taskName && taskContent) {
+		if (taskName) {
 			const newTask: Task = {
 				taskName,
 				taskContent,
@@ -76,7 +76,6 @@ const ToDoList = () => {
 
 	const priorityStyling = useCallback((taskPriority: number) => {
 		const priority = Number(taskPriority);
-		console.log(typeof priority);
 		switch (priority) {
 			case 1:
 				return (

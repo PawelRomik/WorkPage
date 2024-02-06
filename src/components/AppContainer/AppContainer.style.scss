@@ -20,6 +20,9 @@
 	height: 95%;
 	z-index: 3;
 	overflow: hidden;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .appContainerHeader {

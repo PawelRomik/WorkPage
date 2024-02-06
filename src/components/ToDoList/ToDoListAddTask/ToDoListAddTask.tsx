@@ -26,8 +26,8 @@ const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputC
 				border: 2px solid ${color} !important;
 			}
 
-			& .ToDoListButton:focus,
-			& .ToDoListButton:hover {
+			& .ToDoListButton:not(:disabled):focus,
+			& .ToDoListButton:not(:disabled):hover {
 				background-color: ${color} !important;
 				color: white !important;
 			}
@@ -63,17 +63,26 @@ const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputC
 				.ToDoListInput {
 					border: 2px solid ${darkMode ? "black" : "white"};
 					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
 				}
 
 				.ToDoListButton {
 					border: 2px solid ${darkMode ? "black" : "white"};
 					background-color: ${darkMode ? "white" : "black"};
+					color: gray;
+				}
+
+				.ToDoListButton:not(:disabled) {
 					color: ${darkMode ? "black" : "white"};
 				}
 			}
 		`,
 		[darkMode]
 	);
+
+	const disabledButton = useMemo(() => {
+		return inputValues.taskName.length < 3;
+	}, [inputValues]);
 
 	return (
 		<>
@@ -120,7 +129,7 @@ const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputC
 							Finish Editing
 						</button>
 					) : (
-						<button className='ToDoListButton' onClick={addNewTask}>
+						<button disabled={disabledButton} className='ToDoListButton' onClick={addNewTask}>
 							Add new task
 						</button>
 					)}
