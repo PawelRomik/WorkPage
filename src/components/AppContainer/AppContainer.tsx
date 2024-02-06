@@ -78,15 +78,25 @@ const AppContainer = ({ app, closeApp }: AppContainerProps) => {
 		}
 	}, [app]);
 
+	const blockClosingOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+	};
+
+	const appContainerSize = useMemo(() => {
+		return app.name === "Calculator" ? " smallContainer" : "";
+	}, [app]);
+
 	return (
-		<div className='appContainer' css={darkModeStyles}>
-			<header className='appContainerHeader'>
-				<h3 className='appContainerTitle'>{app.name}</h3>
-				<button className='closeButton' onClick={closeApp} css={buttonStyles}>
-					X
-				</button>
-			</header>
-			<main className='appContainerContent'>{renderAppContent()}</main>
+		<div className='appContainerBackground' onClick={closeApp}>
+			<div className={`appContainer${appContainerSize}`} css={darkModeStyles} onClick={blockClosingOnClick}>
+				<header className='appContainerHeader'>
+					<h3 className='appContainerTitle'>{app.name}</h3>
+					<button className='closeButton' onClick={closeApp} css={buttonStyles}>
+						X
+					</button>
+				</header>
+				<main className='appContainerContent'>{renderAppContent()}</main>
+			</div>
 		</div>
 	);
 };
