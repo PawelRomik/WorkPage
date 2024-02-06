@@ -1,5 +1,13 @@
 @import "./../../assets/styles/variables";
 
+.appContainerBackground {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	z-index: 2;
+}
+
 .appContainer {
 	position: absolute;
 	top: 50%;
@@ -12,6 +20,9 @@
 	height: 95%;
 	z-index: 3;
 	overflow: hidden;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .appContainerHeader {
@@ -34,4 +45,10 @@
 
 .appContainerContent {
 	flex: 1;
+}
+
+@media (min-width: 768px) {
+	.appContainer.smallContainer {
+		width: 50%;
+	}
 }

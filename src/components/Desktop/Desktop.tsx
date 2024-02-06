@@ -53,7 +53,7 @@ const Desktop = ({ hideUserWindowState, userWindowState, calendarWindowState, hi
 		<main className='desktop' style={{ backgroundImage: `url(${background})` }} onClick={hidePanels}>
 			<ToastContainer
 				position='top-right'
-				limit={1}
+				limit={2}
 				autoClose={3000}
 				hideProgressBar={false}
 				newestOnTop

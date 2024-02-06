@@ -43,7 +43,7 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, removeTask }: toDo
 				<div className='ToDoListTask' key={id}>
 					<section className='taskContent'>
 						<h2>Title: {task.taskName}</h2>
-						<p>{`Description: ${task.taskContent}`}</p>
+						{task.taskContent && <p>{`Description: ${task.taskContent}`}</p>}
 						<p>Priority: {priorityStyling(task.taskPriority)}</p>
 					</section>
 					<section className='taskOptions'>

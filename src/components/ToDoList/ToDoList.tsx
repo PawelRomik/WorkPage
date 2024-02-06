@@ -1,7 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import "./ToDoList.style.scss";
 import ToDoListAddTask from "./ToDoListAddTask/ToDoListAddTask";
 import ToDoListTask from "./ToDoListTask/ToDoListTask";
+import { useSettingsContext } from "../../providers/SettingsContext";
+import { css } from "@emotion/react";
 
 export type Task = {
 	taskName: string;
@@ -10,10 +12,20 @@ export type Task = {
 };
 
 const ToDoList = () => {
+	const { darkMode } = useSettingsContext();
 	const [tasks, changeTasks] = useState<Task[]>([]);
 	const [inputValues, changeInputValues] = useState<Task>({ taskName: "", taskContent: "", taskPriority: 1 });
 	const [allowEdit, changeAllowEdit] = useState(false);
 	const [currentlyEdited, setCurrentlyEdited] = useState<number | null>(null);
+
+	const darkModeStyles = useMemo(
+		() => css`
+			&.ToDoListContainer {
+				background-color: ${darkMode ? "white" : "rgb(31, 30, 30)"};
+			}
+		`,
+		[darkMode]
+	);
 
 	useEffect(() => {
 		const storedTasks = localStorage.getItem("tasks");
@@ -30,7 +42,7 @@ const ToDoList = () => {
 	const addNewTask = useCallback(() => {
 		const { taskName, taskContent, taskPriority } = inputValues;
 
-		if (taskName && taskContent) {
+		if (taskName) {
 			const newTask: Task = {
 				taskName,
 				taskContent,
@@ -64,7 +76,6 @@ const ToDoList = () => {
 
 	const priorityStyling = useCallback((taskPriority: number) => {
 		const priority = Number(taskPriority);
-		console.log(typeof priority);
 		switch (priority) {
 			case 1:
 				return (
@@ -130,7 +141,7 @@ const ToDoList = () => {
 	}, []);
 
 	return (
-		<div className='ToDoListContainer'>
+		<div className='ToDoListContainer' css={darkModeStyles}>
 			<ToDoListTask tasks={tasks} startEditing={startEditing} priorityStyling={priorityStyling} removeTask={removeTask} />
 			<ToDoListAddTask
 				allowEdit={allowEdit}
