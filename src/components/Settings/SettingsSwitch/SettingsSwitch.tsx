@@ -8,7 +8,6 @@ type SettingsSwitchProps = {
 
 const SettingsSwitch = ({ darkModeInputValue, handleDarkModeChange }: SettingsSwitchProps) => {
 	const { darkMode } = useSettingsContext();
-	console.log(darkModeInputValue === "true");
 	return (
 		<div>
 			<label className='switch' htmlFor='switch'>

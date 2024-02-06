@@ -3,6 +3,7 @@ import translate from "translate";
 import "./Translator.style.scss";
 import TranslatorSettings from "./TranslatorSettings/TranslatorSettings";
 import TranslatorTextArea from "./TranslatorTextArea/TranslatorTextArea";
+import { toast } from "react-toastify";
 
 const Translator = () => {
 	const [inputValue, changeInputValue] = useState("");
@@ -25,6 +26,9 @@ const Translator = () => {
 					changeTranslated("");
 				}
 			} catch (error) {
+				if (error instanceof Error && error.message.includes("Auth Error")) {
+					toast.warn("Wrong ApiKey provided, translator won't work without it!");
+				}
 				console.error("Translation error:", error);
 				changeTranslated("");
 			}
