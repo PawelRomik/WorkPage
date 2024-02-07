@@ -11,7 +11,7 @@ import { css } from "@emotion/react";
 const Settings = () => {
 	const { setBackground, password, setPassword, setColor, color, darkMode, changeDarkMode } = useSettingsContext();
 	const [backgroundInputValue, setBackgroundInputValue] = useState("");
-	const [darkModeInputValue, changeDarkModeInputValue] = useState("true");
+	const [darkModeInputValue, changeDarkModeInputValue] = useState("false");
 	const [colorInputValue, setColorInputValue] = useState(color);
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
