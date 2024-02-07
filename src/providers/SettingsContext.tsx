@@ -17,7 +17,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 	const [background, setBackground] = useState("https://uhdwallpapers.org/uploads/converted/19/07/07/windows-10-hero-redesign-wallpaper-1920x1080_899885-mm-90.jpg");
 	const [password, setPassword] = useState("");
 	const [color, setColor] = useState("#CE17C5");
-	const [darkMode, changeDarkMode] = useState(true);
+	const [darkMode, changeDarkMode] = useState(false);
 
 	useEffect(() => {
 		const storedBackground = localStorage.getItem("background");
