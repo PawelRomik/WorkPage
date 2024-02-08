@@ -4,6 +4,7 @@ import ToDoListAddTask from "./ToDoListAddTask/ToDoListAddTask";
 import ToDoListTask from "./ToDoListTask/ToDoListTask";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { css } from "@emotion/react";
+import LocalStorageNames from "../../utils/localstorageNames";
 
 export type Task = {
 	taskName: string;
@@ -17,6 +18,7 @@ const ToDoList = () => {
 	const [inputValues, changeInputValues] = useState<Task>({ taskName: "", taskContent: "", taskPriority: 1 });
 	const [allowEdit, changeAllowEdit] = useState(false);
 	const [currentlyEdited, setCurrentlyEdited] = useState<number | null>(null);
+	const { localToDoListTasks } = useMemo(() => LocalStorageNames, []);
 
 	const darkModeStyles = useMemo(
 		() => css`
@@ -28,16 +30,16 @@ const ToDoList = () => {
 	);
 
 	useEffect(() => {
-		const storedTasks = localStorage.getItem("tasks");
+		const storedTasks = localStorage.getItem(localToDoListTasks);
 		if (storedTasks) {
 			const parsedTasks: Task[] = JSON.parse(storedTasks);
 			changeTasks(parsedTasks);
 		}
-	}, []);
+	}, [localToDoListTasks]);
 
 	useEffect(() => {
-		localStorage.setItem("tasks", JSON.stringify(tasks));
-	}, [tasks]);
+		localStorage.setItem(localToDoListTasks, JSON.stringify(tasks));
+	}, [tasks, localToDoListTasks]);
 
 	const addNewTask = useCallback(() => {
 		const { taskName, taskContent, taskPriority } = inputValues;

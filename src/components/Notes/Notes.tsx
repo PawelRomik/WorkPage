@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { nanoid } from "nanoid";
 import "./Notes.style.scss";
 import NotesButton from "./NotesButton/NotesButton";
 import NotesTextArea from "./NotesTextArea/NotesTextArea";
+import LocalStorageNames from "../../utils/localstorageNames";
 
 export type Note = {
 	id: string;
@@ -13,19 +14,20 @@ const Notes = () => {
 	const [noteValue, setNoteValue] = useState<string>("");
 	const [notes, setNotes] = useState<Note[]>([]);
 	const [selectedNoteId, setSelectedNoteId] = useState<string | undefined>(undefined);
+	const { localNotes } = useMemo(() => LocalStorageNames, []);
 
 	useEffect(() => {
-		const storedNotes = localStorage.getItem("notes");
+		const storedNotes = localStorage.getItem(localNotes);
 		if (storedNotes) {
 			const parsedNotes: Note[] = JSON.parse(storedNotes);
 			setNotes(parsedNotes);
 			setSelectedNoteId(parsedNotes.length > 0 ? parsedNotes[0].id : undefined);
 		}
-	}, []);
+	}, [localNotes]);
 
 	useEffect(() => {
-		localStorage.setItem("notes", JSON.stringify(notes));
-	}, [notes]);
+		localStorage.setItem(localNotes, JSON.stringify(notes));
+	}, [notes, localNotes]);
 
 	useEffect(() => {
 		setNoteValue((prevNoteValue) => {

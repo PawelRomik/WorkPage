@@ -1,15 +1,28 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import translate from "translate";
 import "./Translator.style.scss";
 import TranslatorSettings from "./TranslatorSettings/TranslatorSettings";
 import TranslatorTextArea from "./TranslatorTextArea/TranslatorTextArea";
 import { toast } from "react-toastify";
+import LocalStorageNames from "../../utils/localstorageNames";
 
 const Translator = () => {
 	const [inputValue, changeInputValue] = useState("");
 	const [translated, changeTranslated] = useState<string | undefined>("");
 	const [selectedLanguageTo, setSelectedLanguageTo] = useState("en");
 	const [selectedLanguageFrom, setSelectedLanguageFrom] = useState("pl");
+	const { localTranslatorLanguageTo, localTranslatorLanguageFrom } = useMemo(() => LocalStorageNames, []);
+
+	useEffect(() => {
+		const storedLangTo = localStorage.getItem(localTranslatorLanguageTo);
+		if (storedLangTo) {
+			setSelectedLanguageTo(JSON.parse(storedLangTo));
+		}
+		const storedLangFrom = localStorage.getItem(localTranslatorLanguageFrom);
+		if (storedLangFrom) {
+			setSelectedLanguageFrom(JSON.parse(storedLangFrom));
+		}
+	}, [localTranslatorLanguageTo, localTranslatorLanguageFrom]);
 
 	const translation = useCallback(
 		async (text: string) => {
@@ -56,30 +69,36 @@ const Translator = () => {
 		(e: React.ChangeEvent<HTMLSelectElement>) => {
 			const newLanguageFrom = e.target.value;
 			setSelectedLanguageFrom(newLanguageFrom);
+			localStorage.setItem(localTranslatorLanguageFrom, JSON.stringify(newLanguageFrom));
 
 			if (newLanguageFrom === selectedLanguageTo) {
 				setSelectedLanguageTo(selectedLanguageFrom);
+				localStorage.setItem(localTranslatorLanguageTo, JSON.stringify(selectedLanguageFrom));
 			}
 		},
-		[selectedLanguageFrom, selectedLanguageTo]
+		[selectedLanguageFrom, selectedLanguageTo, localTranslatorLanguageFrom, localTranslatorLanguageTo]
 	);
 
 	const handleLanguageToChange = useCallback(
 		(e: React.ChangeEvent<HTMLSelectElement>) => {
 			const newLanguageTo = e.target.value;
 			setSelectedLanguageTo(newLanguageTo);
+			localStorage.setItem(localTranslatorLanguageTo, JSON.stringify(newLanguageTo));
 
 			if (newLanguageTo === selectedLanguageFrom) {
 				setSelectedLanguageFrom(selectedLanguageTo);
+				localStorage.setItem(localTranslatorLanguageFrom, JSON.stringify(selectedLanguageTo));
 			}
 		},
-		[selectedLanguageFrom, selectedLanguageTo]
+		[selectedLanguageFrom, selectedLanguageTo, localTranslatorLanguageFrom, localTranslatorLanguageTo]
 	);
 
 	const swapLanguages = useCallback(() => {
 		setSelectedLanguageFrom(selectedLanguageTo);
 		setSelectedLanguageTo(selectedLanguageFrom);
-	}, [selectedLanguageFrom, selectedLanguageTo]);
+		localStorage.setItem(localTranslatorLanguageFrom, JSON.stringify(selectedLanguageTo));
+		localStorage.setItem(localTranslatorLanguageTo, JSON.stringify(selectedLanguageFrom));
+	}, [selectedLanguageFrom, selectedLanguageTo, localTranslatorLanguageFrom, localTranslatorLanguageTo]);
 
 	const clear = useCallback(() => {
 		changeInputValue("");
