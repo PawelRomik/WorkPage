@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import SettingsColorSection from "./SettingsColorsSection/SettingsColorsSection";
 import { useMemo } from "react";
 import { css } from "@emotion/react";
+import LocalStorageNames from "../../utils/localstorageNames";
 
 const Settings = () => {
 	const { setBackground, password, setPassword, setColor, color, darkMode, changeDarkMode } = useSettingsContext();
@@ -15,6 +16,7 @@ const Settings = () => {
 	const [colorInputValue, setColorInputValue] = useState(color);
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
+	const { localSettingsColor, localSettingsDarkMode } = useMemo(() => LocalStorageNames, []);
 
 	const darkModeStyles = useMemo(
 		() => css`
@@ -39,14 +41,14 @@ const Settings = () => {
 	);
 
 	useEffect(() => {
-		const color = localStorage.getItem("color");
+		const color = localStorage.getItem(localSettingsColor);
 		if (color) setColorInputValue(color);
-	}, []);
+	}, [localSettingsColor]);
 
 	useEffect(() => {
-		const mode = localStorage.getItem("darkMode");
+		const mode = localStorage.getItem(localSettingsDarkMode);
 		if (mode) changeDarkModeInputValue(JSON.parse(mode));
-	}, []);
+	}, [localSettingsDarkMode]);
 
 	const changeBackground = useCallback(
 		(e: React.MouseEvent) => {

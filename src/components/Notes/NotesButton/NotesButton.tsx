@@ -9,11 +9,11 @@ type NotesButtonProps = {
 	notes: Note[];
 	selectedNoteId: string | undefined;
 	changeNote: (id: string) => void;
-	removeNote: (noteId: string, e: React.MouseEvent) => void;
+	showConfirmDialog: (noteId: string, e: React.MouseEvent) => void;
 	createNewNote: () => void;
 };
 
-const NotesButton = ({ notes, selectedNoteId, changeNote, removeNote, createNewNote }: NotesButtonProps) => {
+const NotesButton = ({ notes, selectedNoteId, changeNote, showConfirmDialog, createNewNote }: NotesButtonProps) => {
 	const { color, darkMode } = useSettingsContext();
 	const notesSelectionScrollbarStyles = useMemo(
 		() => css`
@@ -100,12 +100,12 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, removeNote, createNewN
 			notes.map((note, numericId) => (
 				<div className={`noteButton ${selectedNoteId === note.id ? "active" : ""}`} css={noteButtonStyles} key={note.id} onClick={() => changeNote(note.id)}>
 					{numericId}
-					<button className='removeNote' onClick={(e) => removeNote(note.id, e)}>
+					<button className='removeNote' onClick={(e) => showConfirmDialog(note.id, e)}>
 						<i className='fa-solid fa-trash'></i>
 					</button>
 				</div>
 			)),
-		[changeNote, notes, removeNote, selectedNoteId, noteButtonStyles]
+		[changeNote, notes, showConfirmDialog, selectedNoteId, noteButtonStyles]
 	);
 
 	return (

@@ -1,7 +1,8 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import "./Paint.style.scss";
 import PaintTools from "./PaintTools/PaintTools";
 import PaintBoard from "./PaintBoard/PaintBoard";
+import LocalStorageNames from "../../utils/localstorageNames";
 
 enum BrushShape {
 	Square = "square",
@@ -18,6 +19,8 @@ const Paint = () => {
 	const [isEraserOn, setIsEraserOn] = useState<boolean>(false);
 	const [brushShape, setBrushShape] = useState<BrushShape>(BrushShape.Square);
 
+	const { localPaintCanvas, localPaintBackground } = useMemo(() => LocalStorageNames, []);
+
 	useEffect(() => {
 		const canvas = canvasRef.current;
 		if (canvas) {
@@ -27,7 +30,7 @@ const Paint = () => {
 	}, []);
 
 	useEffect(() => {
-		const savedCanvasData = localStorage.getItem("paintCanvas");
+		const savedCanvasData = localStorage.getItem(localPaintCanvas);
 		if (savedCanvasData) {
 			const img = new Image();
 			img.src = JSON.parse(savedCanvasData);
@@ -37,13 +40,13 @@ const Paint = () => {
 				}
 			};
 		}
-		const savedBgc = localStorage.getItem("paintBgc");
+		const savedBgc = localStorage.getItem(localPaintBackground);
 		if (savedBgc) setBackgroundColor(JSON.parse(savedBgc));
-	}, []);
+	}, [localPaintBackground, localPaintCanvas]);
 
 	const saveToLocalStorage = useCallback(() => {
-		localStorage.setItem("paintCanvas", JSON.stringify(canvasRef.current!.toDataURL("image/png")));
-	}, []);
+		localStorage.setItem(localPaintCanvas, JSON.stringify(canvasRef.current!.toDataURL("image/png")));
+	}, [localPaintCanvas]);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -82,10 +85,13 @@ const Paint = () => {
 		setThickness(Number(event.target.value));
 	}, []);
 
-	const handleBackgroundColorChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-		setBackgroundColor(event.target.value);
-		localStorage.setItem("paintBgc", JSON.stringify(event.target.value));
-	}, []);
+	const handleBackgroundColorChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			setBackgroundColor(event.target.value);
+			localStorage.setItem(localPaintBackground, JSON.stringify(event.target.value));
+		},
+		[localPaintBackground]
+	);
 
 	const toggleEraser = useCallback(() => {
 		setIsEraserOn(!isEraserOn);

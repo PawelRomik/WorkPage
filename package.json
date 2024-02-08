@@ -19,6 +19,8 @@
     "react-router-dom": "^6.21.1",
     "react-toastify": "^10.0.4",
     "sass": "^1.69.7",
+    "sweetalert2": "^11.10.5",
+    "sweetalert2-react-content": "^5.0.7",
     "translate": "^2.0.2"
   },
   "devDependencies": {
