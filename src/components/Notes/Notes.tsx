@@ -4,6 +4,11 @@ import "./Notes.style.scss";
 import NotesButton from "./NotesButton/NotesButton";
 import NotesTextArea from "./NotesTextArea/NotesTextArea";
 import LocalStorageNames from "../../utils/localstorageNames";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { toast } from "react-toastify";
+import { useSettingsContext } from "../../providers/SettingsContext";
+import { css } from "@emotion/react";
 
 export type Note = {
 	id: string;
@@ -15,6 +20,7 @@ const Notes = () => {
 	const [notes, setNotes] = useState<Note[]>([]);
 	const [selectedNoteId, setSelectedNoteId] = useState<string | undefined>(undefined);
 	const { localNotes } = useMemo(() => LocalStorageNames, []);
+	const { darkMode, color } = useSettingsContext();
 
 	useEffect(() => {
 		const storedNotes = localStorage.getItem(localNotes);
@@ -66,8 +72,7 @@ const Notes = () => {
 	}, []);
 
 	const removeNote = useCallback(
-		(noteId: string, e: React.MouseEvent) => {
-			e.stopPropagation();
+		(noteId: string) => {
 			setNotes((prevNotes) => {
 				const updatedNotes = prevNotes.filter((note) => note.id !== noteId);
 				if (selectedNoteId === noteId && updatedNotes.length > 0) {
@@ -81,9 +86,59 @@ const Notes = () => {
 		[selectedNoteId]
 	);
 
+	const showConfirmDialog = useCallback(
+		(noteId: string, e: React.MouseEvent) => {
+			e.stopPropagation();
+			withReactContent(Swal)
+				.fire({
+					title: "Are you sure?",
+					text: "You won't be able to revert this!",
+					showCancelButton: true,
+					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+					confirmButtonText: "Confirm",
+					background: darkMode ? "white" : "black",
+					color: darkMode ? "black" : "white",
+					showCloseButton: true,
+					target: ".notesContainer",
+				})
+				.then((result) => {
+					if (result.isConfirmed) {
+						removeNote(noteId);
+						toast.success("Success!");
+					}
+				});
+		},
+		[removeNote, darkMode]
+	);
+
+	const swalStyles = useMemo(
+		() => css`
+			& .swal2-popup .swal2-styled:focus,
+			& .swal2-close:focus {
+				box-shadow: none !important;
+			}
+			& .swal2-close:hover,
+			& .swal2-close:focus {
+				color: ${color} !important;
+			}
+
+			& .swal2-actions button {
+				color: ${darkMode ? "black" : "white"} !important;
+
+				&:hover,
+				&:focus {
+					background-color: ${color} !important;
+					color: white !important;
+				}
+			}
+		`,
+		[color, darkMode]
+	);
+
 	return (
-		<div className='notesContainer'>
-			<NotesButton notes={notes} selectedNoteId={selectedNoteId} changeNote={changeNote} removeNote={removeNote} createNewNote={createNewNote} />
+		<div className='notesContainer' css={swalStyles}>
+			<NotesButton notes={notes} selectedNoteId={selectedNoteId} changeNote={changeNote} showConfirmDialog={showConfirmDialog} createNewNote={createNewNote} />
 			<NotesTextArea notesLength={notes.length} noteValue={noteValue} updateNote={updateNote} />
 		</div>
 	);
