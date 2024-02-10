@@ -10,6 +10,8 @@ const LocalStorageNames = {
 	localSettingsPassword: "password",
 	localTranslatorLanguageTo: "translatorLangTo",
 	localTranslatorLanguageFrom: "translatorLangFrom",
+	localWeatherLastFetchTime: "weatherLastFetchTime",
+	localWeatherData: "weatherData",
 };
 
 export default LocalStorageNames;

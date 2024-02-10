@@ -47,6 +47,8 @@ const Saper = () => {
 	const [gameOver, setGameOver] = useState(false);
 	const [revealedCount, setRevealedCount] = useState(0);
 	const [firstClick, changeFirstClick] = useState(true);
+	const [gameTime, setGameTime] = useState(0);
+	const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 	const { rows, columns, totalBombs } = useMemo(() => config, []);
 	const victory = useMemo(() => revealedCount === rows * columns - totalBombs, [revealedCount, columns, rows, totalBombs]);
 
@@ -74,6 +76,21 @@ const Saper = () => {
 		}
 		return newBoard;
 	}, [columns, rows, totalBombs]);
+
+	const startTimer = useCallback(() => {
+		const newTimer = setInterval(() => {
+			setGameTime((time) => time + 1);
+		}, 1000);
+
+		setTimer(newTimer);
+	}, []);
+
+	const stopTimer = useCallback(() => {
+		if (timer) {
+			clearInterval(timer);
+			setTimer(null);
+		}
+	}, [timer]);
 
 	useEffect(() => {
 		setBoard(initializeBoard());
@@ -132,6 +149,7 @@ const Saper = () => {
 
 					if (newBoard[row][col].isBomb) {
 						setGameOver(true);
+						stopTimer();
 						return;
 					} else {
 						setRevealedCount((prevCount) => prevCount + 1);
@@ -149,7 +167,7 @@ const Saper = () => {
 
 			setBoard(newBoard);
 		},
-		[getNeighbors]
+		[getNeighbors, stopTimer]
 	);
 
 	const revealCell = useCallback(
@@ -166,6 +184,7 @@ const Saper = () => {
 				setBoard(newBoard);
 				changeFirstClick(false);
 				revealHelper(newBoard, row, col);
+				startTimer();
 				return;
 			}
 
@@ -175,21 +194,24 @@ const Saper = () => {
 				setBoard(newBoard);
 			}
 		},
-		[board, firstClick, gameOver, initializeBoard, revealHelper]
+		[board, firstClick, gameOver, initializeBoard, revealHelper, startTimer]
 	);
 
 	useEffect(() => {
 		if (victory) {
 			setGameOver(true);
+			stopTimer();
 		}
-	}, [victory]);
+	}, [victory, stopTimer]);
 
 	const playAgain = useCallback(() => {
 		setBoard(initializeBoard());
 		setGameOver(false);
 		setRevealedCount(0);
 		changeFirstClick(true);
-	}, [initializeBoard]);
+		stopTimer();
+		setGameTime(0);
+	}, [initializeBoard, stopTimer]);
 
 	const gameOverText = useMemo(() => (gameOver ? (victory ? "You won!" : "Game Over!") : ""), [gameOver, victory]);
 	const gameOverButtonText = useMemo(() => (gameOver ? "Play again" : "Restart"), [gameOver]);
@@ -198,6 +220,7 @@ const Saper = () => {
 		<div className='saperContainer' css={darkModeStyles}>
 			{victory && <Confetti />}
 			<h1>Minesweeper</h1>
+			<p className='saperTimer'>{`Time: ${gameTime}s`}</p>
 			<SaperBoard board={board} victory={victory} gameOver={gameOver} placeFlag={placeFlag} revealCell={revealCell} handleTouchStart={handleTouchStart} />
 			<div className='saperEndScreen'>
 				<p className='game-over'>{gameOverText}</p>
