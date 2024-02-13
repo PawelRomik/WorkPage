@@ -192,6 +192,16 @@ const Paint = () => {
 		}
 	}, [backgroundColor]);
 
+	const disableEraserOnRightClick = useCallback(
+		(e: React.MouseEvent<HTMLCanvasElement>) => {
+			e.preventDefault();
+			if (isEraserOn) {
+				setIsEraserOn(false);
+			}
+		},
+		[isEraserOn]
+	);
+
 	return (
 		<div className='paintContainer'>
 			<PaintTools
@@ -208,7 +218,14 @@ const Paint = () => {
 				clearCanvas={clearCanvas}
 				saveImage={saveImage}
 			/>
-			<PaintBoard canvasRef={canvasRef} backgroundColor={backgroundColor} startPaint={startPaint} paint={paint} endPaint={endPaint} />
+			<PaintBoard
+				canvasRef={canvasRef}
+				backgroundColor={backgroundColor}
+				startPaint={startPaint}
+				paint={paint}
+				endPaint={endPaint}
+				disableEraserOnRightClick={disableEraserOnRightClick}
+			/>
 		</div>
 	);
 };
