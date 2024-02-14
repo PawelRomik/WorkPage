@@ -3,6 +3,11 @@ import "./Paint.style.scss";
 import PaintTools from "./PaintTools/PaintTools";
 import PaintBoard from "./PaintBoard/PaintBoard";
 import LocalStorageNames from "../../utils/localstorageNames";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import { useSettingsContext } from "../../providers/SettingsContext";
+import { css } from "@emotion/react";
 
 enum BrushShape {
 	Square = "square",
@@ -12,12 +17,13 @@ enum BrushShape {
 const Paint = () => {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
-	const [color, setColor] = useState<string>("#000000");
+	const [brushColor, setBrushColor] = useState<string>("#000000");
 	const [thickness, setThickness] = useState<number>(2);
 	const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff");
 	const [isPainting, setIsPainting] = useState<boolean>(false);
 	const [isEraserOn, setIsEraserOn] = useState<boolean>(false);
 	const [brushShape, setBrushShape] = useState<BrushShape>(BrushShape.Square);
+	const { darkMode, color } = useSettingsContext();
 
 	const { localPaintCanvas, localPaintBackground } = useMemo(() => LocalStorageNames, []);
 
@@ -78,7 +84,7 @@ const Paint = () => {
 	}, [saveToLocalStorage]);
 
 	const handleColorChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-		setColor(event.target.value);
+		setBrushColor(event.target.value);
 	}, []);
 
 	const handleThicknessChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -147,13 +153,13 @@ const Paint = () => {
 			} else {
 				ctx.globalCompositeOperation = "source-over";
 				ctx.lineWidth = thickness;
-				ctx.strokeStyle = color;
+				ctx.strokeStyle = brushColor;
 				ctx.lineCap = brushShape === BrushShape.Circle ? "round" : "square";
 			}
 
 			ctx.stroke();
 		},
-		[brushShape, color, isEraserOn, isPainting, thickness]
+		[brushShape, brushColor, isEraserOn, isPainting, thickness]
 	);
 
 	const endPaint = useCallback(() => {
@@ -165,32 +171,35 @@ const Paint = () => {
 		saveToLocalStorage();
 	}, [saveToLocalStorage]);
 
-	const saveImage = useCallback(() => {
-		const canvas = canvasRef.current;
-		const ctx = ctxRef.current;
+	const saveImage = useCallback(
+		(imageName: string) => {
+			const canvas = canvasRef.current;
+			const ctx = ctxRef.current;
 
-		if (canvas && ctx) {
-			const tempCanvas = document.createElement("canvas");
-			const tempCtx = tempCanvas.getContext("2d", { willReadFrequently: true });
-			if (!tempCtx) return;
+			if (canvas && ctx) {
+				const tempCanvas = document.createElement("canvas");
+				const tempCtx = tempCanvas.getContext("2d", { willReadFrequently: true });
+				if (!tempCtx) return;
 
-			tempCanvas.width = canvas.width;
-			tempCanvas.height = canvas.height;
+				tempCanvas.width = canvas.width;
+				tempCanvas.height = canvas.height;
 
-			tempCtx.fillStyle = backgroundColor;
-			tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-			tempCtx.drawImage(canvas, 0, 0);
+				tempCtx.fillStyle = backgroundColor;
+				tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+				tempCtx.drawImage(canvas, 0, 0);
 
-			tempCanvas.toBlob((blob) => {
-				if (blob) {
-					const a = document.createElement("a");
-					a.href = URL.createObjectURL(blob);
-					a.download = "image.png";
-					a.click();
-				}
-			}, "image/png");
-		}
-	}, [backgroundColor]);
+				tempCanvas.toBlob((blob) => {
+					if (blob) {
+						const a = document.createElement("a");
+						a.href = URL.createObjectURL(blob);
+						a.download = imageName;
+						a.click();
+					}
+				}, "image/png");
+			}
+		},
+		[backgroundColor]
+	);
 
 	const disableEraserOnRightClick = useCallback(
 		(e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -202,10 +211,67 @@ const Paint = () => {
 		[isEraserOn]
 	);
 
+	const showSaveDialog = useCallback(
+		(e: React.MouseEvent) => {
+			e.stopPropagation();
+			withReactContent(Swal)
+				.fire({
+					title: "Save your image",
+					inputLabel: "Change name:",
+					inputValue: "WorkPainting",
+					showCancelButton: true,
+					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+					confirmButtonText: "Confirm",
+					input: "text",
+					background: darkMode ? "white" : "black",
+					color: darkMode ? "black" : "white",
+					showCloseButton: true,
+					target: ".paintContainer",
+				})
+				.then((result) => {
+					if (result.isConfirmed) {
+						saveImage(result.value);
+						toast.success("Success!");
+					}
+				});
+		},
+		[darkMode, saveImage]
+	);
+
+	const swalStyles = useMemo(
+		() => css`
+			& .swal2-popup .swal2-styled:focus,
+			& .swal2-close:focus,
+			& .swal2-input:focus {
+				box-shadow: none !important;
+			}
+			& .swal2-close:hover,
+			& .swal2-close:focus {
+				color: ${color} !important;
+			}
+
+			& .swal2-input:focus {
+				border-color: ${color} !important;
+			}
+
+			& .swal2-actions button {
+				color: ${darkMode ? "black" : "white"} !important;
+
+				&:hover,
+				&:focus {
+					background-color: ${color} !important;
+					color: white !important;
+				}
+			}
+		`,
+		[color, darkMode]
+	);
+
 	return (
-		<div className='paintContainer'>
+		<div className='paintContainer' css={swalStyles}>
 			<PaintTools
-				brushColor={color}
+				brushColor={brushColor}
 				handleColorChange={handleColorChange}
 				thickness={thickness}
 				handleThicknessChange={handleThicknessChange}
@@ -216,7 +282,7 @@ const Paint = () => {
 				backgroundColor={backgroundColor}
 				handleBackgroundColorChange={handleBackgroundColorChange}
 				clearCanvas={clearCanvas}
-				saveImage={saveImage}
+				showSaveDialog={showSaveDialog}
 			/>
 			<PaintBoard
 				canvasRef={canvasRef}
