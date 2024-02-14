@@ -20,7 +20,7 @@ type PaintToolsProps = {
 	backgroundColor: string;
 	handleBackgroundColorChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	clearCanvas: () => void;
-	saveImage: () => void;
+	showSaveDialog: (e: React.MouseEvent) => void;
 };
 
 const PaintTools = ({
@@ -35,7 +35,7 @@ const PaintTools = ({
 	backgroundColor,
 	handleBackgroundColorChange,
 	clearCanvas,
-	saveImage,
+	showSaveDialog,
 }: PaintToolsProps) => {
 	const { color, darkMode } = useSettingsContext();
 
@@ -146,7 +146,7 @@ const PaintTools = ({
 						<button className='paintButton' onClick={clearCanvas}>
 							<i className='fa-solid fa-trash'></i>
 						</button>
-						<button className='paintButton' onClick={saveImage}>
+						<button className='paintButton' onClick={showSaveDialog}>
 							<i className='fa-solid fa-download'></i>
 						</button>
 					</div>
