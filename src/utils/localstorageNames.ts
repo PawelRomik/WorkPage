@@ -12,6 +12,7 @@ const LocalStorageNames = {
 	localTranslatorLanguageFrom: "translatorLangFrom",
 	localWeatherLastFetchTime: "weatherLastFetchTime",
 	localWeatherData: "weatherData",
+	localSettingsWallpaperStyle: "wallpaperStyle",
 };
 
 export default LocalStorageNames;

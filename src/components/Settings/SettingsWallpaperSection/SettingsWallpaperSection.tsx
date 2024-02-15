@@ -37,6 +37,24 @@ const SettingsWallpaperSection = ({
 					border-left: none !important;
 				}
 			}
+
+			& .wallpapersStyleButton:focus,
+			& .wallpapersStyleButton:hover {
+				background-color: ${color} !important;
+				color: white;
+			}
+		`,
+		[color]
+	);
+
+	const wallpaperStyleButtonsStyles = useMemo(
+		() => css`
+			& .wallpapersStyleButton:focus,
+			& .wallpapersStyleButton:hover {
+				background-color: ${color} !important;
+				border-color: ${color} !important;
+				color: white;
+			}
 		`,
 		[color]
 	);
@@ -61,6 +79,17 @@ const SettingsWallpaperSection = ({
 						border: 2px solid ${darkMode ? "white" : "black"};
 					}
 				}
+
+				.wallpapersStyleButton {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+					border: 2px solid ${darkMode ? "white" : "black"};
+
+					&.chosenWallpaperStyle {
+						background-color: ${darkMode ? "black" : "white"};
+						color: ${darkMode ? "white" : "black"};
+					}
+				}
 			}
 		`,
 		[darkMode]
@@ -79,24 +108,30 @@ const SettingsWallpaperSection = ({
 	return (
 		<section className='changeWallpaperSection' css={darkModeStyles}>
 			<h2>SET YOUR WALLPAPER</h2>
+			<div className='wallpaperSectionSettings'>
+				<div className='wallpaperPanel' css={wallpaperConfirmButtonStyles}>
+					<input
+						className='wallpaperInput'
+						type='text'
+						name='wallpaperInput'
+						value={backgroundInputValue}
+						onChange={handleBackgroundInputChange}
+						id='wallpaperInput'
+						placeholder={`Custom wallpaper: (url)`}
+						onKeyDown={handleInputKeyDown}
+					></input>
+					<button className='wallpaperConfirmButton' css={wallpaperConfirmButtonStyles} onClick={handleCustomWallpaper}>
+						<i className='fa-solid fa-arrow-right-to-bracket'></i>
+					</button>
+				</div>
 
-			<div className='wallpaperPanel' css={wallpaperConfirmButtonStyles}>
-				<input
-					className='wallpaperInput'
-					type='text'
-					name='wallpaperInput'
-					value={backgroundInputValue}
-					onChange={handleBackgroundInputChange}
-					id='wallpaperInput'
-					placeholder={`Custom wallpaper: (url)`}
-					onKeyDown={handleInputKeyDown}
-				></input>
-				<button className='wallpaperConfirmButton' css={wallpaperConfirmButtonStyles} onClick={handleCustomWallpaper}>
-					<i className='fa-solid fa-arrow-right-to-bracket'></i>
-				</button>
+				<div className='wallpapersSelection'>{wallpapers}</div>
+				<div className='wallpapersStyle' css={wallpaperStyleButtonsStyles}>
+					<button className='wallpapersStyleButton'>Auto</button>
+					<button className='wallpapersStyleButton'>Cover</button>
+					<button className='wallpapersStyleButton'>Contain</button>
+				</div>
 			</div>
-
-			<div className='wallpapersSelection'>{wallpapers}</div>
 		</section>
 	);
 };
