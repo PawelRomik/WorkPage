@@ -2,12 +2,22 @@
 
 .changeWallpaperSection {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	flex: 1;
+	min-height: 70%;
+	gap: 10%;
+}
 
-	min-height: 50%;
+.wallpaperSectionSettings {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 70%;
+	width: 100%;
+	gap: 5%;
 }
 
 .wallpaperConfirmButton {
@@ -31,7 +41,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex: 1;
+	flex: 2;
 }
 .wallpaperInput {
 	border-radius: 30px 0 0 30px;
@@ -39,7 +49,7 @@
 
 .wallpapersSelection {
 	width: 100%;
-	flex: 1;
+	flex: 2;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -47,12 +57,35 @@
 
 	& button {
 		width: 25%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		cursor: pointer;
 		background-color: transparent;
 		& img {
+			flex: 1;
 			width: 100%;
 		}
 	}
+}
+
+.wallpapersStyle {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	gap: 1rem;
+	flex: 1;
+}
+
+.wallpapersStyleButton {
+	width: 4.5rem;
+	height: 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 30px;
+	cursor: pointer;
 }
 
 @media (min-width: 768px) {

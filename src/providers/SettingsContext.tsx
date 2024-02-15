@@ -10,21 +10,29 @@ type SettingsContextProps = {
 	setColor: (newColor: string) => void;
 	darkMode: boolean;
 	changeDarkMode: (newMode: boolean) => void;
+	wallpaperStyle: string;
+	changeWallpaperStyle: (newStyle: string) => void;
 };
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(undefined);
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
-	const { localSettingsBackground, localSettingsPassword, localSettingsColor, localSettingsDarkMode } = useMemo(() => LocalStorageNames, []);
+	const { localSettingsBackground, localSettingsPassword, localSettingsColor, localSettingsDarkMode, localSettingsWallpaperStyle } = useMemo(() => LocalStorageNames, []);
 	const [background, setBackground] = useState("https://uhdwallpapers.org/uploads/converted/19/07/07/windows-10-hero-redesign-wallpaper-1920x1080_899885-mm-90.jpg");
 	const [password, setPassword] = useState("");
 	const [color, setColor] = useState("#CE17C5");
 	const [darkMode, changeDarkMode] = useState(false);
+	const [wallpaperStyle, changeWallpaperStyle] = useState("cover");
 
 	useEffect(() => {
 		const storedBackground = localStorage.getItem(localSettingsBackground);
 		if (storedBackground) {
 			setBackground(storedBackground);
+		}
+
+		const storedWallpaperStyle = localStorage.getItem(localSettingsWallpaperStyle);
+		if (storedWallpaperStyle) {
+			changeWallpaperStyle(storedWallpaperStyle);
 		}
 
 		const storedPassword = localStorage.getItem(localSettingsPassword);
@@ -41,7 +49,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 		if (storedMode) {
 			changeDarkMode(JSON.parse(storedMode));
 		}
-	}, [localSettingsBackground, localSettingsColor, localSettingsDarkMode, localSettingsPassword]);
+	}, [localSettingsBackground, localSettingsColor, localSettingsDarkMode, localSettingsPassword, localSettingsWallpaperStyle]);
 
 	useEffect(() => {
 		localStorage.setItem(localSettingsBackground, background);
@@ -59,7 +67,11 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 		localStorage.setItem(localSettingsDarkMode, JSON.stringify(darkMode));
 	}, [darkMode, localSettingsDarkMode]);
 
-	return <SettingsContext.Provider value={{ background, setBackground, password, setPassword, setColor, color, darkMode, changeDarkMode }}>{children}</SettingsContext.Provider>;
+	return (
+		<SettingsContext.Provider value={{ background, setBackground, password, setPassword, setColor, color, darkMode, changeDarkMode, wallpaperStyle, changeWallpaperStyle }}>
+			{children}
+		</SettingsContext.Provider>
+	);
 };
 
 export const useSettingsContext = () => {
