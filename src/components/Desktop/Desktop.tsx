@@ -9,6 +9,7 @@ import CalendarWindow from "../CalendarWindow/CalendarWindow";
 import DesktopApps from "./DesktopApps/DesktopApps";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { css } from "@emotion/react";
 
 export type App = {
 	id: number;
@@ -24,7 +25,7 @@ type DesktopProps = {
 };
 
 const Desktop = ({ hideUserWindowState, userWindowState, calendarWindowState, hideCalendarWindow }: DesktopProps) => {
-	const { background, darkMode } = useSettingsContext();
+	const { background, darkMode, wallpaperStyle } = useSettingsContext();
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 
 	const launchApp = useCallback((e: React.MouseEvent) => {
@@ -49,8 +50,13 @@ const Desktop = ({ hideUserWindowState, userWindowState, calendarWindowState, hi
 		[launchApp]
 	);
 
+	const desktopStyles = css`
+		background-image: url(${background});
+		background-size: ${wallpaperStyle};
+	`;
+
 	return (
-		<main className='desktop' style={{ backgroundImage: `url(${background})` }} onClick={hidePanels}>
+		<main className='desktop' css={desktopStyles} onClick={hidePanels}>
 			<ToastContainer
 				position='top-right'
 				limit={2}

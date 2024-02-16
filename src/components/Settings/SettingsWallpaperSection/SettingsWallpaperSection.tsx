@@ -10,6 +10,7 @@ type SettingsWallpaperSectionProps = {
 	handleInputKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 	handleCustomWallpaper: () => void;
 	handleBackgroundInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	changeWallpaperStyleOnClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const SettingsWallpaperSection = ({
@@ -18,8 +19,9 @@ const SettingsWallpaperSection = ({
 	handleInputKeyDown,
 	handleCustomWallpaper,
 	handleBackgroundInputChange,
+	changeWallpaperStyleOnClick,
 }: SettingsWallpaperSectionProps) => {
-	const { color, darkMode } = useSettingsContext();
+	const { color, darkMode, wallpaperStyle } = useSettingsContext();
 
 	const wallpaperConfirmButtonStyles = useMemo(
 		() => css`
@@ -41,18 +43,6 @@ const SettingsWallpaperSection = ({
 			& .wallpapersStyleButton:focus,
 			& .wallpapersStyleButton:hover {
 				background-color: ${color} !important;
-				color: white;
-			}
-		`,
-		[color]
-	);
-
-	const wallpaperStyleButtonsStyles = useMemo(
-		() => css`
-			& .wallpapersStyleButton:focus,
-			& .wallpapersStyleButton:hover {
-				background-color: ${color} !important;
-				border-color: ${color} !important;
 				color: white;
 			}
 		`,
@@ -95,6 +85,18 @@ const SettingsWallpaperSection = ({
 		[darkMode]
 	);
 
+	const wallpaperStyleButtonsStyles = useMemo(
+		() => css`
+			& .wallpapersStyleButton:focus,
+			& .wallpapersStyleButton:hover {
+				background-color: ${color} !important;
+				border-color: ${color} !important;
+				color: white !important;
+			}
+		`,
+		[color]
+	);
+
 	const wallpapers = useMemo(
 		() =>
 			wallpaperData.map((el, i) => (
@@ -127,9 +129,15 @@ const SettingsWallpaperSection = ({
 
 				<div className='wallpapersSelection'>{wallpapers}</div>
 				<div className='wallpapersStyle' css={wallpaperStyleButtonsStyles}>
-					<button className='wallpapersStyleButton'>Auto</button>
-					<button className='wallpapersStyleButton'>Cover</button>
-					<button className='wallpapersStyleButton'>Contain</button>
+					<button className={`wallpapersStyleButton ${wallpaperStyle === "auto" ? "chosenWallpaperStyle" : ""}`} onClick={changeWallpaperStyleOnClick}>
+						Auto
+					</button>
+					<button className={`wallpapersStyleButton ${wallpaperStyle === "cover" ? "chosenWallpaperStyle" : ""}`} onClick={changeWallpaperStyleOnClick}>
+						Cover
+					</button>
+					<button className={`wallpapersStyleButton ${wallpaperStyle === "contain" ? "chosenWallpaperStyle" : ""}`} onClick={changeWallpaperStyleOnClick}>
+						Contain
+					</button>
 				</div>
 			</div>
 		</section>
