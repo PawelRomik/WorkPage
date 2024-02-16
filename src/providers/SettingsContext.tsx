@@ -56,6 +56,10 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 	}, [background, localSettingsBackground]);
 
 	useEffect(() => {
+		localStorage.setItem(localSettingsWallpaperStyle, wallpaperStyle);
+	}, [wallpaperStyle, localSettingsWallpaperStyle]);
+
+	useEffect(() => {
 		localStorage.setItem(localSettingsPassword, password);
 	}, [password, localSettingsPassword]);
 

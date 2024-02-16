@@ -10,7 +10,7 @@ import { css } from "@emotion/react";
 import LocalStorageNames from "../../utils/localstorageNames";
 
 const Settings = () => {
-	const { setBackground, password, setPassword, setColor, color, darkMode, changeDarkMode } = useSettingsContext();
+	const { setBackground, password, setPassword, setColor, color, darkMode, changeDarkMode, changeWallpaperStyle } = useSettingsContext();
 	const [backgroundInputValue, setBackgroundInputValue] = useState("");
 	const [darkModeInputValue, changeDarkModeInputValue] = useState("false");
 	const [colorInputValue, setColorInputValue] = useState(color);
@@ -148,6 +148,17 @@ const Settings = () => {
 		toast.success("Success!");
 	}, [setPassword]);
 
+	const changeWallpaperStyleOnClick = useCallback(
+		(e: React.MouseEvent<HTMLButtonElement>) => {
+			const chosenStyle = (e.target as HTMLButtonElement).textContent?.toLowerCase();
+			if (chosenStyle) {
+				changeWallpaperStyle(chosenStyle);
+				toast.success("Success!");
+			}
+		},
+		[changeWallpaperStyle]
+	);
+
 	return (
 		<div className='settingsContainer' css={darkModeStyles}>
 			<SettingsPasswordSection
@@ -173,6 +184,7 @@ const Settings = () => {
 				handleInputKeyDown={handleInputKeyDown}
 				handleCustomWallpaper={handleCustomWallpaper}
 				handleBackgroundInputChange={handleBackgroundInputChange}
+				changeWallpaperStyleOnClick={changeWallpaperStyleOnClick}
 			/>
 		</div>
 	);
