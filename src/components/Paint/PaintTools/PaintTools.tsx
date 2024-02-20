@@ -2,6 +2,7 @@ import "./PaintTools.style.scss";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { useMemo } from "react";
 import { css } from "@emotion/react";
+import PaintSavedColors from "../PaintSavedColors/PaintSavedColors";
 
 enum BrushShape {
 	Square = "square",
@@ -10,17 +11,20 @@ enum BrushShape {
 
 type PaintToolsProps = {
 	brushColor: string;
-	handleColorChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	handleColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	thickness: number;
-	handleThicknessChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	handleThicknessChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	brushShape: "square" | "circle";
 	toggleBrushShape: () => void;
 	isEraserOn: boolean;
 	toggleEraser: () => void;
 	backgroundColor: string;
-	handleBackgroundColorChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	handleBackgroundColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	clearCanvas: () => void;
 	showSaveDialog: (e: React.MouseEvent) => void;
+	paintColors: string[];
+	addToSavedColors: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	handleOnButtonClickColorChange: (e: React.ChangeEvent<HTMLButtonElement>) => void;
 };
 
 const PaintTools = ({
@@ -36,8 +40,12 @@ const PaintTools = ({
 	handleBackgroundColorChange,
 	clearCanvas,
 	showSaveDialog,
+	paintColors,
+	addToSavedColors,
+	handleOnButtonClickColorChange,
 }: PaintToolsProps) => {
 	const { color, darkMode } = useSettingsContext();
+	console.log(paintColors);
 
 	const paintInputColorStyles = useMemo(
 		() => css`
@@ -124,7 +132,7 @@ const PaintTools = ({
 				<div className='paintToolsGroup'>
 					<div className='paintInputContainer'>
 						<p>Color: </p>
-						<input className='paintInputColor' css={paintInputColorStyles} type='color' value={brushColor} onChange={handleColorChange} />
+						<input className='paintInputColor' onBlur={addToSavedColors} css={paintInputColorStyles} type='color' value={brushColor} onChange={handleColorChange} />
 					</div>
 					<div className='paintInputContainer'>
 						<p className='paintSizeParagraph'>Size: {thickness}</p>
@@ -151,6 +159,7 @@ const PaintTools = ({
 						</button>
 					</div>
 				</div>
+				<PaintSavedColors paintColors={paintColors} handleOnButtonClickColorChange={handleOnButtonClickColorChange} />
 			</div>
 		</section>
 	);

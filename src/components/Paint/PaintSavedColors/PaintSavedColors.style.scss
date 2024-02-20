@@ -1,0 +1,13 @@
+.paintSavedColor {
+	margin-top: 0.8rem;
+	width: 2rem;
+	height: 2rem;
+	cursor: pointer;
+}
+
+@media (min-width: 768px) {
+	.paintSavedColor {
+		width: 2.25rem;
+		height: 2.25rem;
+	}
+}
