@@ -24,7 +24,7 @@ type PaintToolsProps = {
 	showSaveDialog: (e: React.MouseEvent) => void;
 	paintColors: string[];
 	addToSavedColors: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	handleOnButtonClickColorChange: (e: React.ChangeEvent<HTMLButtonElement>) => void;
+	handleOnButtonClickColorChange: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const PaintTools = ({
@@ -45,7 +45,6 @@ const PaintTools = ({
 	handleOnButtonClickColorChange,
 }: PaintToolsProps) => {
 	const { color, darkMode } = useSettingsContext();
-	console.log(paintColors);
 
 	const paintInputColorStyles = useMemo(
 		() => css`

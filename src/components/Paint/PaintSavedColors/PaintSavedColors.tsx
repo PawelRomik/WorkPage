@@ -5,7 +5,7 @@ import { css } from "@emotion/react";
 
 type PaintToolsProps = {
 	paintColors: string[];
-	handleOnButtonClickColorChange: (e: React.ChangeEvent<HTMLButtonElement>) => void;
+	handleOnButtonClickColorChange: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const PaintSavedColors = ({ paintColors, handleOnButtonClickColorChange }: PaintToolsProps) => {
@@ -26,7 +26,7 @@ const PaintSavedColors = ({ paintColors, handleOnButtonClickColorChange }: Paint
 			arr.push("");
 		}
 		return arr.map((el, index) => (
-			<button key={index} className='paintSavedColor' onClick={el ? () => handleOnButtonClickColorChange : undefined} style={{ backgroundColor: el || "transparent" }}></button>
+			<button key={index} className='paintSavedColor' onClick={el ? handleOnButtonClickColorChange : undefined} style={{ backgroundColor: el || "transparent" }}></button>
 		));
 	}, [paintColors, handleOnButtonClickColorChange]);
 
