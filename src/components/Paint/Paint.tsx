@@ -24,8 +24,17 @@ const Paint = () => {
 	const [isEraserOn, setIsEraserOn] = useState<boolean>(false);
 	const [brushShape, setBrushShape] = useState<BrushShape>(BrushShape.Square);
 	const { darkMode, color } = useSettingsContext();
+	const [paintColors, changePaintColors] = useState<string[]>([]);
+	const { localPaintCanvas, localPaintBackground, localPaintColors } = useMemo(() => LocalStorageNames, []);
 
-	const { localPaintCanvas, localPaintBackground } = useMemo(() => LocalStorageNames, []);
+	useEffect(() => {
+		const storedColors = localStorage.getItem(localPaintColors);
+		if (storedColors) {
+			const parsedColors = JSON.parse(storedColors);
+			changePaintColors(parsedColors);
+			setBrushColor(parsedColors[0]);
+		}
+	}, [localPaintColors]);
 
 	useEffect(() => {
 		const canvas = canvasRef.current;
@@ -83,18 +92,41 @@ const Paint = () => {
 		};
 	}, [saveToLocalStorage]);
 
-	const handleColorChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-		setBrushColor(event.target.value);
+	const handleColorChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		setBrushColor(e.target.value);
 	}, []);
 
-	const handleThicknessChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-		setThickness(Number(event.target.value));
+	const handleOnButtonClickColorChange = useCallback((e: React.ChangeEvent<HTMLButtonElement>) => {
+		setBrushColor(e.target.style.backgroundColor);
+	}, []);
+
+	const addToSavedColors = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			let array: string[] = [];
+
+			if (!array.includes(e.target.value)) {
+				array = [e.target.value, ...paintColors];
+			} else {
+				array = [...paintColors];
+			}
+
+			if (array.length >= 9) {
+				array.pop();
+			}
+			localStorage.setItem(localPaintColors, JSON.stringify(array));
+			changePaintColors([...array]);
+		},
+		[paintColors, localPaintColors]
+	);
+
+	const handleThicknessChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		setThickness(Number(e.target.value));
 	}, []);
 
 	const handleBackgroundColorChange = useCallback(
-		(event: React.ChangeEvent<HTMLInputElement>) => {
-			setBackgroundColor(event.target.value);
-			localStorage.setItem(localPaintBackground, JSON.stringify(event.target.value));
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			setBackgroundColor(e.target.value);
+			localStorage.setItem(localPaintBackground, JSON.stringify(e.target.value));
 		},
 		[localPaintBackground]
 	);
@@ -116,36 +148,36 @@ const Paint = () => {
 		setBrushShape((prevShape) => (prevShape === BrushShape.Square ? BrushShape.Circle : BrushShape.Square));
 	}, []);
 
-	const startPaint = useCallback((event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
-		event.stopPropagation();
+	const startPaint = useCallback((e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+		e.stopPropagation();
 		const ctx = ctxRef.current;
 		if (!ctx) return;
 
 		ctx.beginPath();
 
-		if ("touches" in event) {
+		if ("touches" in e) {
 			const rect = canvasRef.current!.getBoundingClientRect();
-			ctx.moveTo(event.touches[0].pageX - rect.left, event.touches[0].pageY - rect.top);
+			ctx.moveTo(e.touches[0].pageX - rect.left, e.touches[0].pageY - rect.top);
 		} else {
-			ctx.moveTo(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
+			ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
 		}
 
 		setIsPainting(true);
 	}, []);
 
 	const paint = useCallback(
-		(event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
-			event.stopPropagation();
+		(e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+			e.stopPropagation();
 			if (!isPainting) return;
 
 			const ctx = ctxRef.current;
 			if (!ctx) return;
 
-			if ("touches" in event) {
+			if ("touches" in e) {
 				const rect = canvasRef.current!.getBoundingClientRect();
-				ctx.lineTo(event.touches[0].pageX - rect.left, event.touches[0].pageY - rect.top);
+				ctx.lineTo(e.touches[0].pageX - rect.left, e.touches[0].pageY - rect.top);
 			} else {
-				ctx.lineTo(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
+				ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
 			}
 
 			if (isEraserOn) {
@@ -283,6 +315,9 @@ const Paint = () => {
 				handleBackgroundColorChange={handleBackgroundColorChange}
 				clearCanvas={clearCanvas}
 				showSaveDialog={showSaveDialog}
+				paintColors={paintColors}
+				addToSavedColors={addToSavedColors}
+				handleOnButtonClickColorChange={handleOnButtonClickColorChange}
 			/>
 			<PaintBoard
 				canvasRef={canvasRef}
