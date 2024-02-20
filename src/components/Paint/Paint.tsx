@@ -96,9 +96,25 @@ const Paint = () => {
 		setBrushColor(e.target.value);
 	}, []);
 
-	const handleOnButtonClickColorChange = useCallback((e: React.ChangeEvent<HTMLButtonElement>) => {
-		setBrushColor(e.target.style.backgroundColor);
-	}, []);
+	const formatColor = useCallback(
+		(rgb: string | null) =>
+			rgb
+				? `#${rgb
+						.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+						?.slice(1)
+						.map((n) => parseInt(n, 10).toString(16).padStart(2, "0"))
+						.join("")}`
+				: "",
+		[]
+	);
+
+	const handleOnButtonClickColorChange = useCallback(
+		(e: React.MouseEvent<HTMLButtonElement>) => {
+			const target = e.target as HTMLButtonElement;
+			setBrushColor(formatColor(target.style.backgroundColor));
+		},
+		[formatColor]
+	);
 
 	const addToSavedColors = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
