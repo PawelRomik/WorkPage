@@ -57,7 +57,11 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 		[board, colors, gameOver, handleTouchStart, placeFlag, revealCell, victory, saperBombStyles]
 	);
 
-	return <div className='saperBoard'>{renderedBoard}</div>;
+	return (
+		<div className='saperBoardContainer'>
+			<div className='saperBoard'>{renderedBoard}</div>
+		</div>
+	);
 };
 
 export default SaperBoard;

@@ -1,10 +1,12 @@
 import "./Saper.style.scss";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import Confetti from "react-confetti";
-import SaperBoard from "./SaperBoard/SaperBoard";
 import config from "./saper.config";
 import { css } from "@emotion/react";
 import { useSettingsContext } from "../../providers/SettingsContext";
+import LocalStorageNames from "../../utils/localstorageNames";
+import SaperCenter from "./SaperCenter/SaperCenter";
+import SaperEndScreen from "./SaperEndScreen/SaperEndScreen";
 
 export type Cell = {
 	isBomb: boolean;
@@ -14,18 +16,7 @@ export type Cell = {
 };
 
 const Saper = () => {
-	const { color, darkMode } = useSettingsContext();
-
-	const resetButtonStyles = useMemo(
-		() => css`
-			&:hover,
-			&:focus {
-				background-color: ${color} !important;
-				color: white !important;
-			}
-		`,
-		[color]
-	);
+	const { darkMode } = useSettingsContext();
 
 	const darkModeStyles = useMemo(
 		() => css`
@@ -38,36 +29,107 @@ const Saper = () => {
 					color: ${darkMode ? "black" : "white"};
 					border: 2px solid ${darkMode ? "white" : "black"};
 				}
+
+				.saperDifficultyButton {
+					background-color: ${darkMode ? "white" : "black"};
+					color: ${darkMode ? "black" : "white"};
+					border: 2px solid ${darkMode ? "white" : "black"};
+
+					&.saperEasy.saperDifficultyActive {
+						background-color: green;
+						color: white;
+					}
+
+					&.saperNormal.saperDifficultyActive {
+						background-color: orange;
+						color: white;
+					}
+
+					&.saperHard.saperDifficultyActive {
+						background-color: red;
+						color: white;
+					}
+				}
+
+				.saperStats {
+					background-color: ${darkMode ? "white" : "black"};
+					border: 2px solid ${darkMode ? "#c9c2c2" : "white"};
+					color: ${darkMode ? "black" : "white"};
+				}
+
+				@media (min-width: 1200px) {
+					.saperEndScreen {
+						background-color: ${darkMode ? "#ebe9e9" : "rgb(36, 36, 36)"};
+					}
+				}
 			}
 		`,
 		[darkMode]
 	);
 
 	const [board, setBoard] = useState<Cell[][]>([]);
+	const [difficulty, setDifficulty] = useState(0);
 	const [gameOver, setGameOver] = useState(false);
 	const [revealedCount, setRevealedCount] = useState(0);
 	const [firstClick, changeFirstClick] = useState(true);
 	const [gameTime, setGameTime] = useState(0);
 	const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 	const { rows, columns, totalBombs } = useMemo(() => config, []);
-	const victory = useMemo(() => revealedCount === rows * columns - totalBombs, [revealedCount, columns, rows, totalBombs]);
+	const victory = useMemo(() => revealedCount === rows[difficulty] * columns[difficulty] - totalBombs[difficulty], [revealedCount, columns, rows, totalBombs, difficulty]);
+	const [bestTimes, setBestTimes] = useState<number[]>([]);
+	const { localSaperBestTimes } = useMemo(() => LocalStorageNames, []);
+
+	useEffect(() => {
+		const storedBestTimes = localStorage.getItem(localSaperBestTimes);
+		if (storedBestTimes) {
+			setBestTimes(JSON.parse(storedBestTimes));
+		}
+	}, [localSaperBestTimes]);
+
+	const saveBestTime = useCallback(
+		(time: number) => {
+			const updatedBestTimes = [...bestTimes];
+			updatedBestTimes[difficulty] = time;
+			localStorage.setItem(localSaperBestTimes, JSON.stringify(updatedBestTimes));
+			setBestTimes(updatedBestTimes);
+		},
+		[bestTimes, difficulty, localSaperBestTimes]
+	);
+
+	useEffect(() => {
+		let resizeTimeout: NodeJS.Timeout;
+
+		const handleResize = () => {
+			clearTimeout(resizeTimeout);
+			resizeTimeout = setTimeout(() => {
+				if (window.innerWidth < 1200) {
+					setDifficulty(0);
+				}
+			}, 100);
+		};
+
+		window.addEventListener("resize", handleResize);
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
 
 	const initializeBoard = useCallback(() => {
 		const newBoard: Cell[][] = [];
 
-		for (let i = 0; i < rows; i++) {
+		for (let i = 0; i < rows[difficulty]; i++) {
 			const newRow: Cell[] = [];
 
-			for (let j = 0; j < columns; j++) {
+			for (let j = 0; j < columns[difficulty]; j++) {
 				newRow[j] = { isBomb: false, isRevealed: false, neighborBombs: 0, isFlagged: false };
 			}
 			newBoard.push(newRow);
 		}
 
 		let placedBombs = 0;
-		while (placedBombs < totalBombs) {
-			const row = Math.floor(Math.random() * rows);
-			const col = Math.floor(Math.random() * columns);
+		while (placedBombs < totalBombs[difficulty]) {
+			const row = Math.floor(Math.random() * rows[difficulty]);
+			const col = Math.floor(Math.random() * columns[difficulty]);
 
 			if (!newBoard[row][col].isBomb) {
 				newBoard[row][col].isBomb = true;
@@ -75,7 +137,7 @@ const Saper = () => {
 			}
 		}
 		return newBoard;
-	}, [columns, rows, totalBombs]);
+	}, [columns, rows, totalBombs, difficulty]);
 
 	const startTimer = useCallback(() => {
 		const newTimer = setInterval(() => {
@@ -126,7 +188,7 @@ const Saper = () => {
 					const newRow = row + i;
 					const newCol = col + j;
 
-					if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns && !(i === 0 && j === 0)) {
+					if (newRow >= 0 && newRow < rows[difficulty] && newCol >= 0 && newCol < columns[difficulty] && !(i === 0 && j === 0)) {
 						neighbors.push([newRow, newCol]);
 					}
 				}
@@ -134,7 +196,7 @@ const Saper = () => {
 
 			return neighbors;
 		},
-		[columns, rows]
+		[columns, rows, difficulty]
 	);
 
 	const revealHelper = useMemo(
@@ -201,8 +263,13 @@ const Saper = () => {
 		if (victory) {
 			setGameOver(true);
 			stopTimer();
+			const currentTime = gameTime;
+			const bestTime = bestTimes[difficulty];
+			if (!bestTime || currentTime < bestTime) {
+				saveBestTime(currentTime);
+			}
 		}
-	}, [victory, stopTimer]);
+	}, [victory, stopTimer, bestTimes, difficulty, gameTime, saveBestTime]);
 
 	const playAgain = useCallback(() => {
 		setBoard(initializeBoard());
@@ -213,21 +280,19 @@ const Saper = () => {
 		setGameTime(0);
 	}, [initializeBoard, stopTimer]);
 
-	const gameOverText = useMemo(() => (gameOver ? (victory ? "You won!" : "Game Over!") : ""), [gameOver, victory]);
-	const gameOverButtonText = useMemo(() => (gameOver ? "Play again" : "Restart"), [gameOver]);
+	const changeDifficultyOnClick = useCallback(
+		(passedDifficulty: number) => {
+			setDifficulty(passedDifficulty);
+			playAgain();
+		},
+		[playAgain]
+	);
 
 	return (
 		<div className='saperContainer' css={darkModeStyles}>
 			{victory && <Confetti />}
-			<h1>Minesweeper</h1>
-			<p className='saperTimer'>{`Time: ${gameTime}s`}</p>
-			<SaperBoard board={board} victory={victory} gameOver={gameOver} placeFlag={placeFlag} revealCell={revealCell} handleTouchStart={handleTouchStart} />
-			<div className='saperEndScreen'>
-				<p className='game-over'>{gameOverText}</p>
-				<button className='saperButton' css={resetButtonStyles} onClick={playAgain}>
-					{gameOverButtonText}
-				</button>
-			</div>
+			<SaperCenter board={board} victory={victory} gameOver={gameOver} gameTime={gameTime} handleTouchStart={handleTouchStart} revealCell={revealCell} placeFlag={placeFlag} />
+			<SaperEndScreen bestTimes={bestTimes} gameOver={gameOver} victory={victory} difficulty={difficulty} changeDifficultyOnClick={changeDifficultyOnClick} playAgain={playAgain} />
 		</div>
 	);
 };

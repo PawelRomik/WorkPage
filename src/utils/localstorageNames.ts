@@ -14,6 +14,7 @@ const LocalStorageNames = {
 	localWeatherData: "weatherData",
 	localSettingsWallpaperStyle: "wallpaperStyle",
 	localPaintColors: "paintColors",
+	localSaperBestTimes: "paintBestTimes",
 };
 
 export default LocalStorageNames;
