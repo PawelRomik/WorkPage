@@ -19,27 +19,27 @@ A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>,
 ## Screenshots :tv:
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/6db9b06d-1e30-4d89-901c-a2efad0ef106" alt="Calculator">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/afdc7fe3-2381-44d9-a9bf-f1af03e9ecab" alt="Calculator">
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/64ce03d1-e384-493b-9a2a-cdb9082f3899" alt="ToDoList">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/923e676b-5850-4c62-8a4b-7059fa579c49" alt="ToDoList">
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/fc8e6560-41dc-4f63-9d1c-1f4ce484b41a" alt="Notes">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/73bef92f-16bf-494c-adce-2b4f025d2c5a" alt="Notes">
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/f1b5f303-7b80-4bd7-a6a7-75534f44851e" alt="Minesweeper">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/22dea265-73c3-4543-9156-3899a4b8e340" alt="Minesweeper">
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/2ac1e306-6be7-4ac7-a532-c7c5d1a6c778" alt="Paint">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/0e0cae22-fa0b-410e-8151-557cb245fe03" alt="Paint">
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/c72a4f3b-03aa-49f3-82c7-540de033dce0" alt="Translator">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/f301f0a8-65dc-4e0d-b75f-ba68286dcab2" alt="Translator">
 </p>
 
 ## Installation :floppy_disk:
