@@ -10,6 +10,8 @@ import DesktopApps from "./DesktopApps/DesktopApps";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { css } from "@emotion/react";
+import Soundbar from "../Soundbar/Soundbar";
+import Wifi from "../Wifi/Wifi";
 
 export type App = {
 	id: number;
@@ -20,11 +22,24 @@ export type App = {
 type DesktopProps = {
 	userWindowState: boolean;
 	calendarWindowState: boolean;
+	wifiWindowState: boolean;
+	soundbarWindowState: boolean;
 	hideUserWindowState: () => void;
 	hideCalendarWindow: () => void;
+	hideSoundbarWindowState: () => void;
+	hideWifiWindowState: () => void;
 };
 
-const Desktop = ({ hideUserWindowState, userWindowState, calendarWindowState, hideCalendarWindow }: DesktopProps) => {
+const Desktop = ({
+	hideUserWindowState,
+	userWindowState,
+	calendarWindowState,
+	hideCalendarWindow,
+	wifiWindowState,
+	soundbarWindowState,
+	hideWifiWindowState,
+	hideSoundbarWindowState,
+}: DesktopProps) => {
 	const { background, darkMode, wallpaperStyle } = useSettingsContext();
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 
@@ -41,7 +56,9 @@ const Desktop = ({ hideUserWindowState, userWindowState, calendarWindowState, hi
 	const hidePanels = useCallback(() => {
 		hideUserWindowState();
 		hideCalendarWindow();
-	}, [hideCalendarWindow, hideUserWindowState]);
+		hideSoundbarWindowState();
+		hideWifiWindowState();
+	}, [hideCalendarWindow, hideUserWindowState, hideSoundbarWindowState, hideWifiWindowState]);
 
 	const handleLaunchApp = useCallback(
 		(e: React.MouseEvent) => {
@@ -73,6 +90,8 @@ const Desktop = ({ hideUserWindowState, userWindowState, calendarWindowState, hi
 			{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} />}
 			{userWindowState && <UserWindow />}
 			{calendarWindowState && <CalendarWindow />}
+			{soundbarWindowState && <Soundbar />}
+			{wifiWindowState && <Wifi />}
 			<DesktopApps appData={appData} handleLaunchApp={handleLaunchApp} />
 			<Weather />
 		</main>
