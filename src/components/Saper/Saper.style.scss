@@ -4,9 +4,8 @@
 	width: 100%;
 	height: 100%;
 	display: flex;
-	justify-content: space-around;
-	align-items: center;
 	flex-direction: column;
+	align-items: center;
 }
 
 .saperButton {
@@ -17,19 +16,6 @@
 	cursor: pointer;
 }
 
-.saperEndScreen {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-weight: bold;
-	gap: 1rem;
-	flex-direction: column;
-}
-
-.game-over {
-	height: 1rem;
-}
-
 @media (min-width: 768px) {
 	.saperContainer {
 		font-size: 2rem;
@@ -38,8 +24,12 @@
 	.saperButton {
 		font-size: 2rem;
 	}
+}
 
-	.game-over {
-		height: 2rem;
+@media (min-width: 1200px) {
+	.saperContainer {
+		justify-content: flex-end;
+		gap: 5%;
+		flex-direction: row;
 	}
 }
