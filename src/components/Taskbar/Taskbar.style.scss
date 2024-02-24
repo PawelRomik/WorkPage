@@ -25,6 +25,10 @@
 .rightTaskbarContainer {
 	display: flex;
 	gap: 0.75rem;
+
+	& > i:hover {
+		cursor: pointer;
+	}
 }
 
 @media (min-width: 768px) {

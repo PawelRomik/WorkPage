@@ -7,12 +7,14 @@ import { css } from "@emotion/react";
 type TaskbarProps = {
 	displayUserWindowState: () => void;
 	displayCalendarWindow: () => void;
+	displaySoundbarWindow: () => void;
+	displayWifiWindow: () => void;
 };
 
-const Taskbar = ({ displayUserWindowState, displayCalendarWindow }: TaskbarProps) => {
+const Taskbar = ({ displayUserWindowState, displayCalendarWindow, displaySoundbarWindow, displayWifiWindow }: TaskbarProps) => {
 	const { color, darkMode } = useSettingsContext();
 
-	const systemButtonStyles = useMemo(
+	const activeButtonStyles = useMemo(
 		() => css`
 			&:focus,
 			&:hover {
@@ -45,12 +47,12 @@ const Taskbar = ({ displayUserWindowState, displayCalendarWindow }: TaskbarProps
 
 	return (
 		<footer className='taskbar' css={darkModeStyles}>
-			<button className='systemButton' css={systemButtonStyles} onClick={displayUserWindowState}>
+			<button className='systemButton' css={activeButtonStyles} onClick={displayUserWindowState}>
 				<i className='fa-solid fa-fire'></i>
 			</button>
 			<div className='rightTaskbarContainer'>
-				<i className='fa-solid fa-volume-high'></i>
-				<i className='fa-solid fa-wifi'></i>
+				<i className='fa-solid fa-volume-high' css={activeButtonStyles} onClick={displaySoundbarWindow}></i>
+				<i className='fa-solid fa-wifi' css={activeButtonStyles} onClick={displayWifiWindow}></i>
 				<div className='taskbarTimer' onClick={displayCalendarWindow}>
 					<Clock />
 				</div>
