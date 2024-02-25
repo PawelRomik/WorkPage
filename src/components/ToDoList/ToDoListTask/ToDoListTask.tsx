@@ -18,7 +18,7 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, removeTask }: toDo
 		() => css`
 			& .ToDoListTask {
 				border-bottom: 2px solid ${darkMode ? "white" : "black"};
-				background-color: ${darkMode ? "lightgray" : "rgb(66, 66, 66)"};
+				background-color: ${darkMode ? "#eee" : "rgb(66, 66, 66)"};
 				color: ${darkMode ? "black" : "white"};
 
 				.taskOptions button {

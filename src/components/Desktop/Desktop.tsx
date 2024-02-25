@@ -1,5 +1,5 @@
 import "./Desktop.style.scss";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import appData from "../../data/apps";
 import AppContainer from "../AppContainer/AppContainer";
@@ -9,7 +9,7 @@ import CalendarWindow from "../CalendarWindow/CalendarWindow";
 import DesktopApps from "./DesktopApps/DesktopApps";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { css } from "@emotion/react";
+import { Global, css } from "@emotion/react";
 import Soundbar from "../Soundbar/Soundbar";
 import Wifi from "../Wifi/Wifi";
 
@@ -40,7 +40,7 @@ const Desktop = ({
 	hideWifiWindowState,
 	hideSoundbarWindowState,
 }: DesktopProps) => {
-	const { background, darkMode, wallpaperStyle } = useSettingsContext();
+	const { background, darkMode, wallpaperStyle, color } = useSettingsContext();
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 
 	const launchApp = useCallback((e: React.MouseEvent) => {
@@ -67,13 +67,23 @@ const Desktop = ({
 		[launchApp]
 	);
 
-	const desktopStyles = css`
-		background-image: url(${background});
-		background-size: ${wallpaperStyle};
-	`;
+	const desktopStyles = useMemo(
+		() => css`
+			:root {
+				--toastify-color-info: ${color};
+				--toastify-color-success: ${color};
+				--toastify-color-warning: ${color};
+				--toastify-color-error: ${color};
+			}
+			background-image: url(${background});
+			background-size: ${wallpaperStyle};
+		`,
+		[color, background, wallpaperStyle]
+	);
 
 	return (
 		<main className='desktop' css={desktopStyles} onClick={hidePanels}>
+			<Global styles={desktopStyles} />
 			<ToastContainer
 				position='top-right'
 				limit={2}
@@ -82,9 +92,9 @@ const Desktop = ({
 				newestOnTop
 				closeOnClick
 				rtl={false}
-				pauseOnFocusLoss
+				pauseOnFocusLoss={false}
 				draggable
-				pauseOnHover
+				pauseOnHover={false}
 				theme={darkMode ? "light" : "dark"}
 			/>
 			{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} />}
