@@ -23,7 +23,7 @@ const ToDoList = () => {
 	const darkModeStyles = useMemo(
 		() => css`
 			&.ToDoListContainer {
-				background-color: ${darkMode ? "white" : "rgb(31, 30, 30)"};
+				background-color: ${darkMode ? "lightgray" : "rgb(31, 30, 30)"};
 			}
 		`,
 		[darkMode]
@@ -64,6 +64,9 @@ const ToDoList = () => {
 			const updatedTasks = [...tasks];
 			updatedTasks.splice(id, 1);
 			changeTasks(updatedTasks);
+			setCurrentlyEdited(null);
+			changeAllowEdit(false);
+			changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 		},
 		[tasks]
 	);

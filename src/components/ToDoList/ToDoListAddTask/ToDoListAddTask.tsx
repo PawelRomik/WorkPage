@@ -42,21 +42,25 @@ const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputC
 	const darkModeStyles = useMemo(
 		() => css`
 			&.allowEditBtn {
-				background-color: ${darkMode ? "lightgray" : "black"};
+				background-color: ${darkMode ? "white" : "black"};
 				color: ${darkMode ? "black" : "white"};
-				border: 2px solid ${darkMode ? "lightgray" : "black"};
+				border: 2px solid ${darkMode ? "white" : "black"};
+			}
+
+			& .ToDoListInputWrapper p {
+				color: ${darkMode ? "black" : "#999"};
 			}
 
 			&.ToDoListAddTask {
-				background-color: ${darkMode ? "lightgray" : "black"};
-				border: 2px solid ${darkMode ? "lightgray" : "black"};
+				background-color: ${darkMode ? "white" : "black"};
+				border: 2px solid ${darkMode ? "white" : "black"};
 
 				label {
 					color: ${darkMode ? "black" : "white"};
 				}
 
 				.hideEditBtn {
-					background-color: ${darkMode ? "lightgray" : "black"};
+					background-color: ${darkMode ? "white" : "black"};
 					color: ${darkMode ? "black" : "white"};
 				}
 
@@ -93,6 +97,7 @@ const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputC
 					</button>
 					<div className='ToDoListInputWrapper'>
 						<label htmlFor='taskName'>Title:</label>
+						<p>Min. 3 chars.</p>
 						<input className='ToDoListInput' type='text' id='taskName' name='taskName' value={inputValues.taskName} onChange={handleInputChange}></input>
 					</div>
 					<div className='ToDoListInputWrapper'>
