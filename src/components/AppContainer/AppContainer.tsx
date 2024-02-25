@@ -83,7 +83,7 @@ const AppContainer = ({ app, closeApp }: AppContainerProps) => {
 	};
 
 	const appContainerSize = useMemo(() => {
-		return app.name === "Calculator" ? " smallContainer" : "";
+		return app.name === "Calculator" || app.name === "Settings" ? " smallContainer" : "";
 	}, [app]);
 
 	return (
