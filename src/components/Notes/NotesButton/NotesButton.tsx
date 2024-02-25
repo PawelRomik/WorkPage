@@ -99,7 +99,7 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, showConfirmDialog, cre
 		() =>
 			notes.map((note, numericId) => (
 				<div className={`noteButton ${selectedNoteId === note.id ? "active" : ""}`} css={noteButtonStyles} key={note.id} onClick={() => changeNote(note.id)}>
-					{numericId}
+					{numericId + 1}
 					<button className='removeNote' onClick={(e) => showConfirmDialog(note.id, e)}>
 						<i className='fa-solid fa-trash'></i>
 					</button>
