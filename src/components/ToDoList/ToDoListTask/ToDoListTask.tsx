@@ -8,10 +8,10 @@ type toDoListTask = {
 	tasks: Task[];
 	priorityStyling: (priority: number) => JSX.Element | null;
 	startEditing: (index: number) => void;
-	removeTask: (index: number) => void;
+	showConfirmDialog: (taskId: number, e: React.MouseEvent) => void;
 };
 
-const ToDoListTask = ({ tasks, priorityStyling, startEditing, removeTask }: toDoListTask) => {
+const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog }: toDoListTask) => {
 	const { darkMode } = useSettingsContext();
 
 	const darkModeStyles = useMemo(
@@ -50,13 +50,13 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, removeTask }: toDo
 						<button onClick={() => startEditing(id)}>
 							<i className='fa-solid fa-pen'></i>
 						</button>
-						<button onClick={() => removeTask(id)}>
+						<button onClick={(e) => showConfirmDialog(id, e)}>
 							<i className='fa-solid fa-trash'></i>
 						</button>
 					</section>
 				</div>
 			)),
-		[priorityStyling, removeTask, startEditing, tasks]
+		[priorityStyling, showConfirmDialog, startEditing, tasks]
 	);
 	return (
 		<section className='ToDoListTasksContainer' css={darkModeStyles}>

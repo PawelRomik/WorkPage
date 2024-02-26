@@ -5,6 +5,9 @@ import ToDoListTask from "./ToDoListTask/ToDoListTask";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { css } from "@emotion/react";
 import LocalStorageNames from "../../utils/localstorageNames";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 export type Task = {
 	taskName: string;
@@ -69,6 +72,32 @@ const ToDoList = () => {
 			changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 		},
 		[tasks]
+	);
+
+	const showConfirmDialog = useCallback(
+		(taskId: number, e: React.MouseEvent) => {
+			e.stopPropagation();
+			withReactContent(Swal)
+				.fire({
+					title: "Are you sure?",
+					text: "You won't be able to revert this!",
+					showCancelButton: true,
+					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+					confirmButtonText: "Confirm",
+					background: darkMode ? "white" : "black",
+					color: darkMode ? "black" : "white",
+					showCloseButton: true,
+					target: ".notesContainer",
+				})
+				.then((result) => {
+					if (result.isConfirmed) {
+						removeTask(taskId);
+						toast.success("Success!");
+					}
+				});
+		},
+		[removeTask, darkMode]
 	);
 
 	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -147,7 +176,7 @@ const ToDoList = () => {
 
 	return (
 		<div className='ToDoListContainer' css={darkModeStyles}>
-			<ToDoListTask tasks={tasks} startEditing={startEditing} priorityStyling={priorityStyling} removeTask={removeTask} />
+			<ToDoListTask tasks={tasks} startEditing={startEditing} priorityStyling={priorityStyling} showConfirmDialog={showConfirmDialog} />
 			<ToDoListAddTask
 				allowEdit={allowEdit}
 				changeAllowEdit={changeAllowEdit}
