@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Desktop from "../../components/Desktop/Desktop";
+import LocalStorageNames from "../../utils/localstorageNames";
 import Taskbar from "../../components/Taskbar/Taskbar";
 
 const System = () => {
@@ -7,6 +8,19 @@ const System = () => {
 	const [calendarWindowState, changeCalendarWindowState] = useState(false);
 	const [soundbarWindowState, changeSoundbarWindowState] = useState(false);
 	const [wifiWindowState, changeWifiWindowState] = useState(false);
+	const [volume, setVolume] = useState(50);
+	const { localSoundValue } = useMemo(() => LocalStorageNames, []);
+
+	useEffect(() => {
+		const storedSoundValue = localStorage.getItem(localSoundValue);
+		if (storedSoundValue) {
+			setVolume(JSON.parse(storedSoundValue));
+		}
+	}, [localSoundValue]);
+
+	useEffect(() => {
+		localStorage.setItem(localSoundValue, JSON.stringify(volume));
+	}, [volume, localSoundValue]);
 
 	const displayUserWindowState = () => {
 		changeUserWindowState((prevState) => !prevState);
@@ -63,12 +77,15 @@ const System = () => {
 				hideUserWindowState={hideUserWindowState}
 				calendarWindowState={calendarWindowState}
 				hideCalendarWindow={hideCalendarWindowState}
+				volume={volume}
+				setVolume={setVolume}
 			/>
 			<Taskbar
 				displayUserWindowState={displayUserWindowState}
 				displayCalendarWindow={displayCalendarWindowState}
 				displaySoundbarWindow={displaySoundbarWindowState}
 				displayWifiWindow={displayWifiWindowState}
+				volume={volume}
 			/>
 		</>
 	);

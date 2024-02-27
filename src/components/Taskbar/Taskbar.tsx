@@ -9,9 +9,10 @@ type TaskbarProps = {
 	displayCalendarWindow: () => void;
 	displaySoundbarWindow: () => void;
 	displayWifiWindow: () => void;
+	volume: number;
 };
 
-const Taskbar = ({ displayUserWindowState, displayCalendarWindow, displaySoundbarWindow, displayWifiWindow }: TaskbarProps) => {
+const Taskbar = ({ displayUserWindowState, displayCalendarWindow, displaySoundbarWindow, displayWifiWindow, volume }: TaskbarProps) => {
 	const { color, darkMode } = useSettingsContext();
 
 	const activeButtonStyles = useMemo(
@@ -45,13 +46,15 @@ const Taskbar = ({ displayUserWindowState, displayCalendarWindow, displaySoundba
 		[darkMode]
 	);
 
+	const volumeClass = useMemo(() => (volume < 10 ? "fa-volume-xmark" : volume < 70 ? "fa-volume-low" : "fa-volume-high"), [volume]);
+
 	return (
 		<footer className='taskbar' css={darkModeStyles}>
 			<button className='systemButton' css={activeButtonStyles} onClick={displayUserWindowState}>
 				<i className='fa-solid fa-fire'></i>
 			</button>
 			<div className='rightTaskbarContainer'>
-				<i className='fa-solid fa-volume-high' css={activeButtonStyles} onClick={displaySoundbarWindow}></i>
+				<i className={`fa-solid ${volumeClass}`} css={activeButtonStyles} onClick={displaySoundbarWindow}></i>
 				<i className='fa-solid fa-wifi' css={activeButtonStyles} onClick={displayWifiWindow}></i>
 				<div className='taskbarTimer' onClick={displayCalendarWindow}>
 					<Clock />

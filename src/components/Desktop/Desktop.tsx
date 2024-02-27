@@ -28,6 +28,8 @@ type DesktopProps = {
 	hideCalendarWindow: () => void;
 	hideSoundbarWindowState: () => void;
 	hideWifiWindowState: () => void;
+	volume: number;
+	setVolume: (value: number) => void;
 };
 
 const Desktop = ({
@@ -39,6 +41,8 @@ const Desktop = ({
 	soundbarWindowState,
 	hideWifiWindowState,
 	hideSoundbarWindowState,
+	volume,
+	setVolume,
 }: DesktopProps) => {
 	const { background, darkMode, wallpaperStyle, color } = useSettingsContext();
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
@@ -100,7 +104,7 @@ const Desktop = ({
 			{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} />}
 			{userWindowState && <UserWindow />}
 			{calendarWindowState && <CalendarWindow />}
-			{soundbarWindowState && <Soundbar />}
+			{soundbarWindowState && <Soundbar volume={volume} setVolume={setVolume} />}
 			{wifiWindowState && <Wifi />}
 			<DesktopApps appData={appData} handleLaunchApp={handleLaunchApp} />
 			<Weather />
