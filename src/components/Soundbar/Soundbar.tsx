@@ -50,7 +50,6 @@ const Soundbar = ({ volume, setVolume }: SoundbarProps) => {
 	);
 
 	const lowerVolumeOnIconClick = useCallback(() => {
-		console.log(oldSoundVal);
 		if (volume == 0) {
 			setVolume(oldSoundVal == 0 ? 50 : oldSoundVal);
 		} else {
