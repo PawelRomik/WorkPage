@@ -7,7 +7,6 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { useSettingsContext } from "../../providers/SettingsContext";
-import { css } from "@emotion/react";
 
 enum BrushShape {
 	Square = "square",
@@ -23,7 +22,7 @@ const Paint = () => {
 	const [isPainting, setIsPainting] = useState<boolean>(false);
 	const [isEraserOn, setIsEraserOn] = useState<boolean>(false);
 	const [brushShape, setBrushShape] = useState<BrushShape>(BrushShape.Square);
-	const { darkMode, color } = useSettingsContext();
+	const { darkMode } = useSettingsContext();
 	const [paintColors, changePaintColors] = useState<string[]>([]);
 	const { localPaintCanvas, localPaintBackground, localPaintColors } = useMemo(() => LocalStorageNames, []);
 
@@ -152,13 +151,31 @@ const Paint = () => {
 	}, [isEraserOn]);
 
 	const clearCanvas = useCallback(() => {
-		const canvas = canvasRef.current;
-		const ctx = ctxRef.current;
-		if (canvas && ctx) {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		}
+		withReactContent(Swal)
+			.fire({
+				title: "Are you sure?",
+				text: "You won't be able to revert this!",
+				showCancelButton: true,
+				confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+				cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+				confirmButtonText: "Confirm",
+				background: darkMode ? "white" : "black",
+				color: darkMode ? "black" : "white",
+				showCloseButton: true,
+				target: ".paintContainer",
+			})
+			.then((result) => {
+				if (result.isConfirmed) {
+					const canvas = canvasRef.current;
+					const ctx = ctxRef.current;
+					if (canvas && ctx) {
+						ctx.clearRect(0, 0, canvas.width, canvas.height);
+					}
+				}
+			});
+
 		saveToLocalStorage();
-	}, [saveToLocalStorage]);
+	}, [saveToLocalStorage, darkMode]);
 
 	const toggleBrushShape = useCallback(() => {
 		setBrushShape((prevShape) => (prevShape === BrushShape.Square ? BrushShape.Circle : BrushShape.Square));
@@ -280,44 +297,15 @@ const Paint = () => {
 				.then((result) => {
 					if (result.isConfirmed) {
 						saveImage(result.value);
-						toast.success("Success!");
+						toast.success("The image has been successfully saved to your device.");
 					}
 				});
 		},
 		[darkMode, saveImage]
 	);
 
-	const swalStyles = useMemo(
-		() => css`
-			& .swal2-popup .swal2-styled:focus,
-			& .swal2-close:focus,
-			& .swal2-input:focus {
-				box-shadow: none !important;
-			}
-			& .swal2-close:hover,
-			& .swal2-close:focus {
-				color: ${color} !important;
-			}
-
-			& .swal2-input:focus {
-				border-color: ${color} !important;
-			}
-
-			& .swal2-actions button {
-				color: ${darkMode ? "black" : "white"} !important;
-
-				&:hover,
-				&:focus {
-					background-color: ${color} !important;
-					color: white !important;
-				}
-			}
-		`,
-		[color, darkMode]
-	);
-
 	return (
-		<div className='paintContainer' css={swalStyles}>
+		<div className='paintContainer'>
 			<PaintTools
 				brushColor={brushColor}
 				handleColorChange={handleColorChange}

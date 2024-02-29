@@ -57,7 +57,7 @@ const Settings = () => {
 				if (firstChild instanceof HTMLImageElement) {
 					const imageSrc = firstChild.src;
 					setBackground(imageSrc);
-					toast.success("Success!");
+					toast.success("Succesfully changed wallpaper!");
 				}
 			}
 		},
@@ -71,7 +71,7 @@ const Settings = () => {
 			img.onload = () => {
 				setBackground(backgroundInputValue);
 				setBackgroundInputValue("");
-				toast.success("Success!");
+				toast.success("Succesfully changed wallpaper!");
 			};
 		}
 	}, [backgroundInputValue, setBackground]);
@@ -91,7 +91,7 @@ const Settings = () => {
 				if (newPassword) {
 					setPassword(newPassword);
 					setNewPassword("");
-					toast.success("Success!");
+					toast.success("Successfully set your password!");
 					e.currentTarget.blur();
 				}
 			} else {
@@ -110,7 +110,7 @@ const Settings = () => {
 			setPassword(newPassword);
 			setNewPassword("");
 			setOldPassword("");
-			toast.success("Success!");
+			toast.success("Succesfully changed your password!");
 		}
 	}, [newPassword, oldPassword, password, setPassword]);
 
@@ -145,7 +145,7 @@ const Settings = () => {
 
 	const unsetPass = useCallback(() => {
 		setPassword("");
-		toast.success("Success!");
+		toast.success("Succesfully removed your password!");
 	}, [setPassword]);
 
 	const changeWallpaperStyleOnClick = useCallback(
@@ -153,7 +153,7 @@ const Settings = () => {
 			const chosenStyle = (e.target as HTMLButtonElement).textContent?.toLowerCase();
 			if (chosenStyle) {
 				changeWallpaperStyle(chosenStyle);
-				toast.success("Success!");
+				toast.success("Successfully changed wallpaper type!");
 			}
 		},
 		[changeWallpaperStyle]

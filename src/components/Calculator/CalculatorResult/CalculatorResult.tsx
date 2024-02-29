@@ -33,7 +33,7 @@ const CalculatorResult = ({ firstNumber, operator, secondNumber, copyContent }: 
 	const bottomContent = useMemo(() => (operator ? (secondNumber ? secondNumber : "0") : firstNumber !== undefined ? firstNumber : "0"), [firstNumber, operator, secondNumber]);
 
 	return (
-		<section className='calculatorResult' onClick={copyContent} css={darkModeStyles}>
+		<section className='calculatorResult' onClick={copyContent} title='Click to copy content' css={darkModeStyles}>
 			<p className='calculatorTop' css={paragraphStyles}>
 				{topContent}
 			</p>

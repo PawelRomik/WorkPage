@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import "./Calculator.style.scss";
 import CalculatorButtons from "./CalculatorButtons/CalculatorButtons";
 import CalculatorResult from "./CalculatorResult/CalculatorResult";
+import { toast } from "react-toastify";
 
 const Calculator: React.FC = () => {
 	const [firstNumber, setFirstNumber] = useState<string | undefined>(undefined);
@@ -113,8 +114,9 @@ const Calculator: React.FC = () => {
 	);
 
 	const copyContent = useCallback(() => {
-		const result = firstNumber !== undefined ? firstNumber : undefined;
-		if (result) navigator.clipboard.writeText(result);
+		const result = firstNumber !== undefined ? firstNumber : "0";
+		navigator.clipboard.writeText(result);
+		toast.success("Copied Calculator's content");
 	}, [firstNumber]);
 
 	return (

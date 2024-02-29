@@ -105,7 +105,7 @@ const Notes = () => {
 				.then((result) => {
 					if (result.isConfirmed) {
 						removeNote(noteId);
-						toast.success("Success!");
+						toast.success(`Succesfully deleted note`);
 					}
 				});
 		},

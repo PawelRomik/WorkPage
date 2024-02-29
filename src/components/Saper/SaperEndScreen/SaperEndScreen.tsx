@@ -9,16 +9,17 @@ type SaperEndScreenProps = {
 	victory: boolean;
 	difficulty: number;
 	playAgain: () => void;
+	firstClick: boolean;
 	changeDifficultyOnClick: (passedDifficulty: number) => void;
 };
 
-const SaperEndScreen = ({ bestTimes, gameOver, victory, difficulty, playAgain, changeDifficultyOnClick }: SaperEndScreenProps) => {
+const SaperEndScreen = ({ bestTimes, gameOver, victory, difficulty, playAgain, changeDifficultyOnClick, firstClick }: SaperEndScreenProps) => {
 	const { color } = useSettingsContext();
 
 	const resetButtonStyles = useMemo(
 		() => css`
-			&:hover,
-			&:focus {
+			&:not([disabled]):hover,
+			&:not([disabled]):focus {
 				background-color: ${color} !important;
 				color: white !important;
 			}
@@ -27,7 +28,7 @@ const SaperEndScreen = ({ bestTimes, gameOver, victory, difficulty, playAgain, c
 	);
 
 	const gameOverText = useMemo(() => (gameOver ? (victory ? "You won!" : "Game Over!") : ""), [gameOver, victory]);
-	const gameOverButtonText = useMemo(() => (gameOver ? "Play again" : "Restart"), [gameOver]);
+	const gameOverButtonText = useMemo(() => (gameOver ? "Play again" : "Reset"), [gameOver]);
 
 	return (
 		<div className='saperEndScreen'>
@@ -50,7 +51,7 @@ const SaperEndScreen = ({ bestTimes, gameOver, victory, difficulty, playAgain, c
 						Hard
 					</button>
 				</div>
-				<button className='saperButton' css={resetButtonStyles} onClick={playAgain}>
+				<button className='saperButton' disabled={firstClick} css={resetButtonStyles} onClick={playAgain}>
 					{gameOverButtonText}
 				</button>
 			</div>

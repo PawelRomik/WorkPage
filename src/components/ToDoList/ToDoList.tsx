@@ -93,7 +93,7 @@ const ToDoList = () => {
 				.then((result) => {
 					if (result.isConfirmed) {
 						removeTask(taskId);
-						toast.success("Success!");
+						toast.success("Successfully removed task!");
 					}
 				});
 		},
