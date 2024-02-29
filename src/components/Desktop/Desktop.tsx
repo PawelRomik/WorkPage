@@ -85,8 +85,37 @@ const Desktop = ({
 		[color, background, wallpaperStyle]
 	);
 
+	const swalStyles = useMemo(
+		() => css`
+			& .swal2-popup .swal2-styled:focus,
+			& .swal2-close:focus,
+			& .swal2-input:focus {
+				box-shadow: none !important;
+			}
+			& .swal2-close:hover,
+			& .swal2-close:focus {
+				color: ${color} !important;
+			}
+
+			& .swal2-input:focus {
+				border-color: ${color} !important;
+			}
+
+			& .swal2-actions button {
+				color: ${darkMode ? "black" : "white"} !important;
+
+				&:hover,
+				&:focus {
+					background-color: ${color} !important;
+					color: white !important;
+				}
+			}
+		`,
+		[color, darkMode]
+	);
+
 	return (
-		<main className='desktop' css={desktopStyles} onClick={hidePanels}>
+		<main className='desktop' css={[desktopStyles, swalStyles]} onClick={hidePanels}>
 			<Global styles={desktopStyles} />
 			<ToastContainer
 				position='top-right'

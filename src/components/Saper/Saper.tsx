@@ -7,6 +7,8 @@ import { useSettingsContext } from "../../providers/SettingsContext";
 import LocalStorageNames from "../../utils/localstorageNames";
 import SaperCenter from "./SaperCenter/SaperCenter";
 import SaperEndScreen from "./SaperEndScreen/SaperEndScreen";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 export type Cell = {
 	isBomb: boolean;
@@ -28,6 +30,13 @@ const Saper = () => {
 					background-color: ${darkMode ? "white" : "black"};
 					color: ${darkMode ? "black" : "white"};
 					border: 2px solid ${darkMode ? "white" : "black"};
+					transition: 0.2s opacity;
+
+					&:disabled {
+						opacity: 0.2;
+
+						cursor: default;
+					}
 				}
 
 				.saperDifficultyButton {
@@ -271,7 +280,7 @@ const Saper = () => {
 		}
 	}, [victory, stopTimer, bestTimes, difficulty, gameTime, saveBestTime]);
 
-	const playAgain = useCallback(() => {
+	const resetGame = useCallback(() => {
 		setBoard(initializeBoard());
 		setGameOver(false);
 		setRevealedCount(0);
@@ -280,19 +289,74 @@ const Saper = () => {
 		setGameTime(0);
 	}, [initializeBoard, stopTimer]);
 
+	const playAgain = useCallback(() => {
+		if (!firstClick && !gameOver) {
+			withReactContent(Swal)
+				.fire({
+					title: "Are you sure?",
+					text: "This action will reset your game progress!",
+					showCancelButton: true,
+					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+					confirmButtonText: "Confirm",
+					background: darkMode ? "white" : "black",
+					color: darkMode ? "black" : "white",
+					showCloseButton: true,
+					target: ".saperContainer",
+				})
+				.then((result) => {
+					if (result.isConfirmed) {
+						resetGame();
+					}
+				});
+		} else {
+			resetGame();
+		}
+	}, [resetGame, darkMode, firstClick, gameOver]);
+
 	const changeDifficultyOnClick = useCallback(
 		(passedDifficulty: number) => {
-			setDifficulty(passedDifficulty);
-			playAgain();
+			if (!firstClick && !gameOver) {
+				withReactContent(Swal)
+					.fire({
+						title: "Are you sure?",
+						text: "This action will reset your game progress!",
+						showCancelButton: true,
+						confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+						cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+						confirmButtonText: "Confirm",
+						background: darkMode ? "white" : "black",
+						color: darkMode ? "black" : "white",
+						showCloseButton: true,
+						target: ".saperContainer",
+					})
+					.then((result) => {
+						if (result.isConfirmed) {
+							setDifficulty(passedDifficulty);
+							resetGame();
+						}
+					});
+			} else {
+				setDifficulty(passedDifficulty);
+				resetGame();
+			}
 		},
-		[playAgain]
+		[resetGame, darkMode, firstClick, gameOver]
 	);
 
 	return (
 		<div className='saperContainer' css={darkModeStyles}>
 			{victory && <Confetti />}
 			<SaperCenter board={board} victory={victory} gameOver={gameOver} gameTime={gameTime} handleTouchStart={handleTouchStart} revealCell={revealCell} placeFlag={placeFlag} />
-			<SaperEndScreen bestTimes={bestTimes} gameOver={gameOver} victory={victory} difficulty={difficulty} changeDifficultyOnClick={changeDifficultyOnClick} playAgain={playAgain} />
+			<SaperEndScreen
+				firstClick={firstClick}
+				bestTimes={bestTimes}
+				gameOver={gameOver}
+				victory={victory}
+				difficulty={difficulty}
+				changeDifficultyOnClick={changeDifficultyOnClick}
+				playAgain={playAgain}
+			/>
 		</div>
 	);
 };
