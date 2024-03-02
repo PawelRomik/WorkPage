@@ -2,13 +2,12 @@ import { useCallback, useEffect, useState, useMemo } from "react";
 import { nanoid } from "nanoid";
 import "./Notes.style.scss";
 import NotesButton from "./NotesButton/NotesButton";
-import NotesTextArea from "./NotesTextArea/NotesTextArea";
+import Tiptap from "./Tiptap/Tiptap";
 import LocalStorageNames from "../../utils/localstorageNames";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { toast } from "react-toastify";
 import { useSettingsContext } from "../../providers/SettingsContext";
-import { css } from "@emotion/react";
 
 export type Note = {
 	id: string;
@@ -20,7 +19,7 @@ const Notes = () => {
 	const [notes, setNotes] = useState<Note[]>([]);
 	const [selectedNoteId, setSelectedNoteId] = useState<string | undefined>(undefined);
 	const { localNotes } = useMemo(() => LocalStorageNames, []);
-	const { darkMode, color } = useSettingsContext();
+	const { darkMode } = useSettingsContext();
 
 	useEffect(() => {
 		const storedNotes = localStorage.getItem(localNotes);
@@ -54,11 +53,9 @@ const Notes = () => {
 	);
 
 	const updateNote = useCallback(
-		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-			const text = e.target.value;
-			setNoteValue(text);
+		(content: string) => {
 			setNotes((prevNotes) => {
-				const updatedNotes = prevNotes.map((note) => (note.id === selectedNoteId ? { ...note, content: text } : note));
+				const updatedNotes = prevNotes.map((note) => (note.id === selectedNoteId ? { ...note, content: content } : note));
 				return updatedNotes;
 			});
 		},
@@ -66,7 +63,13 @@ const Notes = () => {
 	);
 
 	const createNewNote = useCallback(() => {
-		const newNote: Note = { id: nanoid(), content: "" };
+		const newNote: Note = {
+			id: nanoid(),
+			content: `
+		<h2>Your new note</h2>
+		<p>Feel free to write something!</p>
+		`,
+		};
 		setNotes((prevNotes) => [...prevNotes, newNote]);
 		setSelectedNoteId(newNote.id);
 	}, []);
@@ -112,34 +115,10 @@ const Notes = () => {
 		[removeNote, darkMode]
 	);
 
-	const swalStyles = useMemo(
-		() => css`
-			& .swal2-popup .swal2-styled:focus,
-			& .swal2-close:focus {
-				box-shadow: none !important;
-			}
-			& .swal2-close:hover,
-			& .swal2-close:focus {
-				color: ${color} !important;
-			}
-
-			& .swal2-actions button {
-				color: ${darkMode ? "black" : "white"} !important;
-
-				&:hover,
-				&:focus {
-					background-color: ${color} !important;
-					color: white !important;
-				}
-			}
-		`,
-		[color, darkMode]
-	);
-
 	return (
-		<div className='notesContainer' css={swalStyles}>
+		<div className='notesContainer'>
 			<NotesButton notes={notes} selectedNoteId={selectedNoteId} changeNote={changeNote} showConfirmDialog={showConfirmDialog} createNewNote={createNewNote} />
-			<NotesTextArea notesLength={notes.length} noteValue={noteValue} updateNote={updateNote} />
+			<Tiptap notesLength={notes.length} noteValue={noteValue} updateNote={updateNote} />
 		</div>
 	);
 };
