@@ -28,34 +28,12 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, showConfirmDialog, cre
 		[color]
 	);
 
-	const noteButtonStyles = useMemo(
-		() => css`
-			&:hover,
-			&:focus,
-			&.active {
-				& .removeNote {
-					&:hover,
-					&:focus {
-						color: ${color} !important;
-					}
-				}
-			}
-
-			&.active {
-				border: 2px solid ${color} !important;
-
-				& .removeNote {
-					border: 2px solid ${color} !important;
-				}
-			}
-		`,
-		[color]
-	);
-
 	const addNewNoteStyles = useMemo(
 		() => css`
 			& {
 				background-color: ${color} !important;
+				border: 2px solid ${color} !important;
+				color: white !important;
 			}
 
 			&:hover,
@@ -77,12 +55,12 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, showConfirmDialog, cre
 
 				.noteButton {
 					background-color: ${darkMode ? "white" : "black"};
-					border: 2px solid ${darkMode ? "black" : "white"};
+					border: 2px solid ${darkMode ? "white" : "black"};
 					color: ${darkMode ? "black" : "white"};
 
 					&:hover,
-					&:focus,
-					&.active {
+					&:focus {
+						border: 2px solid ${darkMode ? "black" : "white"} !important;
 						& .removeNote {
 							background-color: ${darkMode ? "white" : "black"};
 							border: 2px solid ${darkMode ? "black" : "white"};
@@ -93,6 +71,28 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, showConfirmDialog, cre
 			}
 		`,
 		[darkMode]
+	);
+
+	const noteButtonStyles = useMemo(
+		() => css`
+			&:hover,
+			&:focus,
+			&.active {
+				& .removeNote {
+					&:hover,
+					&:focus {
+						color: ${color} !important;
+					}
+				}
+			}
+
+			&.noteButton.active {
+				border: 2px solid ${color} !important;
+				background-color: ${color} !important;
+				color: white !important;
+			}
+		`,
+		[color]
 	);
 
 	const noteElements = useMemo(
@@ -111,10 +111,10 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, showConfirmDialog, cre
 	return (
 		<section className='notesSelection' css={[notesSelectionScrollbarStyles, darkModeStyles]}>
 			<div className='notesWrapper'>
-				{noteElements}
 				<button className='noteButton addNewNote' css={addNewNoteStyles} onClick={createNewNote}>
 					+
 				</button>
+				{noteElements}
 			</div>
 		</section>
 	);
