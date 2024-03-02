@@ -16,32 +16,10 @@
 .tiptap {
 	display: flex;
 	align-items: center;
+	position: relative;
 	flex-direction: column;
-	.tiptapButtons {
-		display: flex;
-		justify-content: space-between;
-		margin: 0 auto;
-		flex-wrap: wrap;
-		width: 100%;
-		height: 4rem;
-		align-items: center;
-		background-color: black;
 
-		button {
-			cursor: pointer;
-			width: 3em;
-			border: 2px solid black;
-			border-radius: 20px;
-			background-color: #616161;
-			color: white;
-			height: 2rem;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-	}
-
-	&.tiptap > div:nth-of-type(2) {
+	&.tiptap > div:nth-of-type(3) {
 		width: 100%;
 		margin: 0;
 		flex: 1;
@@ -55,6 +33,7 @@
 		width: 100%;
 		top: 0;
 		left: 0;
+		border: 2px solid lightgray;
 		display: block;
 	}
 
@@ -130,14 +109,5 @@
 
 	.tiptap {
 		font-size: 1.25rem;
-		.tiptapButtons {
-			justify-content: center;
-			height: 4rem;
-			gap: 0.5rem;
-			button {
-				width: 5em;
-				height: 2rem;
-			}
-		}
 	}
 }

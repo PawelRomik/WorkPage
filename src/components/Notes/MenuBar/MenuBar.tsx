@@ -1,6 +1,8 @@
 import { useCurrentEditor } from "@tiptap/react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { css } from "@emotion/react";
+import "./MenuBar.style.scss";
 
 type MenuBarProps = {
 	updateNote: (content: string) => void;
@@ -9,7 +11,7 @@ type MenuBarProps = {
 
 const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 	const { editor } = useCurrentEditor();
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	useEffect(() => {
 		if (editor) {
@@ -17,7 +19,6 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 			const pattern = /rgb\(.{1,4},.{1,4},.{1,4}\)/g;
 
 			const newContent = content.replace(pattern, color);
-			console.log(editor);
 
 			editor.commands.setContent(newContent);
 
@@ -37,13 +38,57 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 		}
 	}, [color, editor]);
 
+	const clearContent = useCallback(() => {
+		updateNote("");
+	}, [updateNote]);
+
+	const tiptapButtonsStyles = useMemo(
+		() => css`
+			& {
+				background-color: ${darkMode ? "lightgray" : "black"};
+				border-top: 3px solid ${darkMode ? "white" : "black"};
+				button {
+					border: 2px solid ${darkMode ? "white" : "black"};
+					background-color: ${darkMode ? "white" : "rgb(54, 54, 54)"};
+					color: ${darkMode ? "black" : "white"};
+					&:hover,
+					&:focus {
+						border: 2px solid ${darkMode ? "black" : "white"};
+					}
+					&.is-active {
+						background-color: ${color} !important;
+						border: 2px solid ${color} !important;
+						color: white;
+
+						&:hover,
+						&:focus {
+							border: 2px solid ${darkMode ? "black" : "white"} !important;
+						}
+					}
+				}
+			}
+		`,
+
+		[color, darkMode]
+	);
+
+	const charsLeftStyles = useMemo(
+		() => css`
+			& {
+				background-color: ${darkMode ? "lightgray" : "black"};
+				color: ${darkMode ? "black" : "white"};
+			}
+		`,
+		[darkMode]
+	);
+
 	if (!editor) {
 		return null;
 	}
 
 	return (
 		<>
-			<div className='tiptapButtons'>
+			<div className='tiptapButtons' css={tiptapButtonsStyles}>
 				<button
 					onClick={() => editor.chain().focus().toggleBold().run()}
 					disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -101,15 +146,15 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 				<button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive("blockquote") ? "is-active" : ""}>
 					<i className='fa-solid fa-quote-left'></i>
 				</button>
-				<button onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()}>
-					<i className='fa-solid fa-rotate-left'></i>
-				</button>
-				<button onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().chain().focus().redo().run()}>
-					<i className='fa-solid fa-rotate-right'></i>
-				</button>
-				<button onClick={setColors} className={editor.isActive("textStyle", { color: color }) ? "is-active" : ""}>
+				<button onClick={setColors} className={editor.isActive("textStyle") ? "is-active" : ""}>
 					<i className='fa-solid fa-paintbrush'></i>
 				</button>
+				<button onClick={clearContent}>
+					<i className='fa-solid fa-trash'></i>
+				</button>
+			</div>
+			<div className='charsLeft' css={charsLeftStyles}>
+				{3000 - editor.storage.characterCount.characters()} chars left.
 			</div>
 		</>
 	);
