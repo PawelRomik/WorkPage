@@ -34,7 +34,9 @@ const Tiptap = ({ notesLength, noteValue, updateNote }: tiptapProps) => {
 		<section className='noteEdit'>
 			{notesLength > 0 ? (
 				<div className='tiptap'>
-					<EditorProvider slotBefore={<MenuBar updateNote={updateNote} noteValue={noteValue} />} extensions={extensions}></EditorProvider>
+					<EditorProvider slotBefore={<MenuBar updateNote={updateNote} noteValue={noteValue} />} extensions={extensions}>
+						<></>
+					</EditorProvider>
 				</div>
 			) : (
 				<p className='notesInfo'>No notes found, make a new one.</p>
