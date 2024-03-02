@@ -27,7 +27,7 @@ A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>,
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/73bef92f-16bf-494c-adce-2b4f025d2c5a" alt="Notes">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/174718c9-4cbd-40d6-94d2-07e2652cc506" alt="Notes">
 </p>
 
 <p align="center">
