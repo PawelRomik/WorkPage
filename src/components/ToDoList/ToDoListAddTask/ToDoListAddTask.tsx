@@ -14,9 +14,20 @@ type ToDoListAddTaskProps = {
 	finishEditing: () => void;
 	currentlyEdited: number | null;
 	closeEdit: () => void;
+	handlePriorityChange: (value: number) => void;
 };
 
-const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputChange, addNewTask, finishEditing, currentlyEdited, closeEdit }: ToDoListAddTaskProps) => {
+const ToDoListAddTask = ({
+	allowEdit,
+	changeAllowEdit,
+	handlePriorityChange,
+	inputValues,
+	handleInputChange,
+	addNewTask,
+	finishEditing,
+	currentlyEdited,
+	closeEdit,
+}: ToDoListAddTaskProps) => {
 	const { color, darkMode } = useSettingsContext();
 
 	const editButtonStyles = useMemo(
@@ -48,7 +59,14 @@ const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputC
 			}
 
 			& .ToDoListInputWrapper p {
-				color: ${darkMode ? "black" : "#999"};
+				color: ${color};
+			}
+
+			& .starButton {
+				color: ${darkMode ? "black" : "white"};
+				&.starActive {
+					color: ${color};
+				}
 			}
 
 			&.ToDoListAddTask {
@@ -81,7 +99,7 @@ const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputC
 				}
 			}
 		`,
-		[darkMode]
+		[darkMode, color]
 	);
 
 	const disabledButton = useMemo(() => {
@@ -102,31 +120,21 @@ const ToDoListAddTask = ({ allowEdit, changeAllowEdit, inputValues, handleInputC
 					</div>
 					<div className='ToDoListInputWrapper'>
 						<label htmlFor='taskContent'>Description:</label>
+						<p>(optional)</p>
 						<input className='ToDoListInput' type='text' id='taskContent' name='taskContent' value={inputValues.taskContent} onChange={handleInputChange}></input>
 					</div>
 					<div className='ToDoListInputWrapper'>
 						<label htmlFor='taskPriority'>Priority:</label>
 						<div className='ToDoListRadioButtons'>
-							<div>
-								<input type='radio' id='priority1' name='taskPriority' value={1} checked={Number(inputValues.taskPriority) === 1} onChange={handleInputChange} />
-								<label htmlFor='priority1'>
-									1<i className='fa-solid fa-star'></i>
-								</label>
-							</div>
-
-							<div>
-								<input type='radio' id='priority2' name='taskPriority' value={2} checked={Number(inputValues.taskPriority) === 2} onChange={handleInputChange} />
-								<label htmlFor='priority2'>
-									2<i className='fa-solid fa-star'></i>
-								</label>
-							</div>
-
-							<div>
-								<input type='radio' id='priority3' name='taskPriority' value={3} checked={Number(inputValues.taskPriority) === 3} onChange={handleInputChange} />
-								<label htmlFor='priority3'>
-									3<i className='fa-solid fa-star'></i>
-								</label>
-							</div>
+							<button className={`starButton ${inputValues.taskPriority >= 1 ? "starActive" : ""}`} onClick={() => handlePriorityChange(1)}>
+								<i className='fa-solid fa-star'></i>
+							</button>
+							<button className={`starButton ${inputValues.taskPriority >= 2 ? "starActive" : ""}`} onClick={() => handlePriorityChange(2)}>
+								<i className='fa-solid fa-star'></i>
+							</button>
+							<button className={`starButton ${inputValues.taskPriority >= 3 ? "starActive" : ""}`} onClick={() => handlePriorityChange(3)}>
+								<i className='fa-solid fa-star'></i>
+							</button>
 						</div>
 					</div>
 					{currentlyEdited !== null ? (
