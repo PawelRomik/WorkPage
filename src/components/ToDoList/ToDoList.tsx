@@ -88,7 +88,7 @@ const ToDoList = () => {
 					background: darkMode ? "white" : "black",
 					color: darkMode ? "black" : "white",
 					showCloseButton: true,
-					target: ".notesContainer",
+					target: ".ToDoListContainer",
 				})
 				.then((result) => {
 					if (result.isConfirmed) {
@@ -183,7 +183,7 @@ const ToDoList = () => {
 
 	return (
 		<div className='ToDoListContainer' css={darkModeStyles}>
-			<ToDoListTask tasks={tasks} startEditing={startEditing} priorityStyling={priorityStyling} showConfirmDialog={showConfirmDialog} />
+			<ToDoListTask currentlyEdited={currentlyEdited} tasks={tasks} startEditing={startEditing} priorityStyling={priorityStyling} showConfirmDialog={showConfirmDialog} />
 			<ToDoListAddTask
 				allowEdit={allowEdit}
 				handlePriorityChange={handlePriorityChange}
