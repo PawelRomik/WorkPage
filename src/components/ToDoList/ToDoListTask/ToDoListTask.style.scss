@@ -12,6 +12,7 @@
 	width: 100%;
 	display: flex;
 	flex: 1 0 0;
+	gap: 0.5rem;
 	flex-direction: column;
 	overflow: auto;
 	align-items: flex-start;
@@ -36,10 +37,7 @@
 .ToDoListTask {
 	width: 100%;
 	display: flex;
-
-	border-top: none;
-	border-left: none;
-	border-right: none;
+	box-sizing: border-box;
 	padding: 0.25rem;
 	justify-content: space-between;
 	align-items: center;
@@ -64,8 +62,8 @@
 
 .taskContent {
 	max-width: 90%;
-	overflow-x: auto;
 	flex: 1;
+	text-overflow: ellipsis;
 
 	scrollbar-color: black;
 	scrollbar-width: thin;
@@ -88,6 +86,8 @@
 .taskContent p,
 .taskContent h2 {
 	max-width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
 	text-overflow: ellipsis;
 	margin: 0.25rem;
 }

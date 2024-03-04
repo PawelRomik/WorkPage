@@ -91,10 +91,12 @@ const ToDoListAddTask = ({
 				.ToDoListButton {
 					border: 2px solid ${darkMode ? "black" : "white"};
 					background-color: ${darkMode ? "white" : "black"};
+					opacity: 0.5;
 					color: gray;
 				}
 
 				.ToDoListButton:not(:disabled) {
+					opacity: 1;
 					color: ${darkMode ? "black" : "white"};
 				}
 			}
