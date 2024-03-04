@@ -12,7 +12,7 @@ type toDoListTask = {
 };
 
 const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog }: toDoListTask) => {
-	const { darkMode } = useSettingsContext();
+	const { darkMode, color } = useSettingsContext();
 
 	const darkModeStyles = useMemo(
 		() => css`
@@ -21,6 +21,10 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog 
 				background-color: ${darkMode ? "#eee" : "rgb(66, 66, 66)"};
 				color: ${darkMode ? "black" : "white"};
 
+				.taskPriorityParagraph {
+					color: ${color};
+				}
+
 				.taskOptions button {
 					border: 2px solid ${darkMode ? "white" : "black"};
 					background-color: ${darkMode ? "#e7e4e4" : "rgb(51, 51, 51)"};
@@ -28,13 +32,13 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog 
 
 					&:focus,
 					&:hover {
-						background-color: ${darkMode ? "white" : "black"};
-						color: ${darkMode ? "black" : "white"};
+						background-color: ${color};
+						color: white;
 					}
 				}
 			}
 		`,
-		[darkMode]
+		[darkMode, color]
 	);
 
 	const taskElements = useMemo(
@@ -44,7 +48,9 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog 
 					<section className='taskContent'>
 						<h2>Title: {task.taskName}</h2>
 						{task.taskContent && <p>{`Description: ${task.taskContent}`}</p>}
-						<p>Priority: {priorityStyling(task.taskPriority)}</p>
+						<p>
+							Priority: <span className='taskPriorityParagraph'>{priorityStyling(task.taskPriority)}</span>
+						</p>
 					</section>
 					<section className='taskOptions'>
 						<button onClick={() => startEditing(id)}>

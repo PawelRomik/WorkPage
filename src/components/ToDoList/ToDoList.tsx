@@ -108,6 +108,13 @@ const ToDoList = () => {
 		}));
 	}, []);
 
+	const handlePriorityChange = useCallback((value: number) => {
+		changeInputValues((prevValues) => ({
+			...prevValues,
+			taskPriority: value,
+		}));
+	}, []);
+
 	const priorityStyling = useCallback((taskPriority: number) => {
 		const priority = Number(taskPriority);
 		switch (priority) {
@@ -179,6 +186,7 @@ const ToDoList = () => {
 			<ToDoListTask tasks={tasks} startEditing={startEditing} priorityStyling={priorityStyling} showConfirmDialog={showConfirmDialog} />
 			<ToDoListAddTask
 				allowEdit={allowEdit}
+				handlePriorityChange={handlePriorityChange}
 				changeAllowEdit={changeAllowEdit}
 				inputValues={inputValues}
 				handleInputChange={handleInputChange}

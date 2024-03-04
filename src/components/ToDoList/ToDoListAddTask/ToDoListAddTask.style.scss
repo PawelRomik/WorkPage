@@ -55,8 +55,24 @@
 	}
 }
 
+.starButton {
+	cursor: pointer;
+	width: 2rem;
+	height: 2rem;
+	font-size: 1.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: transparent;
+	border: none;
+}
+
+.ToDoListInputWrapper p {
+	font-size: 0.75rem;
+}
+
 .ToDoListRadioButtons {
-	width: 60%;
+	width: 40%;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
@@ -92,10 +108,14 @@
 }
 
 @media (min-width: 768px) {
+	.ToDoListInputWrapper p {
+		font-size: 1rem;
+	}
+
 	.ToDoListInput {
 		padding: 0.55rem;
 		margin: 0.25rem;
-		width: 50%;
+		width: 30%;
 		outline: none;
 		font-size: 1.25rem;
 		transition: 0.1s;
@@ -121,7 +141,7 @@
 	}
 
 	.ToDoListRadioButtons {
-		width: 15%;
+		width: 8%;
 		justify-content: space-around;
 	}
 }
