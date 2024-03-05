@@ -12,7 +12,7 @@ const CalendarWindow = () => {
 		e.stopPropagation();
 	}, []);
 
-	const { color, darkMode } = useSettingsContext();
+	const { color, darkMode, settingsLanguage } = useSettingsContext();
 
 	const calendarStyles = useMemo(
 		() => css`
@@ -95,7 +95,7 @@ const CalendarWindow = () => {
 				<CurrentDate />
 			</section>
 			<section className='calendar' css={calendarStyles}>
-				<Calendar css={calendarStyles} />
+				<Calendar css={calendarStyles} locale={settingsLanguage} />
 			</section>
 		</div>
 	);

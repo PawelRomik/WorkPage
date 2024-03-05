@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import { TextStyle } from "@tiptap/extension-text-style";
+import { useTranslation } from "react-i18next";
 
 type tiptapProps = {
 	notesLength: number;
@@ -36,6 +37,7 @@ const extensions = [
 ];
 
 const Tiptap = ({ notesLength, noteValue, updateNote }: tiptapProps) => {
+	const { t } = useTranslation();
 	const { darkMode } = useSettingsContext();
 	const darkModeStyles = useMemo(
 		() => css`
@@ -54,7 +56,7 @@ const Tiptap = ({ notesLength, noteValue, updateNote }: tiptapProps) => {
 					</EditorProvider>
 				</div>
 			) : (
-				<p className='notesInfo'>No notes found, make a new one.</p>
+				<p className='notesInfo'>{t("Notes.noNotes")}</p>
 			)}
 		</section>
 	);

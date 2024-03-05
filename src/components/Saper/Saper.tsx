@@ -9,6 +9,7 @@ import SaperCenter from "./SaperCenter/SaperCenter";
 import SaperEndScreen from "./SaperEndScreen/SaperEndScreen";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
+import { useTranslation } from "react-i18next";
 
 export type Cell = {
 	isBomb: boolean;
@@ -19,6 +20,7 @@ export type Cell = {
 
 const Saper = () => {
 	const { darkMode } = useSettingsContext();
+	const { t } = useTranslation();
 
 	const darkModeStyles = useMemo(
 		() => css`
@@ -293,12 +295,13 @@ const Saper = () => {
 		if (!firstClick && !gameOver) {
 			withReactContent(Swal)
 				.fire({
-					title: "Are you sure?",
-					text: "This action will reset your game progress!",
+					title: t("Swal.swalTitle"),
+					text: t("Minesweeper.toastResetProgress"),
 					showCancelButton: true,
 					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
 					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
-					confirmButtonText: "Confirm",
+					confirmButtonText: t("Swal.swalYes"),
+					cancelButtonText: t("Swal.swalNo"),
 					background: darkMode ? "white" : "black",
 					color: darkMode ? "black" : "white",
 					showCloseButton: true,
@@ -312,19 +315,20 @@ const Saper = () => {
 		} else {
 			resetGame();
 		}
-	}, [resetGame, darkMode, firstClick, gameOver]);
+	}, [resetGame, darkMode, firstClick, gameOver, t]);
 
 	const changeDifficultyOnClick = useCallback(
 		(passedDifficulty: number) => {
 			if (!firstClick && !gameOver) {
 				withReactContent(Swal)
 					.fire({
-						title: "Are you sure?",
-						text: "This action will reset your game progress!",
+						title: t("Swal.swalTitle"),
+						text: t("Minesweeper.toastResetProgress"),
 						showCancelButton: true,
 						confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
 						cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
-						confirmButtonText: "Confirm",
+						confirmButtonText: t("Swal.swalYes"),
+						cancelButtonText: t("Swal.swalNo"),
 						background: darkMode ? "white" : "black",
 						color: darkMode ? "black" : "white",
 						showCloseButton: true,
@@ -341,7 +345,7 @@ const Saper = () => {
 				resetGame();
 			}
 		},
-		[resetGame, darkMode, firstClick, gameOver]
+		[resetGame, darkMode, firstClick, gameOver, t]
 	);
 
 	return (

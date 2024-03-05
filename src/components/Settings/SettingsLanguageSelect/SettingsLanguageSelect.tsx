@@ -3,7 +3,12 @@ import { css } from "@emotion/react";
 import { useMemo } from "react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 
-const SettingsLanguageSelect = () => {
+type SettingsLanguageSelectProps = {
+	changeLanguageOnChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+	settingsLanguage: string;
+};
+
+const SettingsLanguageSelect = ({ changeLanguageOnChange, settingsLanguage }: SettingsLanguageSelectProps) => {
 	const { darkMode } = useSettingsContext();
 
 	const darkModeStyles = useMemo(
@@ -21,7 +26,7 @@ const SettingsLanguageSelect = () => {
 	);
 
 	return (
-		<select className='settingsLanguageSelect' css={darkModeStyles}>
+		<select className='settingsLanguageSelect' css={darkModeStyles} onChange={changeLanguageOnChange} value={settingsLanguage}>
 			<option key='pl' value='pl'>
 				Polski
 			</option>

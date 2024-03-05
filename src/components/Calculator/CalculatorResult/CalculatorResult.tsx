@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import "./CalculatorResult.style.scss";
 import { css } from "@emotion/react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
+import { useTranslation } from "react-i18next";
 
 type CalculatorResultProps = {
 	firstNumber: string | undefined;
@@ -11,6 +12,7 @@ type CalculatorResultProps = {
 };
 
 const CalculatorResult = ({ firstNumber, operator, secondNumber, copyContent }: CalculatorResultProps) => {
+	const { t } = useTranslation();
 	const { color, darkMode } = useSettingsContext();
 
 	const paragraphStyles = useMemo(
@@ -33,7 +35,7 @@ const CalculatorResult = ({ firstNumber, operator, secondNumber, copyContent }: 
 	const bottomContent = useMemo(() => (operator ? (secondNumber ? secondNumber : "0") : firstNumber !== undefined ? firstNumber : "0"), [firstNumber, operator, secondNumber]);
 
 	return (
-		<section className='calculatorResult' onClick={copyContent} title='Click to copy content' css={darkModeStyles}>
+		<section className='calculatorResult' onClick={copyContent} title={t("Calculator.calculatorCopyHover")} css={darkModeStyles}>
 			<p className='calculatorTop' css={paragraphStyles}>
 				{topContent}
 			</p>

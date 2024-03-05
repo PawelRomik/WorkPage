@@ -5,6 +5,7 @@ import TranslatorSettings from "./TranslatorSettings/TranslatorSettings";
 import TranslatorTextArea from "./TranslatorTextArea/TranslatorTextArea";
 import { toast } from "react-toastify";
 import LocalStorageNames from "../../utils/localstorageNames";
+import { useTranslation } from "react-i18next";
 
 const Translator = () => {
 	const [inputValue, changeInputValue] = useState("");
@@ -12,7 +13,7 @@ const Translator = () => {
 	const [selectedLanguageTo, setSelectedLanguageTo] = useState("en");
 	const [selectedLanguageFrom, setSelectedLanguageFrom] = useState("pl");
 	const { localTranslatorLanguageTo, localTranslatorLanguageFrom } = useMemo(() => LocalStorageNames, []);
-
+	const { t } = useTranslation();
 	useEffect(() => {
 		const storedLangTo = localStorage.getItem(localTranslatorLanguageTo);
 		if (storedLangTo) {
@@ -40,18 +41,17 @@ const Translator = () => {
 				}
 			} catch (error) {
 				if (error instanceof Error && error.message.includes("Auth Error")) {
-					toast.warn("Wrong ApiKey provided, translator won't work without it!");
+					toast.warn(t("Translator.toastWrongApiKey"));
 				}
-				console.error("Translation error:", error);
 				changeTranslated("");
 			}
 		},
-		[selectedLanguageTo, selectedLanguageFrom]
+		[selectedLanguageTo, selectedLanguageFrom, t]
 	);
 
 	useEffect(() => {
 		if (inputValue) {
-			changeTranslated("Translating... Please wait.");
+			changeTranslated(t("Translator.translatorTranslating"));
 		} else {
 			changeTranslated("");
 		}
@@ -63,7 +63,7 @@ const Translator = () => {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [inputValue, translation]);
+	}, [inputValue, translation, t]);
 
 	const handleLanguageFromChange = useCallback(
 		(e: React.ChangeEvent<HTMLSelectElement>) => {

@@ -3,6 +3,7 @@ import weatherIcons from "../../data/weatherIcons";
 import "./Weather.style.scss";
 import { toast } from "react-toastify";
 import LocalStorageNames from "../../utils/localstorageNames";
+import { useTranslation } from "react-i18next";
 
 interface WeatherData {
 	temp: number;
@@ -11,6 +12,7 @@ interface WeatherData {
 
 const Weather = () => {
 	const { localWeatherData, localWeatherLastFetchTime } = useMemo(() => LocalStorageNames, []);
+	const { t } = useTranslation();
 	const [data, setData] = useState<WeatherData>({
 		temp: 0,
 		icon: "",
@@ -40,13 +42,13 @@ const Weather = () => {
 				if (!lastFetchTime || currentTime - parseInt(lastFetchTime) >= fetchInterval) {
 					const location = await fetchLocation();
 					if (!location) {
-						toast.warn("Can't fetch location, without it weather won't work!");
+						toast.warn(t("Weather.weatherFetchLocalizationError"));
 						return;
 					}
 
 					const apiKey = import.meta.env.VITE_WEATHER_API;
 					if (!apiKey) {
-						toast.warn("No Weather ApiKey found! Weather won't work without it!");
+						toast.warn(t("Weather.weatherNoApiKey"));
 						return;
 					}
 
@@ -55,7 +57,7 @@ const Weather = () => {
 					);
 
 					if (!response.ok) {
-						toast.error("Error: Failed to fetch weather api!");
+						toast.error(t("Weather.weatherFetchWeatherError"));
 						return;
 					}
 
@@ -86,7 +88,7 @@ const Weather = () => {
 		fetchWeather();
 		const intervalId = setInterval(fetchWeather, fetchInterval);
 		return () => clearInterval(intervalId);
-	}, [localWeatherData, localWeatherLastFetchTime]);
+	}, [localWeatherData, localWeatherLastFetchTime, t]);
 
 	if (!data.icon) {
 		return null;

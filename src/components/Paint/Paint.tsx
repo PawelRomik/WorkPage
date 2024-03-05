@@ -7,6 +7,7 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { useSettingsContext } from "../../providers/SettingsContext";
+import { useTranslation } from "react-i18next";
 
 enum BrushShape {
 	Square = "square",
@@ -25,7 +26,7 @@ const Paint = () => {
 	const { darkMode } = useSettingsContext();
 	const [paintColors, changePaintColors] = useState<string[]>([]);
 	const { localPaintCanvas, localPaintBackground, localPaintColors } = useMemo(() => LocalStorageNames, []);
-
+	const { t } = useTranslation();
 	useEffect(() => {
 		const storedColors = localStorage.getItem(localPaintColors);
 		if (storedColors) {
@@ -153,12 +154,13 @@ const Paint = () => {
 	const clearCanvas = useCallback(() => {
 		withReactContent(Swal)
 			.fire({
-				title: "Are you sure?",
-				text: "You won't be able to revert this!",
+				title: t("Swal.swalTitle"),
+				text: t("Swal.swalDesc"),
 				showCancelButton: true,
 				confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
 				cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
-				confirmButtonText: "Confirm",
+				confirmButtonText: t("Swal.swalYes"),
+				cancelButtonText: t("Swal.swalNo"),
 				background: darkMode ? "white" : "black",
 				color: darkMode ? "black" : "white",
 				showCloseButton: true,
@@ -175,7 +177,7 @@ const Paint = () => {
 			});
 
 		saveToLocalStorage();
-	}, [saveToLocalStorage, darkMode]);
+	}, [saveToLocalStorage, darkMode, t]);
 
 	const toggleBrushShape = useCallback(() => {
 		setBrushShape((prevShape) => (prevShape === BrushShape.Square ? BrushShape.Circle : BrushShape.Square));
@@ -281,13 +283,14 @@ const Paint = () => {
 			e.stopPropagation();
 			withReactContent(Swal)
 				.fire({
-					title: "Save your image",
-					inputLabel: "Change name:",
-					inputValue: "WorkPainting",
+					title: t("Paint.swalSaveImage"),
+					inputLabel: t("Paint.swalChangeName"),
+					inputValue: t("Paint.swalDefaultInput"),
 					showCancelButton: true,
 					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
 					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
-					confirmButtonText: "Confirm",
+					confirmButtonText: t("Swal.swalYes"),
+					cancelButtonText: t("Swal.swalNo"),
 					input: "text",
 					background: darkMode ? "white" : "black",
 					color: darkMode ? "black" : "white",
@@ -297,11 +300,11 @@ const Paint = () => {
 				.then((result) => {
 					if (result.isConfirmed) {
 						saveImage(result.value);
-						toast.success("The image has been successfully saved to your device.");
+						toast.success(t("Paint.toastSavedImage"));
 					}
 				});
 		},
-		[darkMode, saveImage]
+		[darkMode, saveImage, t]
 	);
 
 	return (

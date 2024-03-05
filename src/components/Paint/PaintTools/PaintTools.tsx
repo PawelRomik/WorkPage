@@ -3,6 +3,7 @@ import { useSettingsContext } from "../../../providers/SettingsContext";
 import { useMemo } from "react";
 import { css } from "@emotion/react";
 import PaintSavedColors from "../PaintSavedColors/PaintSavedColors";
+import { useTranslation } from "react-i18next";
 
 enum BrushShape {
 	Square = "square",
@@ -45,6 +46,7 @@ const PaintTools = ({
 	handleOnButtonClickColorChange,
 }: PaintToolsProps) => {
 	const { color, darkMode } = useSettingsContext();
+	const { t } = useTranslation();
 
 	const paintInputColorStyles = useMemo(
 		() => css`
@@ -130,11 +132,13 @@ const PaintTools = ({
 			<div className='paintToolsWrapper' css={paintButtonStyles}>
 				<div className='paintToolsGroup'>
 					<div className='paintInputContainer'>
-						<p>Color: </p>
+						<p>{t("Paint.paintColor")} </p>
 						<input className='paintInputColor' onBlur={addToSavedColors} css={paintInputColorStyles} type='color' value={brushColor} onChange={handleColorChange} />
 					</div>
 					<div className='paintInputContainer'>
-						<p className='paintSizeParagraph'>Size: {thickness}</p>
+						<p className='paintSizeParagraph'>
+							{t("Paint.paintSize")} {thickness}
+						</p>
 						<input className='paintInputThickness' min={1} max={20} css={paintInputThicknessStyles} type='range' value={thickness} onChange={handleThicknessChange} />
 					</div>
 					<button className='paintButton' onClick={toggleBrushShape}>
@@ -146,7 +150,7 @@ const PaintTools = ({
 				</div>
 				<div className='paintToolsGroup'>
 					<div className='paintInputContainer'>
-						<p>Background Color: </p>
+						<p>{t("Paint.paintBackground")} </p>
 						<input className='paintInputColor' css={paintInputColorStyles} type='color' value={backgroundColor} onChange={handleBackgroundColorChange} />
 					</div>
 					<div className='paintButtons'>
