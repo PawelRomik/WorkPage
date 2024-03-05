@@ -6,6 +6,7 @@ import Tiptap from "./Tiptap/Tiptap";
 import LocalStorageNames from "../../utils/localstorageNames";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useSettingsContext } from "../../providers/SettingsContext";
 
@@ -15,6 +16,7 @@ export type Note = {
 };
 
 const Notes = () => {
+	const { t } = useTranslation();
 	const [noteValue, setNoteValue] = useState<string>("");
 	const [notes, setNotes] = useState<Note[]>([]);
 	const [selectedNoteId, setSelectedNoteId] = useState<string | undefined>(undefined);
@@ -66,13 +68,13 @@ const Notes = () => {
 		const newNote: Note = {
 			id: nanoid(),
 			content: `
-		<h2>Your new note</h2>
-		<p>Feel free to write something!</p>
+		<h2>${t("Notes.newNoteTitle")}</h2>
+		<p>${t("Notes.newNoteDesc")}</p>
 		`,
 		};
 		setNotes((prevNotes) => [...prevNotes, newNote]);
 		setSelectedNoteId(newNote.id);
-	}, []);
+	}, [t]);
 
 	const removeNote = useCallback(
 		(noteId: string) => {
@@ -94,12 +96,13 @@ const Notes = () => {
 			e.stopPropagation();
 			withReactContent(Swal)
 				.fire({
-					title: "Are you sure?",
-					text: "You won't be able to revert this!",
+					title: t("Swal.swalTitle"),
+					text: t("Swal.swalDesc"),
 					showCancelButton: true,
 					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
 					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
-					confirmButtonText: "Confirm",
+					confirmButtonText: t("Swal.swalYes"),
+					cancelButtonText: t("Swal.swalNo"),
 					background: darkMode ? "white" : "black",
 					color: darkMode ? "black" : "white",
 					showCloseButton: true,
@@ -108,11 +111,11 @@ const Notes = () => {
 				.then((result) => {
 					if (result.isConfirmed) {
 						removeNote(noteId);
-						toast.success(`Succesfully deleted note`);
+						toast.success(t("Notes.toastRemovedNote"));
 					}
 				});
 		},
-		[removeNote, darkMode]
+		[removeNote, darkMode, t]
 	);
 
 	return (

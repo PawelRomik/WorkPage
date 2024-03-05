@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import "./SettingsWallpaperSection.style.scss";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { css } from "@emotion/react";
+import { useTranslation } from "react-i18next";
 
 type SettingsWallpaperSectionProps = {
 	changeBackground: (e: React.MouseEvent) => void;
@@ -22,6 +23,7 @@ const SettingsWallpaperSection = ({
 	changeWallpaperStyleOnClick,
 }: SettingsWallpaperSectionProps) => {
 	const { color, darkMode, wallpaperStyle } = useSettingsContext();
+	const { t } = useTranslation();
 
 	const wallpaperConfirmButtonStyles = useMemo(
 		() => css`
@@ -109,7 +111,7 @@ const SettingsWallpaperSection = ({
 
 	return (
 		<section className='changeWallpaperSection' css={darkModeStyles}>
-			<h2>SET YOUR WALLPAPER</h2>
+			<h2>{t("Settings.settingsWallpaperSet")}</h2>
 			<div className='wallpaperSectionSettings'>
 				<div className='wallpaperPanel' css={wallpaperConfirmButtonStyles}>
 					<input
@@ -119,7 +121,7 @@ const SettingsWallpaperSection = ({
 						value={backgroundInputValue}
 						onChange={handleBackgroundInputChange}
 						id='wallpaperInput'
-						placeholder={`Custom wallpaper: (url)`}
+						placeholder={t("Settings.settingsWallpaperInputText")}
 						onKeyDown={handleInputKeyDown}
 					></input>
 					<button className='wallpaperConfirmButton' css={wallpaperConfirmButtonStyles} onClick={handleCustomWallpaper}>
@@ -130,13 +132,13 @@ const SettingsWallpaperSection = ({
 				<div className='wallpapersSelection'>{wallpapers}</div>
 				<div className='wallpapersStyle' css={wallpaperStyleButtonsStyles}>
 					<button className={`wallpapersStyleButton ${wallpaperStyle === "auto" ? "chosenWallpaperStyle" : ""}`} onClick={changeWallpaperStyleOnClick}>
-						Auto
+						{t("Settings.settingsWallpaperModeAuto")}
 					</button>
 					<button className={`wallpapersStyleButton ${wallpaperStyle === "cover" ? "chosenWallpaperStyle" : ""}`} onClick={changeWallpaperStyleOnClick}>
-						Cover
+						{t("Settings.settingsWallpaperModeCover")}
 					</button>
 					<button className={`wallpapersStyleButton ${wallpaperStyle === "contain" ? "chosenWallpaperStyle" : ""}`} onClick={changeWallpaperStyleOnClick}>
-						Contain
+						{t("Settings.settingsWallpaperModeContain")}
 					</button>
 				</div>
 			</div>

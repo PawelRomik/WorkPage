@@ -8,6 +8,7 @@ import LocalStorageNames from "../../utils/localstorageNames";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 export type Task = {
 	taskName: string;
@@ -17,6 +18,7 @@ export type Task = {
 
 const ToDoList = () => {
 	const { darkMode } = useSettingsContext();
+	const { t } = useTranslation();
 	const [tasks, changeTasks] = useState<Task[]>([]);
 	const [inputValues, changeInputValues] = useState<Task>({ taskName: "", taskContent: "", taskPriority: 1 });
 	const [allowEdit, changeAllowEdit] = useState(false);
@@ -79,12 +81,13 @@ const ToDoList = () => {
 			e.stopPropagation();
 			withReactContent(Swal)
 				.fire({
-					title: "Are you sure?",
-					text: "You won't be able to revert this!",
+					title: t("Swal.swalTitle"),
+					text: t("Swal.swalDesc"),
 					showCancelButton: true,
 					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
 					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
-					confirmButtonText: "Confirm",
+					confirmButtonText: t("Swal.swalYes"),
+					cancelButtonText: t("Swal.swalNo"),
 					background: darkMode ? "white" : "black",
 					color: darkMode ? "black" : "white",
 					showCloseButton: true,
@@ -93,11 +96,11 @@ const ToDoList = () => {
 				.then((result) => {
 					if (result.isConfirmed) {
 						removeTask(taskId);
-						toast.success("Successfully removed task!");
+						toast.success(t("ToDoList.toastRemovedTask"));
 					}
 				});
 		},
-		[removeTask, darkMode]
+		[removeTask, darkMode, t]
 	);
 
 	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

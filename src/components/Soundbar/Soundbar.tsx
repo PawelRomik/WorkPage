@@ -2,6 +2,7 @@ import "./Soundbar.style.scss";
 import { useCallback, useMemo, useState } from "react";
 import { css } from "@emotion/react";
 import { useSettingsContext } from "../../providers/SettingsContext";
+import { useTranslation } from "react-i18next";
 
 type SoundbarProps = {
 	volume: number;
@@ -11,6 +12,7 @@ type SoundbarProps = {
 const Soundbar = ({ volume, setVolume }: SoundbarProps) => {
 	const { color, darkMode } = useSettingsContext();
 	const [oldSoundVal, setOldSoundVal] = useState(volume);
+	const { t } = useTranslation();
 
 	const soundbarStyles = useMemo(
 		() => css`
@@ -61,7 +63,7 @@ const Soundbar = ({ volume, setVolume }: SoundbarProps) => {
 
 	return (
 		<div className='soundbar' css={darkModeStyles} onClick={dontHideOnClick}>
-			<label htmlFor='soundbarSlider'>Volume:</label>
+			<label htmlFor='soundbarSlider'>{t("Volume.volume")}:</label>
 			<div>
 				<i className={`fa-solid ${volumeClass}`} onClick={lowerVolumeOnIconClick}></i>{" "}
 				<input css={soundbarStyles} type='range' min='0' max='100' value={volume} onChange={changeVolume} className='soundbarSlider' id='soundbarSlider' />

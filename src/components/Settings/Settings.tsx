@@ -8,14 +8,16 @@ import SettingsColorSection from "./SettingsColorsSection/SettingsColorsSection"
 import { useMemo } from "react";
 import { css } from "@emotion/react";
 import LocalStorageNames from "../../utils/localstorageNames";
+import { useTranslation } from "react-i18next";
 
 const Settings = () => {
-	const { setBackground, password, setPassword, setColor, color, darkMode, changeDarkMode, changeWallpaperStyle } = useSettingsContext();
+	const { setBackground, password, settingsLanguage, changeSettingsLanguage, setPassword, setColor, color, darkMode, changeDarkMode, changeWallpaperStyle } = useSettingsContext();
 	const [backgroundInputValue, setBackgroundInputValue] = useState("");
 	const [darkModeInputValue, changeDarkModeInputValue] = useState("false");
 	const [colorInputValue, setColorInputValue] = useState(color);
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
+	const { t } = useTranslation();
 	const { localSettingsColor, localSettingsDarkMode } = useMemo(() => LocalStorageNames, []);
 
 	const darkModeStyles = useMemo(
@@ -57,11 +59,11 @@ const Settings = () => {
 				if (firstChild instanceof HTMLImageElement) {
 					const imageSrc = firstChild.src;
 					setBackground(imageSrc);
-					toast.success("Succesfully changed wallpaper!");
+					toast.success(t("Settings.toastChangedWallpaper"));
 				}
 			}
 		},
-		[setBackground]
+		[setBackground, t]
 	);
 
 	const handleCustomWallpaper = useCallback(() => {
@@ -71,10 +73,10 @@ const Settings = () => {
 			img.onload = () => {
 				setBackground(backgroundInputValue);
 				setBackgroundInputValue("");
-				toast.success("Succesfully changed wallpaper!");
+				toast.success(t("Settings.toastChangedWallpaper"));
 			};
 		}
-	}, [backgroundInputValue, setBackground]);
+	}, [backgroundInputValue, setBackground, t]);
 
 	const handleInputKeyDown = useCallback(
 		(e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -91,28 +93,28 @@ const Settings = () => {
 				if (newPassword) {
 					setPassword(newPassword);
 					setNewPassword("");
-					toast.success("Successfully set your password!");
+					toast.success(t("Settings.toastSetPassword"));
 					e.currentTarget.blur();
 				}
 			} else {
-				toast.error("Please provide the password!");
+				toast.error(t("Settings.toastNoPassword"));
 			}
 		},
-		[newPassword, setPassword]
+		[newPassword, setPassword, t]
 	);
 
 	const changePass = useCallback(() => {
 		if (newPassword.length <= 0 || oldPassword.length <= 0) {
-			toast.error("Please provide the password!");
+			toast.error(t("Settings.toastNoPassword"));
 		} else if (oldPassword != password) {
-			toast.error("Old password doesn't match!");
+			toast.error(t("Settings.toastWrongPassword"));
 		} else {
 			setPassword(newPassword);
 			setNewPassword("");
 			setOldPassword("");
-			toast.success("Succesfully changed your password!");
+			toast.success(t("Settings.toastChangedPassword"));
 		}
-	}, [newPassword, oldPassword, password, setPassword]);
+	}, [newPassword, oldPassword, password, setPassword, t]);
 
 	const handleColorChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,18 +147,25 @@ const Settings = () => {
 
 	const unsetPass = useCallback(() => {
 		setPassword("");
-		toast.success("Succesfully removed your password!");
-	}, [setPassword]);
+		toast.success(t("Settings.toastRemovedPassword"));
+	}, [setPassword, t]);
 
 	const changeWallpaperStyleOnClick = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
 			const chosenStyle = (e.target as HTMLButtonElement).textContent?.toLowerCase();
 			if (chosenStyle) {
 				changeWallpaperStyle(chosenStyle);
-				toast.success("Successfully changed wallpaper type!");
+				toast.success(t("Settings.toastChangedWallpaperMode"));
 			}
 		},
-		[changeWallpaperStyle]
+		[changeWallpaperStyle, t]
+	);
+
+	const changeLanguageOnChange = useCallback(
+		(e: React.ChangeEvent<HTMLSelectElement>) => {
+			changeSettingsLanguage(e.target.value);
+		},
+		[changeSettingsLanguage]
 	);
 
 	return (
@@ -177,6 +186,8 @@ const Settings = () => {
 				handleColorChange={handleColorChange}
 				handleDarkModeChange={handleDarkModeChange}
 				darkModeInputValue={darkModeInputValue}
+				changeLanguageOnChange={changeLanguageOnChange}
+				settingsLanguage={settingsLanguage}
 			/>
 			<SettingsWallpaperSection
 				changeBackground={changeBackground}

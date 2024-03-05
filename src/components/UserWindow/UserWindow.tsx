@@ -3,9 +3,11 @@ import { useAuthContext } from "../../providers/AuthContext";
 import { useCallback, useMemo } from "react";
 import { css } from "@emotion/react";
 import { useSettingsContext } from "../../providers/SettingsContext";
+import { useTranslation } from "react-i18next";
 
 const UserWindow = () => {
 	const { color, darkMode } = useSettingsContext();
+	const { t } = useTranslation();
 
 	const userWindowButtonStyles = useMemo(
 		() => css`
@@ -40,9 +42,9 @@ const UserWindow = () => {
 	const { logout } = useAuthContext();
 	return (
 		<div className='userWindow' css={darkModeStyles} onClick={dontHideOnClick}>
-			<p>Logged as: User</p>
+			<p>{t("UserWindow.userWindowLoggedAs")}</p>
 			<button css={userWindowButtonStyles} onClick={logout}>
-				Logout
+				{t("UserWindow.userWindowLogout")}
 			</button>
 		</div>
 	);

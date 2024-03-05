@@ -9,6 +9,7 @@ import Paint from "../Paint/Paint";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { useCallback, useMemo } from "react";
 import { css } from "@emotion/react";
+import { useTranslation } from "react-i18next";
 
 type AppContainerProps = {
 	app: {
@@ -20,6 +21,7 @@ type AppContainerProps = {
 };
 
 const AppContainer = ({ app, closeApp }: AppContainerProps) => {
+	const { t } = useTranslation();
 	const { color, darkMode } = useSettingsContext();
 
 	const buttonStyles = useMemo(
@@ -90,7 +92,7 @@ const AppContainer = ({ app, closeApp }: AppContainerProps) => {
 		<div className='appContainerBackground' onClick={closeApp}>
 			<div className={`appContainer${appContainerSize}`} css={darkModeStyles} onClick={blockClosingOnClick}>
 				<header className='appContainerHeader'>
-					<h3 className='appContainerTitle'>{app.name}</h3>
+					<h3 className='appContainerTitle'>{t(`Apps.${app.name}`)}</h3>
 					<button className='closeButton' onClick={closeApp} css={buttonStyles}>
 						X
 					</button>

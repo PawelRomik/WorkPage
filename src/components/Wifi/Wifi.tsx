@@ -2,9 +2,11 @@ import { useCallback, useMemo } from "react";
 import "./Wifi.style.scss";
 import { css } from "@emotion/react";
 import { useSettingsContext } from "../../providers/SettingsContext";
+import { useTranslation } from "react-i18next";
 
 const Wifi = () => {
 	const { color, darkMode } = useSettingsContext();
+	const { t } = useTranslation();
 
 	const wifiStyles = useMemo(
 		() => css`
@@ -37,7 +39,8 @@ const Wifi = () => {
 	return (
 		<div className='wifiContainer' css={darkModeStyles} onClick={dontHideOnClick}>
 			<p>
-				<i className='fa-solid fa-wifi' css={wifiStyles}></i>Connected
+				<i className='fa-solid fa-wifi' css={wifiStyles}></i>
+				{t("Wifi.wifiConnected")}
 			</p>
 		</div>
 	);

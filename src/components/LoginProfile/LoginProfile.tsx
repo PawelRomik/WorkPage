@@ -1,6 +1,7 @@
 import React from "react";
 import "./LoginProfile.style.scss";
 import avatar from "../../assets/loginAvatar.png";
+import { useTranslation } from "react-i18next";
 
 type LoginProfileProps = {
 	handleLogin: () => void;
@@ -12,10 +13,11 @@ type LoginProfileProps = {
 };
 
 const LoginProfile = ({ handleLogin, handleKeyPress, error, password, loginInput, updateLoginInput }: LoginProfileProps) => {
+	const { t } = useTranslation();
 	return (
 		<div className='loginProfile'>
 			<img src={avatar} alt='avatar' className='userAvatar' />
-			<p className='user'>User</p>
+			<p className='user'>{t("LoginProfile.loginUser")}</p>
 			<div className='loginPanel'>
 				{password ? (
 					<input
@@ -29,7 +31,7 @@ const LoginProfile = ({ handleLogin, handleKeyPress, error, password, loginInput
 					></input>
 				) : (
 					<button className='loginJoinButton' aria-label='Login' onClick={handleLogin}>
-						Enter
+						{t("LoginProfile.loginEnter")}
 					</button>
 				)}
 				<button onClick={handleLogin} aria-label='Login' className='signInButton'>

@@ -3,6 +3,7 @@ import { useSettingsContext } from "../../../providers/SettingsContext";
 import { useCallback, useEffect, useMemo } from "react";
 import { css } from "@emotion/react";
 import "./MenuBar.style.scss";
+import { useTranslation } from "react-i18next";
 
 type MenuBarProps = {
 	updateNote: (content: string) => void;
@@ -10,6 +11,7 @@ type MenuBarProps = {
 };
 
 const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
+	const { t } = useTranslation();
 	const { editor } = useCurrentEditor();
 	const { color, darkMode } = useSettingsContext();
 
@@ -154,7 +156,7 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 				</button>
 			</div>
 			<div className='charsLeft' css={charsLeftStyles}>
-				{3000 - editor.storage.characterCount.characters()} chars left.
+				{3000 - editor.storage.characterCount.characters()} {t("Notes.noteCharsLeft")}
 			</div>
 		</>
 	);

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import "./SettingsPasswordSection.style.scss";
 import { css } from "@emotion/react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
+import { useTranslation } from "react-i18next";
 
 type SettingsPasswordSectionProps = {
 	password: string;
@@ -25,6 +26,7 @@ const SettingsPasswordSection = ({
 	handleOldPasswordChange,
 }: SettingsPasswordSectionProps) => {
 	const { color, darkMode } = useSettingsContext();
+	const { t } = useTranslation();
 
 	const passwordButtonsStyles = useMemo(
 		() => css`
@@ -64,7 +66,7 @@ const SettingsPasswordSection = ({
 		[darkMode]
 	);
 
-	const sectionTitle = useMemo(() => (password ? "CHANGE YOUR PASSWORD" : "SET YOUR PASSWORD"), [password]);
+	const sectionTitle = useMemo(() => (password ? t("Settings.settingsPasswordChange") : t("Settings.settingsPasswordSet")), [password, t]);
 	return (
 		<section className='changePasswordSection' css={[passwordButtonsStyles, darkModeStyles]}>
 			<h2>{sectionTitle}</h2>
@@ -77,7 +79,7 @@ const SettingsPasswordSection = ({
 						type='password'
 						id='oldpassword'
 						name='oldpassword'
-						placeholder='Old password'
+						placeholder={t("Settings.settingsPasswordInputOld")}
 					/>
 				)}
 				<input
@@ -87,22 +89,22 @@ const SettingsPasswordSection = ({
 					type='password'
 					id='confirmPassword'
 					name='confirmPassword'
-					placeholder='New Password'
+					placeholder={t("Settings.settingsPasswordInputNew")}
 				/>
 
 				<div className='changePasswordButtons'>
 					{password ? (
 						<>
 							<button className='unlockButton' onClick={changePass}>
-								Change
+								{t("Settings.settingsPasswordButtonChange")}
 							</button>
 							<button className='removeButton' onClick={unsetPass}>
-								Remove password
+								{t("Settings.settingsPasswordButtonRemove")}
 							</button>
 						</>
 					) : (
 						<button className='unlockButton' onClick={unlock}>
-							Confirm
+							{t("Settings.settingsPasswordButtonConfirm")}
 						</button>
 					)}
 				</div>

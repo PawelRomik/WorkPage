@@ -3,6 +3,7 @@ import { Task } from "../ToDoList";
 import "./ToDoListTask.style.scss";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { css } from "@emotion/react";
+import { useTranslation } from "react-i18next";
 
 type toDoListTask = {
 	tasks: Task[];
@@ -14,9 +15,13 @@ type toDoListTask = {
 
 const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog, currentlyEdited }: toDoListTask) => {
 	const { darkMode, color } = useSettingsContext();
+	const { t } = useTranslation();
 
 	const darkModeStyles = useMemo(
 		() => css`
+			& .toDoInfo {
+				color: ${darkMode ? "black" : "white"};
+			}
 			& .ToDoListTask {
 				border: 4px solid ${darkMode ? "#eee" : "rgb(66, 66, 66)"};
 				background-color: ${darkMode ? "#eee" : "rgb(66, 66, 66)"};
@@ -66,10 +71,12 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog,
 			tasks.map((task, id) => (
 				<div className={`ToDoListTask ${currentlyEdited === id && "taskEdited"}`} key={id}>
 					<section className='taskContent'>
-						<h2 title={task.taskName}>Title: {task.taskName} </h2>
-						{task.taskContent && <p title={task.taskContent}>{`Description: ${task.taskContent}`}</p>}
+						<h2 title={task.taskName}>
+							{t("ToDoList.toDoListTitle")}: {task.taskName}{" "}
+						</h2>
+						{task.taskContent && <p title={task.taskContent}>{`${t("ToDoList.toDoListDescription")}: ${task.taskContent}`}</p>}
 						<p>
-							Priority: <span className='taskPriorityParagraph'>{priorityStyling(task.taskPriority)}</span>
+							{t("ToDoList.toDoListPriority")}: <span className='taskPriorityParagraph'>{priorityStyling(task.taskPriority)}</span>
 						</p>
 					</section>
 					<section className='taskOptions'>
@@ -82,11 +89,11 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog,
 					</section>
 				</div>
 			)),
-		[priorityStyling, showConfirmDialog, startEditing, tasks, currentlyEdited]
+		[priorityStyling, t, showConfirmDialog, startEditing, tasks, currentlyEdited]
 	);
 	return (
 		<section className='ToDoListTasksContainer' css={darkModeStyles}>
-			{taskElements.length ? taskElements : <p className='toDoInfo'>No tasks found, create a new one.</p>}
+			{taskElements.length ? taskElements : <p className='toDoInfo'>{t("ToDoList.toDoListNoTasks")}</p>}
 		</section>
 	);
 };

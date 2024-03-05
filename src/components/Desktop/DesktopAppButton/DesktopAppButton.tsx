@@ -3,6 +3,7 @@ import type { App } from "../Desktop";
 import "./DesktopAppButton.style.scss";
 import { useMemo } from "react";
 import { css } from "@emotion/react";
+import { useTranslation } from "react-i18next";
 
 type AppButtonProps = {
 	app: App;
@@ -11,6 +12,7 @@ type AppButtonProps = {
 
 const AppButton = ({ app, handleLaunchApp }: AppButtonProps) => {
 	const { id, name, class: appClass } = useMemo(() => app, [app]);
+	const { t } = useTranslation();
 
 	const buttonClass = useMemo(() => `app ${name === "Settings" ? "settings" : ""}`, [name]);
 	const iconClass = useMemo(() => `${appClass} appIcon`, [appClass]);
@@ -28,7 +30,7 @@ const AppButton = ({ app, handleLaunchApp }: AppButtonProps) => {
 	return (
 		<button className={buttonClass} key={id} data-app={id} onClick={handleLaunchApp} css={appStyles}>
 			<i className={iconClass}></i>
-			<p>{name}</p>
+			<p>{t(`Apps.${name}`)}</p>
 		</button>
 	);
 };
