@@ -20,7 +20,8 @@ const CalculatorButtons = ({ handleOperation, handleAddNumber, handleAddOperator
 		() => css`
 			& > button:hover,
 			& > button:focus {
-				color: ${color};
+				background-color: ${color};
+				color: white;
 			}
 		`,
 		[color]
@@ -31,7 +32,6 @@ const CalculatorButtons = ({ handleOperation, handleAddNumber, handleAddOperator
 			& {
 				.calculatorButton {
 					background-color: ${darkMode ? " rgb(231,231,231)" : "rgb(77, 77, 77)"};
-					border: ${darkMode ? "2px solid white" : "2px solid black"};
 					color: ${darkMode ? "black" : "white"};
 				}
 			}
