@@ -149,16 +149,22 @@ const ToDoList = () => {
 
 	const startEditing = useCallback(
 		(index: number) => {
-			setCurrentlyEdited(index);
-			const taskToEdit = tasks[index];
-			changeInputValues({
-				taskName: taskToEdit.taskName,
-				taskContent: taskToEdit.taskContent,
-				taskPriority: taskToEdit.taskPriority,
-			});
-			changeAllowEdit(true);
+			if (currentlyEdited !== index) {
+				setCurrentlyEdited(index);
+				const taskToEdit = tasks[index];
+				changeInputValues({
+					taskName: taskToEdit.taskName,
+					taskContent: taskToEdit.taskContent,
+					taskPriority: taskToEdit.taskPriority,
+				});
+				changeAllowEdit(true);
+			} else {
+				setCurrentlyEdited(null);
+				changeAllowEdit(false);
+				changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
+			}
 		},
-		[tasks]
+		[tasks, currentlyEdited]
 	);
 
 	const finishEditing = useCallback(() => {

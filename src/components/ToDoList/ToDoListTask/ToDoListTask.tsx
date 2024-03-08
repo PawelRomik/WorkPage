@@ -23,8 +23,8 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog,
 				color: ${darkMode ? "black" : "white"};
 			}
 			& .ToDoListTask {
-				border: 4px solid ${darkMode ? "#eee" : "rgb(66, 66, 66)"};
-				background-color: ${darkMode ? "#eee" : "rgb(66, 66, 66)"};
+				border: 4px solid ${darkMode ? "white" : "black"};
+				background-color: ${darkMode ? "white" : "black"};
 				color: ${darkMode ? "black" : "white"};
 
 				&.taskEdited {
@@ -36,6 +36,11 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog,
 					}
 
 					.taskOptions button {
+						&:first-of-type {
+							background-color: white;
+							color: ${color};
+							border: 4px solid white;
+						}
 						&:hover,
 						&:focus {
 							background-color: white;
@@ -50,8 +55,8 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog,
 				}
 
 				.taskOptions button {
-					border: 4px solid ${darkMode ? "#e7e4e4" : "rgb(51, 51, 51)"};
-					background-color: ${darkMode ? "#e7e4e4" : "rgb(51, 51, 51)"};
+					border: 4px solid ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
+					background-color: ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
 					color: ${darkMode ? "black" : "white"};
 
 					&:focus,
