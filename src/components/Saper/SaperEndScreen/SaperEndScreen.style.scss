@@ -5,6 +5,8 @@
 	font-weight: bold;
 	gap: 1rem;
 	flex-direction: column;
+	width: 100%;
+	padding: 0.5rem;
 }
 
 .game-over {
@@ -26,7 +28,7 @@
 	.saperEndScreen {
 		height: 100%;
 		display: flex;
-		width: 30%;
+		width: 45%;
 		justify-content: space-around;
 	}
 

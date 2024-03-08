@@ -20,7 +20,7 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 	const saperBombStyles = useMemo(
 		() => css`
 			&.saperBomb {
-				background-color: ${color};
+				background-color: ${color} !important;
 			}
 		`,
 		[color]
@@ -57,9 +57,11 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 		[board, colors, gameOver, handleTouchStart, placeFlag, revealCell, victory, saperBombStyles]
 	);
 
+	const saperClass = useMemo(() => `saperBoard ${gameOver && "saperGameOver"}`, [gameOver]);
+
 	return (
 		<div className='saperBoardContainer'>
-			<div className='saperBoard'>{renderedBoard}</div>
+			<div className={saperClass}>{renderedBoard}</div>
 		</div>
 	);
 };

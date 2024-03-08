@@ -19,19 +19,45 @@ export type Cell = {
 };
 
 const Saper = () => {
-	const { darkMode } = useSettingsContext();
+	const { darkMode, color } = useSettingsContext();
 	const { t } = useTranslation();
 
 	const darkModeStyles = useMemo(
 		() => css`
+
+		
 			&.saperContainer {
-				background-color: ${darkMode ? "lightgray" : "rgb(27,27,27)"};
+				background-color: ${darkMode ? "white" : "black"};
 				color: ${darkMode ? "black" : "white"};
 
+				.saperTitle {
+					background-color: ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
+				}
+				
+				.saperBoard {
+					border: 5px solid ${darkMode ? "#dfdfdf" : "gray"};
+
+					&:not(.saperGameOver) .saperCell:not(.saperCellRevealed):focus,  &:not(.saperGameOver) .saperCell:not(.saperCellRevealed):hover {
+						background-color: ${color} !important;
+						cursor: pointer;
+					}
+				}
+
+				
+
+				.saperCell {
+					background-color: ${darkMode ? "#dfdfdf" : "rgb(54,54,54)"};
+					border: 1px solid ${darkMode ? "gray" : "black"};
+				}
+
+				.saperCellRevealed {
+					background-color: ${darkMode ? "white" : "gray"} ;
+				}
+
 				.saperButton {
-					background-color: ${darkMode ? "white" : "black"};
 					color: ${darkMode ? "black" : "white"};
-					border: 2px solid ${darkMode ? "white" : "black"};
+					background-color: ${darkMode ? "white" : "black"};
+						border: 2px solid ${darkMode ? "white" : "black"};
 					transition: 0.2s opacity;
 
 					&:disabled {
@@ -64,18 +90,38 @@ const Saper = () => {
 
 				.saperStats {
 					background-color: ${darkMode ? "white" : "black"};
-					border: 2px solid ${darkMode ? "#c9c2c2" : "white"};
+					border-radius: 20px;
 					color: ${darkMode ? "black" : "white"};
+				}
+
+				.saperEndScreen {
+					background-color: ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
 				}
 
 				@media (min-width: 1200px) {
 					.saperEndScreen {
-						background-color: ${darkMode ? "#ebe9e9" : "rgb(36, 36, 36)"};
+						background-color: ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
 					}
+
+					.saperTitle {
+						border-bottom: 3px solid gray;
+					}
+
+					.saperCenter {
+						border-left: 3px solid gray;
+					}
+
+					.saperEndScreen {
+						border-left: 3px solid gray;
+						border-right: 3px solid gray;
+					}
+
+					.saperButton {
+						
 				}
 			}
 		`,
-		[darkMode]
+		[darkMode, color]
 	);
 
 	const [board, setBoard] = useState<Cell[][]>([]);

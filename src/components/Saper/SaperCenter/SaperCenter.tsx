@@ -17,7 +17,7 @@ const SaperCenter = ({ board, victory, gameOver, gameTime, handleTouchStart, rev
 	const { t } = useTranslation();
 	return (
 		<div className='saperCenter'>
-			<div>
+			<div className='saperTitle'>
 				<h1>{t("Minesweeper.minesweeperTitle")}</h1>
 				<p className='saperTimer'>{`${t("Minesweeper.minesweeperTime")}: ${gameTime}s`}</p>
 			</div>

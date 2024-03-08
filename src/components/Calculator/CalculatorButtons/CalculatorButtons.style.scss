@@ -5,9 +5,9 @@
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	grid-template-rows: repeat(6, 1fr);
-	gap: 0.25rem;
+	border: none;
 	width: 100%;
-	padding: 0.25rem;
+	padding: 0.25rem 0;
 }
 
 .calculatorButton {
@@ -16,6 +16,7 @@
 	font-size: 1.25rem;
 	width: 100%;
 	height: 100%;
+
 	cursor: pointer;
 	outline: none;
 	transition: 0.1s;

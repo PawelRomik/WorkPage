@@ -1,14 +1,12 @@
 @import "../../../assets/styles/variables";
 .saperBoard {
 	padding: 0.25rem;
-	border: 5px solid white;
 }
 
 .saperCell {
 	width: 2.25rem;
 	height: 2.25rem;
 	border: 1px solid black;
-	background-color: rgb(161, 161, 161);
 	display: flex;
 	justify-content: center;
 	align-items: center;
