@@ -47,10 +47,10 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, showConfirmDialog, cre
 	const darkModeStyles = useMemo(
 		() => css`
 			&.notesSelection {
-				background-color: ${darkMode ? "lightgray" : "rgb(27, 27, 27)"};
+				background-color: ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
 
 				&::-webkit-scrollbar-track {
-					background-color: ${darkMode ? "gray" : "black"};
+					background-color: ${darkMode ? "white" : "black"};
 				}
 
 				.noteButton {

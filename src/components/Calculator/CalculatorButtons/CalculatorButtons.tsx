@@ -30,9 +30,11 @@ const CalculatorButtons = ({ handleOperation, handleAddNumber, handleAddOperator
 	const darkModeStyles = useMemo(
 		() => css`
 			& {
+				background-color: ${darkMode ? "white" : "black"};
 				.calculatorButton {
 					background-color: ${darkMode ? " rgb(231,231,231)" : "rgb(77, 77, 77)"};
 					color: ${darkMode ? "black" : "white"};
+					border: 0.1rem ${darkMode ? "white" : "black"} solid;
 				}
 			}
 		`,

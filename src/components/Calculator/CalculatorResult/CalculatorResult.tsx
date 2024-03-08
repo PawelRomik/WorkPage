@@ -25,7 +25,8 @@ const CalculatorResult = ({ firstNumber, operator, secondNumber, copyContent }: 
 	const darkModeStyles = useMemo(
 		() => css`
 			&.calculatorResult {
-				background-color: ${darkMode ? "rgb(201, 201, 201)" : "white"};
+				color: ${darkMode ? "black" : "white"};
+				background-color: ${darkMode ? "lightgray" : "#hhhhhh"};
 			}
 		`,
 		[darkMode]

@@ -22,11 +22,12 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 
 			const newContent = content.replace(pattern, color);
 
-			editor.commands.setContent(newContent);
+			editor.commands.setContent(newContent, false, { preserveWhitespace: "full" });
 
 			editor.off("update");
 			editor.on("update", ({ editor }) => {
 				const html = editor.getHTML();
+				console.log(html);
 				updateNote(html);
 			});
 		}
@@ -47,11 +48,11 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 	const tiptapButtonsStyles = useMemo(
 		() => css`
 			& {
-				background-color: ${darkMode ? "lightgray" : "black"};
+				background-color: ${darkMode ? "white" : "black"};
 				border-top: 3px solid ${darkMode ? "white" : "black"};
 				button {
-					border: 2px solid ${darkMode ? "white" : "black"};
-					background-color: ${darkMode ? "white" : "rgb(54, 54, 54)"};
+					border: 2px solid ${darkMode ? "#dfdfdf" : "rgb(54,54,54)"};
+					background-color: ${darkMode ? "#dfdfdf" : "rgb(54, 54, 54)"};
 					color: ${darkMode ? "black" : "white"};
 					&:hover,
 					&:focus {
@@ -77,7 +78,7 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 	const charsLeftStyles = useMemo(
 		() => css`
 			& {
-				background-color: ${darkMode ? "lightgray" : "black"};
+				background-color: ${darkMode ? "#dfdfdf" : "black"};
 				color: ${darkMode ? "black" : "white"};
 			}
 		`,

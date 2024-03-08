@@ -37,7 +37,7 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, showConfirmDialog,
 
 					.taskOptions button {
 						&:hover,
-						&:active {
+						&:focus {
 							background-color: white;
 							color: ${color};
 							border: 4px solid white;

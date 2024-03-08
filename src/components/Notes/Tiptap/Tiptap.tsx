@@ -42,7 +42,9 @@ const Tiptap = ({ notesLength, noteValue, updateNote }: tiptapProps) => {
 	const darkModeStyles = useMemo(
 		() => css`
 			& .ProseMirror {
-				border: 2px solid ${darkMode ? "lightgray" : "black"};
+				background-color: ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
+				color: ${darkMode ? "black" : "white"};
+				border: 4px solid ${darkMode ? "white" : "black"};
 			}
 		`,
 		[darkMode]
