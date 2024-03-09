@@ -20,8 +20,9 @@ const TranslatorSettings = ({ selectedLanguageFrom, selectedLanguageTo, clear, s
 		() => css`
 			button:focus,
 			button:hover {
-				border: 2px solid ${color};
-				color: ${color};
+				border: 4px solid ${color};
+				background-color: ${color};
+				color: white;
 			}
 		`,
 		[color]
@@ -30,12 +31,12 @@ const TranslatorSettings = ({ selectedLanguageFrom, selectedLanguageTo, clear, s
 	const darkModeStyles = useMemo(
 		() => css`
 			&.translatorTopSection {
-				background-color: ${darkMode ? "lightgray" : "rgb(27,27,27)"};
+				background-color: ${darkMode ? "#dfdfdf" : "rgb(27,27,27)"};
 
 				button {
 					background-color: ${darkMode ? "white" : "black"};
 					color: ${darkMode ? "black" : "white"};
-					border: 2px solid ${darkMode ? "black" : "white"};
+					border: 4px solid ${darkMode ? "white" : "black"};
 				}
 			}
 		`,

@@ -11,8 +11,6 @@
 
 .translateResult {
 	height: 100%;
-	background-color: white;
-	color: black;
 	flex: 1;
 	padding: 0.5rem;
 	font-size: 1rem;
@@ -21,10 +19,8 @@
 
 .translateTextArea {
 	height: 100%;
-	background-color: white;
-	color: black;
 	flex: 1;
-	border: 2px solid white;
+
 	display: flex;
 	vertical-align: top;
 	outline: none;

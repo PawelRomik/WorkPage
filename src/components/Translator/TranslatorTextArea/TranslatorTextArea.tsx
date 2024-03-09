@@ -10,15 +10,20 @@ type TranslatorTextAreaProps = {
 };
 
 const TranslatorTextArea = ({ inputValue, updateInputValue, translated }: TranslatorTextAreaProps) => {
-	const { color } = useSettingsContext();
+	const { color, darkMode } = useSettingsContext();
 
 	const translatorTextAreaStyles = useMemo(
 		() => css`
+			& {
+				background-color: ${darkMode ? "white" : "rgb(54,54,54)"};
+				border: 2px solid ${darkMode ? "white" : "rgb(54,54,54)"};
+				color: ${darkMode ? "black" : "white"};
+			}
 			&:focus {
 				border: 2px solid ${color};
 			}
 		`,
-		[color]
+		[color, darkMode]
 	);
 
 	return (
@@ -32,7 +37,9 @@ const TranslatorTextArea = ({ inputValue, updateInputValue, translated }: Transl
 				maxLength={1000}
 				onChange={updateInputValue}
 			></textarea>
-			<p className='translateResult'>{translated}</p>
+			<p className='translateResult' css={translatorTextAreaStyles}>
+				{translated}
+			</p>
 		</section>
 	);
 };
