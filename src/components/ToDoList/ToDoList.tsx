@@ -169,7 +169,7 @@ const ToDoList = () => {
 
 	const finishEditing = useCallback(() => {
 		const { taskName, taskContent, taskPriority } = inputValues;
-		if (taskName && taskContent && currentlyEdited !== null) {
+		if (taskName && currentlyEdited !== null) {
 			const updatedTasks = [...tasks];
 			updatedTasks[currentlyEdited] = {
 				taskName,
