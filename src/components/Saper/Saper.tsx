@@ -342,7 +342,6 @@ const Saper = () => {
 
 	const animationEnd = useCallback(() => {
 		changeIsLoading(false);
-		console.log("e");
 	}, []);
 
 	const playAgain = useCallback(() => {
