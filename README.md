@@ -3,35 +3,39 @@
 ## Project Overview :tada:
 <h3>Workpage</h3> 
 <p align="center">
-     <img src="https://github.com/LeQu15/WorkPage/assets/78439105/806657bb-d380-4c13-a6d7-8461dbe2b342" alt="desktop">
+     <img src="https://github.com/LeQu15/WorkPage/assets/78439105/68657542-d6f7-4c92-a16a-e6e46bd63b68" alt="desktop">
 </p>
 A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>, <b>Notes</b>, <b>Paint</b> or <b>Translator</b>. Boost your productivity and keep everything in one convenient place!
 
 ## Tech/framework used :wrench:
 * [Vite](https://github.com/vitejs/vite)
+* [TypeScript](https://github.com/microsoft/TypeScript)
 * [React](https://github.com/facebook/react)
 * [React-calendar](https://github.com/wojtekmaj/react-calendar)
 * [React-confetti](https://github.com/alampros/react-confetti)
-* [TypeScript](https://github.com/microsoft/TypeScript)
-* [Nanoid](https://github.com/ai/nanoid)             
+* [React-toastify](https://github.com/fkhadra/react-toastify)
 * [Sass](https://github.com/sass/sass)
+* [Nanoid](https://github.com/ai/nanoid)             
+* [Tiptap](https://github.com/ueberdosis/tiptap)
+* [i18next](https://github.com/i18next/react-i18next)
+* [SweetAlert2](https://github.com/sweetalert2/sweetalert2)
 
 ## Screenshots :tv:
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/afdc7fe3-2381-44d9-a9bf-f1af03e9ecab" alt="Calculator">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/1ef97017-26a7-4883-af6c-1fabae9d7d7d" alt="Calculator">
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/923e676b-5850-4c62-8a4b-7059fa579c49" alt="ToDoList">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/ac5ae975-81f4-4550-82b0-8252c5d9cb4e" alt="ToDoList">
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/174718c9-4cbd-40d6-94d2-07e2652cc506" alt="Notes">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/2111c043-73b9-4fde-b614-a8fc264d0cb3" alt="Notes">
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/22dea265-73c3-4543-9156-3899a4b8e340" alt="Minesweeper">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/ea39e05e-7ddb-44b3-8bcb-51cfb274ef30" alt="Minesweeper">
 </p>
 
 <p align="center">
@@ -39,7 +43,7 @@ A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>,
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/f301f0a8-65dc-4e0d-b75f-ba68286dcab2" alt="Translator">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/eef76b16-e072-41ee-a3da-4d56315fa451" alt="Translator">
 </p>
 
 ## Installation :floppy_disk:
