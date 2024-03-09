@@ -1,5 +1,5 @@
 import "./Saper.style.scss";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Confetti from "react-confetti";
 import config from "./saper.config";
 import { css } from "@emotion/react";
@@ -135,6 +135,8 @@ const Saper = () => {
 	const victory = useMemo(() => revealedCount === rows[difficulty] * columns[difficulty] - totalBombs[difficulty], [revealedCount, columns, rows, totalBombs, difficulty]);
 	const [bestTimes, setBestTimes] = useState<number[]>([]);
 	const { localSaperBestTimes } = useMemo(() => LocalStorageNames, []);
+	const [loading, changeIsLoading] = useState(false);
+	const boardRef = useRef(null);
 
 	useEffect(() => {
 		const storedBestTimes = localStorage.getItem(localSaperBestTimes);
@@ -335,7 +337,12 @@ const Saper = () => {
 		changeFirstClick(true);
 		stopTimer();
 		setGameTime(0);
+		changeIsLoading(true);
 	}, [initializeBoard, stopTimer]);
+
+	const animationEnd = useCallback(() => {
+		changeIsLoading(false);
+	}, []);
 
 	const playAgain = useCallback(() => {
 		if (!firstClick && !gameOver) {
@@ -395,14 +402,23 @@ const Saper = () => {
 	);
 
 	return (
-		<div className='saperContainer' css={darkModeStyles}>
-			{victory && <Confetti />}
-			<SaperCenter board={board} victory={victory} gameOver={gameOver} gameTime={gameTime} handleTouchStart={handleTouchStart} revealCell={revealCell} placeFlag={placeFlag} />
+		<div className='saperContainer' css={darkModeStyles} ref={boardRef}>
+			{victory && <Confetti width={window.innerWidth} height={window.innerHeight} />}
+			<SaperCenter
+				board={board}
+				loading={loading}
+				victory={victory}
+				gameOver={gameOver}
+				gameTime={gameTime}
+				handleTouchStart={handleTouchStart}
+				revealCell={revealCell}
+				placeFlag={placeFlag}
+				animationEnd={animationEnd}
+			/>
 			<SaperEndScreen
 				firstClick={firstClick}
 				bestTimes={bestTimes}
 				gameOver={gameOver}
-				victory={victory}
 				difficulty={difficulty}
 				changeDifficultyOnClick={changeDifficultyOnClick}
 				playAgain={playAgain}

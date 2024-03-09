@@ -7,14 +7,13 @@ import { useTranslation } from "react-i18next";
 type SaperEndScreenProps = {
 	bestTimes: number[];
 	gameOver: boolean;
-	victory: boolean;
 	difficulty: number;
 	playAgain: () => void;
 	firstClick: boolean;
 	changeDifficultyOnClick: (passedDifficulty: number) => void;
 };
 
-const SaperEndScreen = ({ bestTimes, gameOver, victory, difficulty, playAgain, changeDifficultyOnClick, firstClick }: SaperEndScreenProps) => {
+const SaperEndScreen = ({ bestTimes, gameOver, difficulty, playAgain, changeDifficultyOnClick, firstClick }: SaperEndScreenProps) => {
 	const { color } = useSettingsContext();
 	const { t } = useTranslation();
 
@@ -29,12 +28,10 @@ const SaperEndScreen = ({ bestTimes, gameOver, victory, difficulty, playAgain, c
 		[color]
 	);
 
-	const gameOverText = useMemo(() => (gameOver ? (victory ? t("Minesweeper.minesweeperWin") : t("Minesweeper.minesweeperLose")) : ""), [gameOver, victory, t]);
 	const gameOverButtonText = useMemo(() => (gameOver ? t("Minesweeper.minesweeperButtonPlayAgain") : t("Minesweeper.minesweeperButtonReset")), [gameOver, t]);
 
 	return (
 		<div className='saperEndScreen'>
-			<p className='game-over'>{gameOverText}</p>
 			<div className='saperStats'>
 				<p>{t("Minesweeper.minesweeperStats")}: </p>
 				<p className='saperStatsParagraph'>

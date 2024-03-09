@@ -46,6 +46,7 @@ const Desktop = ({
 }: DesktopProps) => {
 	const { background, darkMode, wallpaperStyle, color } = useSettingsContext();
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
+	const [isOff, changeIsOff] = useState(false);
 
 	const launchApp = useCallback((e: React.MouseEvent) => {
 		const target = e.currentTarget as HTMLButtonElement;
@@ -54,8 +55,11 @@ const Desktop = ({
 	}, []);
 
 	const closeApp = useCallback(() => {
-		changeChosenApp(null);
-	}, []);
+		if (isOff) {
+			changeChosenApp(null);
+			changeIsOff(false);
+		}
+	}, [isOff]);
 
 	const hidePanels = useCallback(() => {
 		hideUserWindowState();
@@ -130,7 +134,7 @@ const Desktop = ({
 				pauseOnHover={false}
 				theme={darkMode ? "light" : "dark"}
 			/>
-			{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} />}
+			{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} isOff={isOff} changeIsOff={changeIsOff} />}
 			{userWindowState && <UserWindow />}
 			{calendarWindowState && <CalendarWindow />}
 			{soundbarWindowState && <Soundbar volume={volume} setVolume={setVolume} />}

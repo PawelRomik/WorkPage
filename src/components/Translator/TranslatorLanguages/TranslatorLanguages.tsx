@@ -15,7 +15,7 @@ const TranslatorLanguages = ({ passedValue, onValueChange }: translatorLanguages
 	const translatorLanguagesSelectStyles = useMemo(
 		() => css`
 			&:focus {
-				border: 2px solid ${color};
+				border: 4px solid ${color};
 			}
 		`,
 		[color]
@@ -26,7 +26,7 @@ const TranslatorLanguages = ({ passedValue, onValueChange }: translatorLanguages
 			& {
 				background-color: ${darkMode ? "white" : "black"};
 				color: ${darkMode ? "black" : "white"};
-				border: 2px solid ${darkMode ? "black" : "white"};
+				border: 4px solid ${darkMode ? "white" : "black"};
 			}
 		`,
 		[darkMode]
