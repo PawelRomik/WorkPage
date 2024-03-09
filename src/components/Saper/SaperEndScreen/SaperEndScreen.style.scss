@@ -9,19 +9,9 @@
 	padding: 0.5rem;
 }
 
-.game-over {
-	height: 1rem;
-}
-
 .saperDifficulty,
 .saperStats {
 	display: none;
-}
-
-@media (min-width: 768px) {
-	.game-over {
-		height: 2rem;
-	}
 }
 
 @media (min-width: 1200px) {
@@ -30,10 +20,6 @@
 		display: flex;
 		width: 45%;
 		justify-content: space-around;
-	}
-
-	.game-over {
-		font-size: 3rem;
 	}
 
 	.saperStats {

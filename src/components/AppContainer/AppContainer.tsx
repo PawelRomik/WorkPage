@@ -10,6 +10,7 @@ import { useSettingsContext } from "../../providers/SettingsContext";
 import { useCallback, useMemo } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
+import { Dispatch, SetStateAction } from "react";
 
 type AppContainerProps = {
 	app: {
@@ -18,9 +19,11 @@ type AppContainerProps = {
 		class: string;
 	};
 	closeApp: () => void;
+	isOff: boolean;
+	changeIsOff: Dispatch<SetStateAction<boolean>>;
 };
 
-const AppContainer = ({ app, closeApp }: AppContainerProps) => {
+const AppContainer = ({ app, closeApp, isOff, changeIsOff }: AppContainerProps) => {
 	const { t } = useTranslation();
 	const { color, darkMode } = useSettingsContext();
 
@@ -80,6 +83,10 @@ const AppContainer = ({ app, closeApp }: AppContainerProps) => {
 		}
 	}, [app]);
 
+	const playAnimation = () => {
+		changeIsOff(true);
+	};
+
 	const blockClosingOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 	};
@@ -88,12 +95,14 @@ const AppContainer = ({ app, closeApp }: AppContainerProps) => {
 		return app.name === "Calculator" || app.name === "Settings" ? " smallContainer" : "";
 	}, [app]);
 
+	const appContainerClassName = useMemo(() => `appContainerBackground${isOff ? " offAnimation" : ""}`, [isOff]);
+
 	return (
-		<div className='appContainerBackground' onClick={closeApp}>
+		<div className={appContainerClassName} onClick={playAnimation} onAnimationEnd={closeApp}>
 			<div className={`appContainer${appContainerSize}`} css={darkModeStyles} onClick={blockClosingOnClick}>
 				<header className='appContainerHeader'>
 					<h3 className='appContainerTitle'>{t(`Apps.${app.name}`)}</h3>
-					<button className='closeButton' onClick={closeApp} css={buttonStyles}>
+					<button className='closeButton' onClick={playAnimation} onAnimationEnd={closeApp} css={buttonStyles}>
 						X
 					</button>
 				</header>

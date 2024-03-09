@@ -3,6 +3,7 @@ import { Cell } from "../Saper";
 import { useMemo } from "react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { css } from "@emotion/react";
+import { useTranslation } from "react-i18next";
 import "./SaperBoard.style.scss";
 
 type SaperBoardProps = {
@@ -16,7 +17,7 @@ type SaperBoardProps = {
 
 const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTouchStart }: SaperBoardProps) => {
 	const { color } = useSettingsContext();
-
+	const { t } = useTranslation();
 	const saperBombStyles = useMemo(
 		() => css`
 			&.saperBomb {
@@ -58,9 +59,13 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 	);
 
 	const saperClass = useMemo(() => `saperBoard ${gameOver && "saperGameOver"}`, [gameOver]);
+	const gameOverText = useMemo(() => (gameOver ? (victory ? t("Minesweeper.minesweeperWin") : t("Minesweeper.minesweeperLose")) : ""), [gameOver, victory, t]);
 
 	return (
 		<div className='saperBoardContainer'>
+			<p className='game-over'>
+				<span>{gameOverText}</span>
+			</p>
 			<div className={saperClass}>{renderedBoard}</div>
 		</div>
 	);

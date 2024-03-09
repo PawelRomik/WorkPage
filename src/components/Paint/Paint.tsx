@@ -56,8 +56,12 @@ const Paint = () => {
 			};
 		}
 		const savedBgc = localStorage.getItem(localPaintBackground);
-		if (savedBgc) setBackgroundColor(JSON.parse(savedBgc));
-	}, [localPaintBackground, localPaintCanvas]);
+		if (savedBgc) {
+			setBackgroundColor(JSON.parse(savedBgc));
+		} else {
+			setBackgroundColor(darkMode ? "#ffffff" : "#363636");
+		}
+	}, [localPaintBackground, localPaintCanvas, darkMode]);
 
 	const saveToLocalStorage = useCallback(() => {
 		localStorage.setItem(localPaintCanvas, JSON.stringify(canvasRef.current!.toDataURL("image/png")));
@@ -173,11 +177,14 @@ const Paint = () => {
 					if (canvas && ctx) {
 						ctx.clearRect(0, 0, canvas.width, canvas.height);
 					}
+					const newBgc = darkMode ? "#ffffff" : "#363636";
+					setBackgroundColor(newBgc);
+					localStorage.setItem(localPaintBackground, JSON.stringify(newBgc));
 				}
 			});
 
 		saveToLocalStorage();
-	}, [saveToLocalStorage, darkMode, t]);
+	}, [saveToLocalStorage, darkMode, t, localPaintBackground]);
 
 	const toggleBrushShape = useCallback(() => {
 		setBrushShape((prevShape) => (prevShape === BrushShape.Square ? BrushShape.Circle : BrushShape.Square));

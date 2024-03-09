@@ -402,7 +402,6 @@ const Saper = () => {
 				firstClick={firstClick}
 				bestTimes={bestTimes}
 				gameOver={gameOver}
-				victory={victory}
 				difficulty={difficulty}
 				changeDifficultyOnClick={changeDifficultyOnClick}
 				playAgain={playAgain}
