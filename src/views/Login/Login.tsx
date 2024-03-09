@@ -16,15 +16,15 @@ const Login = () => {
 	const handleLogin = useCallback(() => {
 		if (password === loginInput) {
 			setLoading(true);
-
-			setTimeout(() => {
-				setLoading(false);
-				login();
-			}, 3000);
 		} else {
 			setError("Incorrect password");
 		}
-	}, [login, loginInput, password]);
+	}, [loginInput, password]);
+
+	const animationEnd = useCallback(() => {
+		setLoading(false);
+		login();
+	}, [login]);
 
 	const handleKeyPress = useCallback(
 		(event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -41,7 +41,7 @@ const Login = () => {
 				<Clock />
 			</div>
 			{loading ? (
-				<LoadingAnimation />
+				<LoadingAnimation animationEnd={animationEnd} repeats={2} />
 			) : (
 				<LoginProfile handleKeyPress={handleKeyPress} handleLogin={handleLogin} error={error} password={password} loginInput={loginInput} updateLoginInput={setLoginInput} />
 			)}

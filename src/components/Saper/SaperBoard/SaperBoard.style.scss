@@ -1,6 +1,7 @@
 @import "../../../assets/styles/variables";
 .saperBoard {
 	padding: 0.25rem;
+	position: relative;
 }
 
 .saperBoardContainer {
@@ -8,7 +9,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: relative;
 }
 
 .game-over {
@@ -23,6 +23,17 @@
 	height: 100%;
 	top: 0;
 	left: 0;
+	animation: 400ms linear gameOver;
+
+	& > span {
+		width: 100%;
+		opacity: 0;
+		height: 4rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		animation: 400ms 400ms linear gameOver forwards;
+	}
 }
 
 .saperCell {
@@ -68,5 +79,15 @@
 	.saperCell {
 		width: 3.5rem;
 		height: 3.5rem;
+	}
+}
+
+@keyframes gameOver {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
 	}
 }

@@ -11,9 +11,11 @@ type SaperCenterProps = {
 	handleTouchStart: (row: number, col: number) => void;
 	revealCell: (row: number, col: number) => void;
 	placeFlag: (row: number, col: number) => void;
+	loading: boolean;
+	animationEnd: () => void;
 };
 
-const SaperCenter = ({ board, victory, gameOver, gameTime, handleTouchStart, revealCell, placeFlag }: SaperCenterProps) => {
+const SaperCenter = ({ board, victory, gameOver, gameTime, handleTouchStart, revealCell, animationEnd, placeFlag, loading }: SaperCenterProps) => {
 	const { t } = useTranslation();
 	return (
 		<div className='saperCenter'>
@@ -21,7 +23,16 @@ const SaperCenter = ({ board, victory, gameOver, gameTime, handleTouchStart, rev
 				<h1>{t("Minesweeper.minesweeperTitle")}</h1>
 				<p className='saperTimer'>{`${t("Minesweeper.minesweeperTime")}: ${gameTime}s`}</p>
 			</div>
-			<SaperBoard board={board} victory={victory} gameOver={gameOver} placeFlag={placeFlag} revealCell={revealCell} handleTouchStart={handleTouchStart} />
+			<SaperBoard
+				board={board}
+				loading={loading}
+				animationEnd={animationEnd}
+				victory={victory}
+				gameOver={gameOver}
+				placeFlag={placeFlag}
+				revealCell={revealCell}
+				handleTouchStart={handleTouchStart}
+			/>
 		</div>
 	);
 };
