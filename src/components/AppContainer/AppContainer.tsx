@@ -10,7 +10,6 @@ import { useSettingsContext } from "../../providers/SettingsContext";
 import { useCallback, useMemo } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
-import { Dispatch, SetStateAction } from "react";
 
 type AppContainerProps = {
 	app: {
@@ -20,7 +19,7 @@ type AppContainerProps = {
 	};
 	closeApp: () => void;
 	isOff: boolean;
-	changeIsOff: Dispatch<SetStateAction<boolean>>;
+	changeIsOff: (newValue: boolean) => void;
 };
 
 const AppContainer = ({ app, closeApp, isOff, changeIsOff }: AppContainerProps) => {

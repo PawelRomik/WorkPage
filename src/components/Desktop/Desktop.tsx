@@ -1,5 +1,5 @@
 import "./Desktop.style.scss";
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import appData from "../../data/apps";
 import AppContainer from "../AppContainer/AppContainer";
@@ -30,6 +30,10 @@ type DesktopProps = {
 	hideWifiWindowState: () => void;
 	volume: number;
 	setVolume: (value: number) => void;
+	chosenApp: App | null;
+	changeChosenApp: (newApp: App | null) => void;
+	isOff: boolean;
+	changeIsOff: (newValue: boolean) => void;
 };
 
 const Desktop = ({
@@ -43,23 +47,28 @@ const Desktop = ({
 	hideSoundbarWindowState,
 	volume,
 	setVolume,
+	chosenApp,
+	changeChosenApp,
+	isOff,
+	changeIsOff,
 }: DesktopProps) => {
 	const { background, darkMode, wallpaperStyle, color } = useSettingsContext();
-	const [chosenApp, changeChosenApp] = useState<App | null>(null);
-	const [isOff, changeIsOff] = useState(false);
 
-	const launchApp = useCallback((e: React.MouseEvent) => {
-		const target = e.currentTarget as HTMLButtonElement;
-		const id: number = Number(target.dataset.app);
-		changeChosenApp(appData[id]);
-	}, []);
+	const launchApp = useCallback(
+		(e: React.MouseEvent) => {
+			const target = e.currentTarget as HTMLButtonElement;
+			const id: number = Number(target.dataset.app);
+			changeChosenApp(appData[id]);
+		},
+		[changeChosenApp]
+	);
 
 	const closeApp = useCallback(() => {
 		if (isOff) {
 			changeChosenApp(null);
 			changeIsOff(false);
 		}
-	}, [isOff]);
+	}, [isOff, changeChosenApp, changeIsOff]);
 
 	const hidePanels = useCallback(() => {
 		hideUserWindowState();
