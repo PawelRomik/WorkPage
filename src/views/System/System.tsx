@@ -2,6 +2,11 @@ import { useEffect, useState, useMemo } from "react";
 import Desktop from "../../components/Desktop/Desktop";
 import LocalStorageNames from "../../utils/localstorageNames";
 import Taskbar from "../../components/Taskbar/Taskbar";
+export type App = {
+	id: number;
+	name: string;
+	class: string;
+};
 
 const System = () => {
 	const [userWindowState, changeUserWindowState] = useState(false);
@@ -10,6 +15,8 @@ const System = () => {
 	const [wifiWindowState, changeWifiWindowState] = useState(false);
 	const [volume, setVolume] = useState(50);
 	const { localSoundValue } = useMemo(() => LocalStorageNames, []);
+	const [chosenApp, changeChosenApp] = useState<App | null>(null);
+	const [isOff, changeIsOff] = useState(false);
 
 	useEffect(() => {
 		const storedSoundValue = localStorage.getItem(localSoundValue);
@@ -79,6 +86,10 @@ const System = () => {
 				hideCalendarWindow={hideCalendarWindowState}
 				volume={volume}
 				setVolume={setVolume}
+				chosenApp={chosenApp}
+				changeChosenApp={changeChosenApp}
+				isOff={isOff}
+				changeIsOff={changeIsOff}
 			/>
 			<Taskbar
 				displayUserWindowState={displayUserWindowState}
@@ -86,6 +97,8 @@ const System = () => {
 				displaySoundbarWindow={displaySoundbarWindowState}
 				displayWifiWindow={displayWifiWindowState}
 				volume={volume}
+				chosenApp={chosenApp}
+				changeIsOff={changeIsOff}
 			/>
 		</>
 	);

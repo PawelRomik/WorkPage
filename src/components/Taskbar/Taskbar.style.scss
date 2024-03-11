@@ -6,6 +6,7 @@
 	align-items: center;
 	height: 2rem;
 	background-color: rgba(255, 255, 255, 0.795);
+	position: relative;
 }
 
 .systemButton {
@@ -15,6 +16,29 @@
 	margin-left: 0.5rem;
 	cursor: pointer;
 	outline: none;
+}
+
+.taskbarCenterApp {
+	background-color: transparent;
+	border-bottom: 2px solid white;
+	font-size: 1.25rem;
+	width: 2rem;
+	display: flex;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+
+	justify-content: center;
+	align-items: center;
+	height: 2rem;
+	margin-left: 0.5rem;
+	cursor: pointer;
+	outline: none;
+
+	i {
+		position: relative;
+	}
 }
 
 .taskbarTimer {
@@ -34,6 +58,12 @@
 @media (min-width: 768px) {
 	.taskbar {
 		height: 3rem;
+	}
+
+	.taskbarCenterApp {
+		height: 3rem;
+		width: 3rem;
+		font-size: 1.5rem;
 	}
 
 	.systemButton {
