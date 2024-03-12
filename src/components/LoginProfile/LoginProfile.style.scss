@@ -6,11 +6,17 @@
 	flex-direction: column;
 	color: white;
 	gap: 1rem;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 .userAvatar {
 	width: 10rem;
 	border: 6px solid white;
 	border-radius: 400px;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 	background: linear-gradient(225deg, rgba(12, 33, 232, 1) 0%, rgba(255, 0, 230, 1) 100%);
 }
 
