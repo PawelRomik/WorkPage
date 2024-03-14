@@ -61,23 +61,26 @@ const Login = ({ loaded }: LoginProps) => {
 			<div className='loginTimer'>
 				<Clock />
 			</div>
-			<ToastContainer
-				position='top-right'
-				limit={2}
-				autoClose={3000}
-				hideProgressBar={false}
-				newestOnTop
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss={false}
-				draggable
-				pauseOnHover={false}
-				theme={darkMode ? "light" : "dark"}
-			/>
+
 			{loading || loaded ? (
 				<LoadingAnimation animationEnd={animationEnd} repeats={2} />
 			) : (
-				<LoginProfile handleKeyPress={handleKeyPress} handleLogin={handleLogin} password={password} loginInput={loginInput} updateLoginInput={setLoginInput} />
+				<>
+					<ToastContainer
+						position='top-right'
+						limit={2}
+						autoClose={3000}
+						hideProgressBar={false}
+						newestOnTop
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss={false}
+						draggable
+						pauseOnHover={false}
+						theme={darkMode ? "light" : "dark"}
+					/>
+					<LoginProfile handleKeyPress={handleKeyPress} handleLogin={handleLogin} password={password} loginInput={loginInput} updateLoginInput={setLoginInput} />
+				</>
 			)}
 		</main>
 	);
