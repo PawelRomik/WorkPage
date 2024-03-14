@@ -17,6 +17,7 @@ const LocalStorageNames = {
 	localSaperBestTimes: "paintBestTimes",
 	localSoundValue: "localSoundValue",
 	localSettingsLanguage: "localLanguage",
+	localLoginAnimation: "loginAnimation",
 };
 
 export default LocalStorageNames;

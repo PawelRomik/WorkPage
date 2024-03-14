@@ -2,6 +2,8 @@ import { useEffect, useState, useMemo } from "react";
 import Desktop from "../../components/Desktop/Desktop";
 import LocalStorageNames from "../../utils/localstorageNames";
 import Taskbar from "../../components/Taskbar/Taskbar";
+import Login from "../Login/Login";
+import { useAuthContext } from "../../providers/AuthContext";
 export type App = {
 	id: number;
 	name: string;
@@ -17,6 +19,7 @@ const System = () => {
 	const { localSoundValue } = useMemo(() => LocalStorageNames, []);
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 	const [isOff, changeIsOff] = useState(false);
+	const { loggedInAnimation, changeLoggedInAnimation } = useAuthContext();
 
 	useEffect(() => {
 		const storedSoundValue = localStorage.getItem(localSoundValue);
@@ -75,6 +78,12 @@ const System = () => {
 
 	return (
 		<>
+			{" "}
+			{loggedInAnimation && (
+				<div className='fakeLogin' onAnimationEnd={() => changeLoggedInAnimation(false)}>
+					<Login loaded={true} />
+				</div>
+			)}
 			<Desktop
 				userWindowState={userWindowState}
 				hideWifiWindowState={hideWifiWindowState}

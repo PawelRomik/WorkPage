@@ -5,18 +5,30 @@ type AuthContextProps = {
 	loggedIn: boolean;
 	login: () => void;
 	logout: () => void;
+	loggedInAnimation: boolean;
+	changeLoggedInAnimation: (newValue: boolean) => void;
 };
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-	const { localLoggedIn } = useMemo(() => LocalStorageNames, []);
+	const { localLoggedIn, localLoginAnimation } = useMemo(() => LocalStorageNames, []);
 	const [loggedIn, setLoggedIn] = useState(false);
+	const [loggedInAnimation, changeLoggedInAnimation] = useState(false);
 
 	useEffect(() => {
 		const loginStatus = JSON.parse(localStorage.getItem(localLoggedIn) || "false");
 		setLoggedIn(loginStatus);
 	}, [localLoggedIn]);
+
+	useEffect(() => {
+		const loginAnimationStatus = JSON.parse(localStorage.getItem(localLoginAnimation) || "false");
+		changeLoggedInAnimation(loginAnimationStatus);
+	}, [localLoginAnimation]);
+
+	useEffect(() => {
+		localStorage.setItem(localLoginAnimation, JSON.stringify(loggedInAnimation));
+	}, [loggedInAnimation, localLoginAnimation]);
 
 	const login = useCallback(() => {
 		setLoggedIn(true);
@@ -28,7 +40,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		localStorage.setItem(localLoggedIn, JSON.stringify(false));
 	}, [localLoggedIn]);
 
-	return <AuthContext.Provider value={{ loggedIn, login, logout }}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={{ loggedIn, login, logout, loggedInAnimation, changeLoggedInAnimation }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuthContext = () => {

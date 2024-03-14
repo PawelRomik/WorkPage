@@ -40,7 +40,7 @@
 	border-right: none;
 	border-radius: 30px 0 0 30px;
 	outline: none;
-	transition: 0.1s;
+	transition: 0.2s;
 
 	&:autofill,
 	&:autofill:hover {
@@ -75,6 +75,7 @@
 	border-radius: 0 30px 30px 0;
 	outline: none;
 	cursor: pointer;
+	transition: 0.2s;
 
 	&:hover,
 	&:focus {
