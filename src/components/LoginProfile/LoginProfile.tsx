@@ -17,30 +17,20 @@ type LoginProfileProps = {
 const LoginProfile = ({ handleLogin, handleKeyPress, password, loginInput, updateLoginInput }: LoginProfileProps) => {
 	const { t } = useTranslation();
 	const { color } = useSettingsContext();
-	const loginStyles = useMemo(() => {
-		const getSecondColor = (color: string) => {
-			const parsedColor = parseInt(color.substring(1), 16);
+	const loginStyles = useMemo(
+		() =>
+			css`
+				& .userAvatar {
+					background: linear-gradient(200deg, ${color} 0%, black 100%);
+				}
 
-			let newColor = (parsedColor ^ 0xffffff).toString(16);
-			while (newColor.length < 6) {
-				newColor = "0" + newColor;
-			}
-			return "#" + newColor;
-		};
-
-		const lighterColor = getSecondColor(color);
-
-		return css`
-			& .userAvatar {
-				background: linear-gradient(225deg, ${color} 0%, ${lighterColor} 100%);
-			}
-
-			& .signInButton:hover,
-			& .signInButton:focus {
-				color: ${color} !important;
-			}
-		`;
-	}, [color]);
+				& .signInButton:hover,
+				& .signInButton:focus {
+					color: ${color} !important;
+				}
+			`,
+		[color]
+	);
 	return (
 		<div className='loginProfile' css={loginStyles}>
 			<img src={avatar} alt='avatar' className='userAvatar' draggable={false} />

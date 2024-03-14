@@ -15,6 +15,17 @@
 	flex-direction: column;
 }
 
+.logOutAnimation {
+	position: fixed;
+	top: 0;
+	z-index: 4;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: black;
+	opacity: 0;
+	animation: show2 2s linear forwards;
+}
 .userWindow p {
 	font-weight: bold;
 }
@@ -25,4 +36,13 @@
 	border: none;
 
 	padding: 0.5rem 1rem;
+}
+
+@keyframes show2 {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
