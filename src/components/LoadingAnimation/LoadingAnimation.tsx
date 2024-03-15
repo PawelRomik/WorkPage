@@ -11,7 +11,7 @@ const LoadingAnimation = ({ animationEnd, repeats }: loadingAnimationProps) => {
 	const animationStyles = useMemo(
 		() => css`
 			& div {
-				animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) ${repeats};
+				animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) ${repeats ? repeats : "infinite"};
 			}
 		`,
 

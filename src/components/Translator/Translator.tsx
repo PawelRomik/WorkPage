@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 const Translator = () => {
 	const [inputValue, changeInputValue] = useState("");
-	const [translated, changeTranslated] = useState<string | undefined>("");
+	const [translated, changeTranslated] = useState<string | undefined | number>("");
 	const [selectedLanguageTo, setSelectedLanguageTo] = useState("en");
 	const [selectedLanguageFrom, setSelectedLanguageFrom] = useState("pl");
 	const { localTranslatorLanguageTo, localTranslatorLanguageFrom } = useMemo(() => LocalStorageNames, []);
@@ -51,7 +51,7 @@ const Translator = () => {
 
 	useEffect(() => {
 		if (inputValue) {
-			changeTranslated(t("Translator.translatorTranslating"));
+			changeTranslated(0);
 		} else {
 			changeTranslated("");
 		}
@@ -63,7 +63,7 @@ const Translator = () => {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [inputValue, translation, t]);
+	}, [inputValue, translation]);
 
 	const handleLanguageFromChange = useCallback(
 		(e: React.ChangeEvent<HTMLSelectElement>) => {
