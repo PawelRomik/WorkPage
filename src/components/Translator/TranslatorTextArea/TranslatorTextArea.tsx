@@ -40,16 +40,16 @@ const TranslatorTextArea = ({ inputValue, updateInputValue, translated }: Transl
 				maxLength={1000}
 				onChange={updateInputValue}
 			></textarea>
-			<p className='translateResult' css={translatorTextAreaStyles}>
+			<div className='translateResult' css={translatorTextAreaStyles}>
 				{translated === 0 ? (
 					<div className='translatorLoading'>
 						<LoadingAnimation />
 						<p>{t("Translator.translatorTranslating")}</p>
 					</div>
 				) : (
-					translated
+					<p className='translateResultParagraph'>{translated}</p>
 				)}
-			</p>
+			</div>
 		</section>
 	);
 };
