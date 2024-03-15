@@ -36,7 +36,7 @@ const resources = {
 			Translator: {
 				toastWrongApiKey: "Wrong ApiKey provided, translator won't work properly!",
 				toastNoApiKey: "No Translator ApiKey found! Translator won't work without it!",
-				translatorTranslating: "Translating... Please wait.",
+				translatorTranslating: "Translating...",
 			},
 			LoginProfile: {
 				loginUser: "User",
@@ -149,7 +149,7 @@ const resources = {
 			Translator: {
 				toastWrongApiKey: "Podany klucz API jest zły! Tłumacz nie będzie działać poprawnie!",
 				toastNoApiKey: "Brak klucza API! Tłumacz nie będzie działać poprawnie!",
-				translatorTranslating: "Tłumaczę... Proszę czekać.",
+				translatorTranslating: "Tłumaczę...",
 			},
 			LoginProfile: {
 				loginUser: "Użytkownik",
