@@ -75,7 +75,7 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 	return (
 		<div className='saperBoardContainer'>
 			{loading ? (
-				<LoadingAnimation animationEnd={animationEnd} />
+				<LoadingAnimation animationEnd={animationEnd} repeats={1} />
 			) : (
 				<div className={saperClass}>
 					{gameOver && (
