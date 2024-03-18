@@ -88,6 +88,7 @@ const resources = {
 				toastWrongPassword: "Old password doesn't match!",
 				toastRemovedPassword: "Succesfully removed your password!",
 				toastNoPassword: "Please provide the password!",
+				toastChangedColor: "Succesfully changed app color!",
 				toastChangedWallpaperMode: "Succesfully changed wallpaper mode!",
 			},
 			Volume: {
@@ -201,6 +202,7 @@ const resources = {
 				toastWrongPassword: "Stare hasło nie pasuje!",
 				toastRemovedPassword: "Sukces! Usunięto hasło!",
 				toastNoPassword: "Proszę podaj hasło",
+				toastChangedColor: "Sukces! Zmieniono kolor aplikacji!",
 				toastChangedWallpaperMode: "Sukces! Zmieniono styl tapety!",
 			},
 			Volume: {
