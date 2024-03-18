@@ -11,14 +11,13 @@ import LocalStorageNames from "../../utils/localstorageNames";
 import { useTranslation } from "react-i18next";
 
 const Settings = () => {
-	const { setBackground, password, settingsLanguage, changeSettingsLanguage, setPassword, setColor, color, darkMode, changeDarkMode, changeWallpaperStyle } = useSettingsContext();
+	const { setBackground, password, settingsLanguage, changeSettingsLanguage, setPassword, setColor, darkMode, changeDarkMode, changeWallpaperStyle } = useSettingsContext();
 	const [backgroundInputValue, setBackgroundInputValue] = useState("");
 	const [darkModeInputValue, changeDarkModeInputValue] = useState("false");
-	const [colorInputValue, setColorInputValue] = useState(color);
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const { t } = useTranslation();
-	const { localSettingsColor, localSettingsDarkMode } = useMemo(() => LocalStorageNames, []);
+	const { localSettingsDarkMode } = useMemo(() => LocalStorageNames, []);
 
 	const darkModeStyles = useMemo(
 		() => css`
@@ -41,11 +40,6 @@ const Settings = () => {
 		`,
 		[darkMode]
 	);
-
-	useEffect(() => {
-		const color = localStorage.getItem(localSettingsColor);
-		if (color) setColorInputValue(color);
-	}, [localSettingsColor]);
 
 	useEffect(() => {
 		const mode = localStorage.getItem(localSettingsDarkMode);
@@ -117,11 +111,11 @@ const Settings = () => {
 	}, [newPassword, oldPassword, password, setPassword, t]);
 
 	const handleColorChange = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) => {
-			setColorInputValue(e.target.value);
-			setColor(colorInputValue);
+		(newColor: string) => {
+			setColor(newColor);
+			toast.success(t("Settings.toastChangedColor"));
 		},
-		[colorInputValue, setColor]
+		[setColor, t]
 	);
 
 	const handleDarkModeChange = useCallback(() => {
@@ -182,7 +176,6 @@ const Settings = () => {
 			/>
 
 			<SettingsColorSection
-				colorInputValue={colorInputValue}
 				handleColorChange={handleColorChange}
 				handleDarkModeChange={handleDarkModeChange}
 				darkModeInputValue={darkModeInputValue}
