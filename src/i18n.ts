@@ -37,6 +37,8 @@ const resources = {
 				toastWrongApiKey: "Wrong ApiKey provided, translator won't work properly!",
 				toastNoApiKey: "No Translator ApiKey found! Translator won't work without it!",
 				translatorTranslating: "Translating...",
+				translatorCopyHover: "Click to copy content.",
+				toastCopiedTranslator: "Copied translator's content.",
 			},
 			LoginProfile: {
 				loginUser: "User",
@@ -151,6 +153,8 @@ const resources = {
 				toastWrongApiKey: "Podany klucz API jest zły! Tłumacz nie będzie działać poprawnie!",
 				toastNoApiKey: "Brak klucza API! Tłumacz nie będzie działać poprawnie!",
 				translatorTranslating: "Tłumaczę...",
+				translatorCopyHover: "Kliknij aby skopiować.",
+				toastCopiedTranslator: "Skopiowano zawartość tłumacza.",
 			},
 			LoginProfile: {
 				loginUser: "Użytkownik",

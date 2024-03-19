@@ -3,7 +3,8 @@ import { useSettingsContext } from "../../../providers/SettingsContext";
 import LoadingAnimation from "../../LoadingAnimation/LoadingAnimation";
 import "./TranslatorTextArea.style.scss";
 import { css } from "@emotion/react";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
+import { toast } from "react-toastify";
 
 type TranslatorTextAreaProps = {
 	inputValue: string;
@@ -29,6 +30,11 @@ const TranslatorTextArea = ({ inputValue, updateInputValue, translated }: Transl
 		[color, darkMode]
 	);
 
+	const copyContent = useCallback(() => {
+		if (translated && typeof translated === "string") navigator.clipboard.writeText(translated);
+		toast.success(t("Translator.toastCopiedTranslator"));
+	}, [translated, t]);
+
 	return (
 		<section className='translatorBottomSection'>
 			<textarea
@@ -47,7 +53,9 @@ const TranslatorTextArea = ({ inputValue, updateInputValue, translated }: Transl
 						<p>{t("Translator.translatorTranslating")}</p>
 					</div>
 				) : (
-					<p className='translateResultParagraph'>{translated}</p>
+					<p className='translateResultParagraph' onClick={copyContent} title={t("Translator.translatorCopyHover")}>
+						{translated}
+					</p>
 				)}
 			</div>
 		</section>
