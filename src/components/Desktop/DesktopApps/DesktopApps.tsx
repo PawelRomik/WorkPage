@@ -16,6 +16,9 @@ const DesktopApps = ({ handleLaunchApp, appData }: DesktopAppsProps) => {
 		const hasTranslatorEnv = import.meta.env.VITE_TRANSLATOR_API;
 
 		return appData.map((app) => {
+			if (app.name === "Settings") {
+				return null;
+			}
 			if (app.name === "Translator" && !hasTranslatorEnv) {
 				toast.warn(t("Translator.toastNoApiKey"));
 				return null;
@@ -27,6 +30,9 @@ const DesktopApps = ({ handleLaunchApp, appData }: DesktopAppsProps) => {
 	return (
 		<div className='apps'>
 			<section className='leftApps'>{apps}</section>
+			<section className='rightApps'>
+				<AppButton key={0} app={appData[0]} handleLaunchApp={handleLaunchApp} />
+			</section>
 		</div>
 	);
 };

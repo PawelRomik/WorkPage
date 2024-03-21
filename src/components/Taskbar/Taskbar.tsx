@@ -83,19 +83,21 @@ const Taskbar = ({ displayUserWindowState, changeIsOff, chosenApp, displayCalend
 	const volumeClass = useMemo(() => (volume < 10 ? "fa-volume-xmark" : volume < 70 ? "fa-volume-low" : "fa-volume-high"), [volume]);
 	return (
 		<footer className='taskbar' css={darkModeStyles}>
-			<button className='systemButton' css={activeButtonStyles} onClick={displayUserWindowState}>
-				<i className='fa-solid fa-fire'></i>
-			</button>
-			{chosenApp && (
-				<div className='taskbarCenterApp' onClick={turnOffApp}>
-					<i className={icon}></i>
-				</div>
-			)}
-			<div className='rightTaskbarContainer'>
-				<i className={`fa-solid ${volumeClass}`} css={activeButtonStyles} onClick={displaySoundbarWindow}></i>
-				<i className='fa-solid fa-wifi' css={activeButtonStyles} onClick={displayWifiWindow}></i>
-				<div className='taskbarTimer' onClick={displayCalendarWindow}>
-					<Clock />
+			<div className='taskbarWrapper'>
+				<button className='systemButton' css={activeButtonStyles} onClick={displayUserWindowState}>
+					<i className='fa-solid fa-fire'></i>
+				</button>
+				{chosenApp && (
+					<div className='taskbarCenterApp' onClick={turnOffApp}>
+						<i className={icon}></i>
+					</div>
+				)}
+				<div className='rightTaskbarContainer'>
+					<i className={`fa-solid ${volumeClass}`} css={activeButtonStyles} onClick={displaySoundbarWindow}></i>
+					<i className='fa-solid fa-wifi' css={activeButtonStyles} onClick={displayWifiWindow}></i>
+					<div className='taskbarTimer' onClick={displayCalendarWindow}>
+						<Clock />
+					</div>
 				</div>
 			</div>
 		</footer>
