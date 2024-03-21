@@ -2,15 +2,24 @@
 	flex: 1;
 	background-position: 75%;
 	display: flex;
+	justify-content: center;
 	align-items: center;
 	position: relative;
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	flex-direction: column;
 }
 
-.settings {
-	position: absolute;
-	top: 0;
-	right: 0;
+.appWrapper {
+	width: 100%;
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	max-width: 1920px;
 }

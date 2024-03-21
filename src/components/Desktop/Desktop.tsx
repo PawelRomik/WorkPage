@@ -3,7 +3,6 @@ import { useCallback, useMemo } from "react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import appData from "../../data/apps";
 import AppContainer from "../AppContainer/AppContainer";
-import Weather from "../Weather/Weather";
 import UserWindow from "../UserWindow/UserWindow";
 import CalendarWindow from "../CalendarWindow/CalendarWindow";
 import DesktopApps from "./DesktopApps/DesktopApps";
@@ -12,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Global, css } from "@emotion/react";
 import Soundbar from "../Soundbar/Soundbar";
 import Wifi from "../Wifi/Wifi";
+import Weather from "../Weather/Weather";
 
 export type App = {
 	id: number;
@@ -129,27 +129,29 @@ const Desktop = ({
 
 	return (
 		<main className='desktop' css={[desktopStyles, swalStyles]} onClick={hidePanels}>
-			<Global styles={desktopStyles} />
-			<ToastContainer
-				position='top-right'
-				limit={2}
-				autoClose={3000}
-				hideProgressBar={false}
-				newestOnTop
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss={false}
-				draggable
-				pauseOnHover={false}
-				theme={darkMode ? "light" : "dark"}
-			/>
-			{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} isOff={isOff} changeIsOff={changeIsOff} />}
-			{userWindowState && <UserWindow />}
-			{calendarWindowState && <CalendarWindow />}
-			{soundbarWindowState && <Soundbar volume={volume} setVolume={setVolume} />}
-			{wifiWindowState && <Wifi />}
-			<DesktopApps appData={appData} handleLaunchApp={handleLaunchApp} />
-			<Weather />
+			<div className='appWrapper'>
+				<Global styles={desktopStyles} />
+				<ToastContainer
+					position='top-right'
+					limit={2}
+					autoClose={3000}
+					hideProgressBar={false}
+					newestOnTop
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss={false}
+					draggable
+					pauseOnHover={false}
+					theme={darkMode ? "light" : "dark"}
+				/>
+				{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} isOff={isOff} changeIsOff={changeIsOff} />}
+				{userWindowState && <UserWindow />}
+				{calendarWindowState && <CalendarWindow />}
+				{soundbarWindowState && <Soundbar volume={volume} setVolume={setVolume} />}
+				{wifiWindowState && <Wifi />}
+				<DesktopApps appData={appData} handleLaunchApp={handleLaunchApp} />
+				<Weather />
+			</div>
 		</main>
 	);
 };

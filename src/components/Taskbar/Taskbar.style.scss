@@ -2,7 +2,7 @@
 
 .taskbar {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 	bottom: 0;
 	height: 2rem;
@@ -17,6 +17,15 @@
 	margin-left: 0.5rem;
 	cursor: pointer;
 	outline: none;
+}
+
+.taskbarWrapper {
+	width: 100%;
+	max-width: 1920px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
 }
 
 .taskbarCenterApp {

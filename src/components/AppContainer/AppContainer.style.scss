@@ -3,7 +3,7 @@
 $animationDuration: 150ms;
 
 .appContainerBackground {
-	width: 100%;
+	width: 100vw;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
 	position: absolute;
@@ -36,6 +36,7 @@ $animationDuration: 150ms;
 	-ms-user-select: none;
 	user-select: none;
 	animation: $animationDuration linear popup;
+	max-width: 1920px;
 }
 
 .appContainerHeader {
