@@ -23,6 +23,7 @@ const PaintBoard = ({ canvasRef, backgroundColor, startPaint, paint, endPaint, d
 				onTouchMove={paint}
 				onTouchEnd={endPaint}
 				onContextMenu={disableEraserOnRightClick}
+				onMouseLeave={endPaint}
 			></canvas>
 		</section>
 	);

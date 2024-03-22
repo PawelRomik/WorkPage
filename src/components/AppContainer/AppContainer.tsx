@@ -7,7 +7,7 @@ import Saper from "../Saper/Saper";
 import Translator from "../Translator/Translator";
 import Paint from "../Paint/Paint";
 import { useSettingsContext } from "../../providers/SettingsContext";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
 
@@ -25,6 +25,7 @@ type AppContainerProps = {
 const AppContainer = ({ app, closeApp, isOff, changeIsOff }: AppContainerProps) => {
 	const { t } = useTranslation();
 	const { color, darkMode } = useSettingsContext();
+	const [clickTimeout, changeClickTimeout] = useState<null | number>(null);
 
 	const buttonStyles = useMemo(
 		() => css`
@@ -82,23 +83,38 @@ const AppContainer = ({ app, closeApp, isOff, changeIsOff }: AppContainerProps) 
 		}
 	}, [app]);
 
-	const playAnimation = () => {
+	const playAnimation = useCallback(() => {
 		changeIsOff(true);
-	};
+	}, [changeIsOff]);
 
-	const blockClosingOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+	const blockClosingOnClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-	};
+	}, []);
 
 	const appContainerSize = useMemo(() => {
 		return app.name === "Calculator" || app.name === "Settings" ? " smallContainer" : "";
 	}, [app]);
 
+	const handleMouseDown = useCallback(() => {
+		changeClickTimeout(1);
+		setTimeout(() => {
+			changeClickTimeout(null);
+		}, 300);
+	}, []);
+
+	const handleMouseUp = useCallback(() => {
+		if (clickTimeout === 1) {
+			clearTimeout(clickTimeout);
+			changeClickTimeout(null);
+			playAnimation();
+		}
+	}, [clickTimeout, playAnimation]);
+
 	const appContainerClassName = useMemo(() => `appContainerBackground${isOff ? " offAnimation" : ""}`, [isOff]);
 
 	return (
-		<div className={appContainerClassName} onClick={playAnimation} onAnimationEnd={closeApp}>
-			<div className={`appContainer${appContainerSize}`} css={darkModeStyles} onClick={blockClosingOnClick}>
+		<div className={appContainerClassName} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onAnimationEnd={closeApp}>
+			<div className={`appContainer${appContainerSize}`} css={darkModeStyles} onClick={blockClosingOnClick} onMouseDown={blockClosingOnClick} onMouseUp={blockClosingOnClick}>
 				<header className='appContainerHeader'>
 					<h3 className='appContainerTitle'>{t(`Apps.${app.name}`)}</h3>
 					<button className='closeButton' onClick={playAnimation} onAnimationEnd={closeApp} css={buttonStyles}>
