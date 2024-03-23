@@ -3,12 +3,20 @@ import App from "./views/App";
 import "./assets/styles/globalStyles.scss";
 import { SettingsProvider } from "./providers/SettingsContext";
 import "./i18n";
-import { AuthProvider } from "./providers/AuthContext";
+import { ClerkProvider } from "@clerk/clerk-react";
+
+const clerkKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<AuthProvider>
-		<SettingsProvider>
-			<App />
-		</SettingsProvider>
-	</AuthProvider>
+	<>
+		{clerkKey ? (
+			<ClerkProvider publishableKey={clerkKey}>
+				<SettingsProvider>
+					<App />
+				</SettingsProvider>
+			</ClerkProvider>
+		) : (
+			<h1>Missing clerk api key! The site won't work without it.</h1>
+		)}
+	</>
 );

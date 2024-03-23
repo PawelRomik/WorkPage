@@ -3,7 +3,7 @@ import Desktop from "../../components/Desktop/Desktop";
 import LocalStorageNames from "../../utils/localstorageNames";
 import Taskbar from "../../components/Taskbar/Taskbar";
 import Login from "../Login/Login";
-import { useAuthContext } from "../../providers/AuthContext";
+import { useLocation } from "react-router-dom";
 export type App = {
 	id: number;
 	name: string;
@@ -19,14 +19,21 @@ const System = () => {
 	const { localSoundValue } = useMemo(() => LocalStorageNames, []);
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 	const [isOff, changeIsOff] = useState(false);
-	const { loggedInAnimation, changeLoggedInAnimation } = useAuthContext();
+	const [loadingAnimation, changeLoadingAnimation] = useState(true);
+	const location = useLocation();
 
 	useEffect(() => {
 		const storedSoundValue = localStorage.getItem(localSoundValue);
 		if (storedSoundValue) {
 			setVolume(JSON.parse(storedSoundValue));
 		}
-	}, [localSoundValue]);
+
+		if (location && location?.state?.loginAnimation) {
+			changeLoadingAnimation(location.state.loginAnimation);
+		} else {
+			changeLoadingAnimation(false);
+		}
+	}, [localSoundValue, location]);
 
 	useEffect(() => {
 		localStorage.setItem(localSoundValue, JSON.stringify(volume));
@@ -78,9 +85,8 @@ const System = () => {
 
 	return (
 		<>
-			{" "}
-			{loggedInAnimation && (
-				<div className='fakeLogin' onAnimationEnd={() => changeLoggedInAnimation(false)}>
+			{loadingAnimation && (
+				<div className='fakeLogin' onAnimationEnd={() => changeLoadingAnimation(false)}>
 					<Login loaded={true} />
 				</div>
 			)}
