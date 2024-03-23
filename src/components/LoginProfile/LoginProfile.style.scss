@@ -32,7 +32,8 @@
 }
 
 .passwordInput,
-.loginJoinButton {
+.loginJoinButton,
+.loginButton {
 	background-color: black;
 	color: white;
 	padding: 0.75rem 1.5rem;
@@ -41,6 +42,7 @@
 	border-radius: 30px 0 0 30px;
 	outline: none;
 	transition: 0.2s;
+	cursor: pointer;
 
 	&:autofill,
 	&:autofill:hover {
@@ -63,6 +65,13 @@
 			color: black;
 		}
 	}
+}
+
+.loginButton {
+	border-right: 2px solid white;
+	border-radius: 30px;
+	padding: 0.75rem 3rem;
+	cursor: pointer;
 }
 
 .signInButton {
@@ -94,7 +103,8 @@
 
 	.passwordInput,
 	.signInButton,
-	.loginJoinButton {
+	.loginJoinButton,
+	.loginButton {
 		font-size: 1.25rem;
 	}
 }

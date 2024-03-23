@@ -1,14 +1,15 @@
 import "./UserWindow.style.scss";
-import { useAuthContext } from "../../providers/AuthContext";
 import { useCallback, useMemo, useState } from "react";
 import { css } from "@emotion/react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { useTranslation } from "react-i18next";
+import { useClerk } from "@clerk/clerk-react";
 
 const UserWindow = () => {
 	const { color, darkMode } = useSettingsContext();
 	const { t } = useTranslation();
 	const [isAnimated, changeIsAnimated] = useState(false);
+	const { signOut, user } = useClerk();
 
 	const userWindowButtonStyles = useMemo(
 		() => css`
@@ -44,11 +45,13 @@ const UserWindow = () => {
 		changeIsAnimated(true);
 	}, []);
 
-	const { logout } = useAuthContext();
+	const logout = useCallback(() => {
+		signOut();
+	}, [signOut]);
 	return (
 		<div className='userWindow' css={darkModeStyles} onClick={dontHideOnClick}>
 			{isAnimated && <div className='logOutAnimation' onAnimationEnd={logout}></div>}
-			<p>{t("UserWindow.userWindowLoggedAs")}</p>
+			<p>{`${t("UserWindow.userWindowLoggedAs")} ${user?.username}`}</p>
 			<button css={userWindowButtonStyles} onClick={logoutOnClick}>
 				{t("UserWindow.userWindowLogout")}
 			</button>

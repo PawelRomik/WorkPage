@@ -11,11 +11,9 @@ import LocalStorageNames from "../../utils/localstorageNames";
 import { useTranslation } from "react-i18next";
 
 const Settings = () => {
-	const { setBackground, password, settingsLanguage, changeSettingsLanguage, setPassword, setColor, darkMode, changeDarkMode, changeWallpaperStyle } = useSettingsContext();
+	const { setBackground, settingsLanguage, changeSettingsLanguage, setColor, darkMode, changeDarkMode, changeWallpaperStyle } = useSettingsContext();
 	const [backgroundInputValue, setBackgroundInputValue] = useState("");
 	const [darkModeInputValue, changeDarkModeInputValue] = useState("false");
-	const [oldPassword, setOldPassword] = useState("");
-	const [newPassword, setNewPassword] = useState("");
 	const { t } = useTranslation();
 	const { localSettingsDarkMode } = useMemo(() => LocalStorageNames, []);
 
@@ -81,35 +79,6 @@ const Settings = () => {
 		[handleCustomWallpaper]
 	);
 
-	const unlock = useCallback(
-		(e: React.MouseEvent<HTMLButtonElement>) => {
-			if (newPassword.length > 0) {
-				if (newPassword) {
-					setPassword(newPassword);
-					setNewPassword("");
-					toast.success(t("Settings.toastSetPassword"));
-					e.currentTarget.blur();
-				}
-			} else {
-				toast.error(t("Settings.toastNoPassword"));
-			}
-		},
-		[newPassword, setPassword, t]
-	);
-
-	const changePass = useCallback(() => {
-		if (newPassword.length <= 0 || oldPassword.length <= 0) {
-			toast.error(t("Settings.toastNoPassword"));
-		} else if (oldPassword != password) {
-			toast.error(t("Settings.toastWrongPassword"));
-		} else {
-			setPassword(newPassword);
-			setNewPassword("");
-			setOldPassword("");
-			toast.success(t("Settings.toastChangedPassword"));
-		}
-	}, [newPassword, oldPassword, password, setPassword, t]);
-
 	const handleColorChange = useCallback(
 		(newColor: string) => {
 			setColor(newColor);
@@ -131,19 +100,6 @@ const Settings = () => {
 		setBackgroundInputValue(e.target.value);
 	}, []);
 
-	const handleOldPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		setOldPassword(e.target.value);
-	}, []);
-
-	const handleNewPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		setNewPassword(e.target.value);
-	}, []);
-
-	const unsetPass = useCallback(() => {
-		setPassword("");
-		toast.success(t("Settings.toastRemovedPassword"));
-	}, [setPassword, t]);
-
 	const changeWallpaperStyleOnClick = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
 			const chosenStyle = (e.target as HTMLButtonElement).textContent?.toLowerCase();
@@ -164,16 +120,7 @@ const Settings = () => {
 
 	return (
 		<div className='settingsContainer' css={darkModeStyles}>
-			<SettingsPasswordSection
-				password={password}
-				newPassword={newPassword}
-				oldPassword={oldPassword}
-				unlock={unlock}
-				changePass={changePass}
-				unsetPass={unsetPass}
-				handleNewPasswordChange={handleNewPasswordChange}
-				handleOldPasswordChange={handleOldPasswordChange}
-			/>
+			<SettingsPasswordSection />
 
 			<SettingsColorSection
 				handleColorChange={handleColorChange}

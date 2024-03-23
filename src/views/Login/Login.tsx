@@ -2,37 +2,34 @@ import { useCallback, useMemo, useState } from "react";
 import Clock from "../../components/Clock/Clock";
 import "./Login.style.scss";
 import { useSettingsContext } from "../../providers/SettingsContext";
-import { useAuthContext } from "../../providers/AuthContext";
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 import LoginProfile from "../../components/LoginProfile/LoginProfile";
-import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import { css } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
 
 type LoginProps = {
 	loaded?: boolean;
 };
 
 const Login = ({ loaded }: LoginProps) => {
-	const { login } = useAuthContext();
 	const { password, darkMode, background, wallpaperStyle, color } = useSettingsContext();
 	const [loading, setLoading] = useState(false);
 	const [loginInput, setLoginInput] = useState("");
-	const { changeLoggedInAnimation } = useAuthContext();
+	const navigate = useNavigate();
 
 	const handleLogin = useCallback(() => {
-		if (password === loginInput) {
-			setLoading(true);
-		} else {
-			toast.error("Incorrect password");
-		}
-	}, [loginInput, password]);
+		setLoading(true);
+	}, []);
 
 	const animationEnd = useCallback(() => {
 		setLoading(false);
-		login();
-		changeLoggedInAnimation(true);
-	}, [login, changeLoggedInAnimation]);
+		navigate("/system", {
+			state: {
+				loginAnimation: true,
+			},
+		});
+	}, [navigate]);
 
 	const handleKeyPress = useCallback(
 		(event: React.KeyboardEvent<HTMLInputElement>) => {
