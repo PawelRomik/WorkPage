@@ -30,6 +30,7 @@ const System = () => {
 
 		if (location && location?.state?.loginAnimation) {
 			changeLoadingAnimation(location.state.loginAnimation);
+			window.history.replaceState({}, "");
 		} else {
 			changeLoadingAnimation(false);
 		}
