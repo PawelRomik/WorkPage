@@ -43,7 +43,7 @@ const resources = {
 			LoginProfile: {
 				loginUser: "User",
 				loginEnter: "Enter",
-				loginIn: "Zaloguj",
+				loginIn: "Login",
 			},
 			Paint: {
 				swalSaveImage: "Save your image",
