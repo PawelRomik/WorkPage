@@ -19,6 +19,7 @@ A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>,
 * [Tiptap](https://github.com/ueberdosis/tiptap)
 * [i18next](https://github.com/i18next/react-i18next)
 * [SweetAlert2](https://github.com/sweetalert2/sweetalert2)
+* [Clerk](https://github.com/clerk)
 
 ## Screenshots :tv:
 
