@@ -13,9 +13,8 @@ type LoginProps = {
 };
 
 const Login = ({ loaded }: LoginProps) => {
-	const { password, darkMode, background, wallpaperStyle, color } = useSettingsContext();
+	const { darkMode, background, wallpaperStyle } = useSettingsContext();
 	const [loading, setLoading] = useState(false);
-	const [loginInput, setLoginInput] = useState("");
 	const navigate = useNavigate();
 
 	const handleLogin = useCallback(() => {
@@ -31,26 +30,17 @@ const Login = ({ loaded }: LoginProps) => {
 		});
 	}, [navigate]);
 
-	const handleKeyPress = useCallback(
-		(event: React.KeyboardEvent<HTMLInputElement>) => {
-			if (event.key === "Enter") {
-				handleLogin();
-			}
-		},
-		[handleLogin]
-	);
-
 	const backgroundStyles = useMemo(
 		() => css`
 			& {
-				background: linear-gradient(180deg, rgba(24, 24, 24, 0.2) 0%, ${color} 400%);
+				background: linear-gradient(180deg, rgba(24, 24, 24, 0.2) 0%, black 100%);
 			}
 			&.loginScreen::before {
 				background-image: url(${background});
 				background-size: ${wallpaperStyle};
 			}
 		`,
-		[background, wallpaperStyle, color]
+		[background, wallpaperStyle]
 	);
 
 	return (
@@ -76,7 +66,7 @@ const Login = ({ loaded }: LoginProps) => {
 						pauseOnHover={false}
 						theme={darkMode ? "light" : "dark"}
 					/>
-					<LoginProfile handleKeyPress={handleKeyPress} handleLogin={handleLogin} password={password} loginInput={loginInput} updateLoginInput={setLoginInput} />
+					<LoginProfile handleLogin={handleLogin} />
 				</>
 			)}
 		</main>
