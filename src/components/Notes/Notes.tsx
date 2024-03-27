@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState, useMemo } from "react";
-import { nanoid } from "nanoid";
 import "./Notes.style.scss";
 import NotesButton from "./NotesButton/NotesButton";
 import Tiptap from "./Tiptap/Tiptap";
@@ -11,7 +10,7 @@ import { toast } from "react-toastify";
 import { useSettingsContext } from "../../providers/SettingsContext";
 
 export type Note = {
-	id: string;
+	id: number;
 	content: string;
 };
 
@@ -19,7 +18,7 @@ const Notes = () => {
 	const { t } = useTranslation();
 	const [noteValue, setNoteValue] = useState<string>("");
 	const [notes, setNotes] = useState<Note[]>([]);
-	const [selectedNoteId, setSelectedNoteId] = useState<string | undefined>(undefined);
+	const [selectedNoteId, setSelectedNoteId] = useState<number | undefined>(undefined);
 	const { localNotes } = useMemo(() => LocalStorageNames, []);
 	const { darkMode } = useSettingsContext();
 
@@ -44,7 +43,7 @@ const Notes = () => {
 	}, [selectedNoteId, notes]);
 
 	const changeNote = useCallback(
-		(id: string) => {
+		(id: number) => {
 			const selectedNote = notes.find((note) => note.id === id);
 			if (selectedNote) {
 				setNoteValue(selectedNote.content);
@@ -65,8 +64,17 @@ const Notes = () => {
 	);
 
 	const createNewNote = useCallback(() => {
+		let id = 0;
+		const existingIds = new Set<number>();
+		const existingNotes: Note[] = JSON.parse(localStorage.getItem("notes") || "[]");
+		existingNotes.forEach((note) => existingIds.add(note.id));
+
+		while (existingIds.has(id)) {
+			id++;
+		}
+
 		const newNote: Note = {
-			id: nanoid(),
+			id: id,
 			content: `
 		<h2>${t("Notes.newNoteTitle")}</h2>
 		<p>${t("Notes.newNoteDesc")}</p>
@@ -77,7 +85,7 @@ const Notes = () => {
 	}, [t]);
 
 	const removeNote = useCallback(
-		(noteId: string) => {
+		(noteId: number) => {
 			setNotes((prevNotes) => {
 				const updatedNotes = prevNotes.filter((note) => note.id !== noteId);
 				if (selectedNoteId === noteId && updatedNotes.length > 0) {
@@ -92,7 +100,7 @@ const Notes = () => {
 	);
 
 	const showConfirmDialog = useCallback(
-		(noteId: string, e: React.MouseEvent) => {
+		(noteId: number, e: React.MouseEvent) => {
 			e.stopPropagation();
 			withReactContent(Swal)
 				.fire({

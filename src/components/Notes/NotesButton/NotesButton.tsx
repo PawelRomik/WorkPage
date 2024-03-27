@@ -7,9 +7,9 @@ import { css } from "@emotion/react";
 
 type NotesButtonProps = {
 	notes: Note[];
-	selectedNoteId: string | undefined;
-	changeNote: (id: string) => void;
-	showConfirmDialog: (noteId: string, e: React.MouseEvent) => void;
+	selectedNoteId: number | undefined;
+	changeNote: (id: number) => void;
+	showConfirmDialog: (noteId: number, e: React.MouseEvent) => void;
 	createNewNote: () => void;
 };
 
@@ -97,14 +97,16 @@ const NotesButton = ({ notes, selectedNoteId, changeNote, showConfirmDialog, cre
 
 	const noteElements = useMemo(
 		() =>
-			notes.map((note, numericId) => (
-				<div className={`noteButton ${selectedNoteId === note.id ? "active" : ""}`} css={noteButtonStyles} key={note.id} onClick={() => changeNote(note.id)}>
-					{numericId + 1}
-					<button className='removeNote' onClick={(e) => showConfirmDialog(note.id, e)}>
-						<i className='fa-solid fa-trash'></i>
-					</button>
-				</div>
-			)),
+			notes
+				.sort((a, b) => a.id - b.id)
+				.map((note) => (
+					<div className={`noteButton ${selectedNoteId === note.id ? "active" : ""}`} css={noteButtonStyles} key={note.id} onClick={() => changeNote(note.id)}>
+						{note.id}
+						<button className='removeNote' onClick={(e) => showConfirmDialog(note.id, e)}>
+							<i className='fa-solid fa-trash'></i>
+						</button>
+					</div>
+				)),
 		[changeNote, notes, showConfirmDialog, selectedNoteId, noteButtonStyles]
 	);
 
