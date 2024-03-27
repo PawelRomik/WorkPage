@@ -64,7 +64,7 @@ const Notes = () => {
 	);
 
 	const createNewNote = useCallback(() => {
-		let id = 0;
+		let id = 1;
 		const existingIds = new Set<number>();
 		const existingNotes: Note[] = JSON.parse(localStorage.getItem("notes") || "[]");
 		existingNotes.forEach((note) => existingIds.add(note.id));
