@@ -13,9 +13,8 @@ type LoginProps = {
 };
 
 const Login = ({ loaded }: LoginProps) => {
-	const { password, darkMode, background, wallpaperStyle, color } = useSettingsContext();
+	const { darkMode, background, wallpaperStyle, color } = useSettingsContext();
 	const [loading, setLoading] = useState(false);
-	const [loginInput, setLoginInput] = useState("");
 	const navigate = useNavigate();
 
 	const handleLogin = useCallback(() => {
@@ -30,15 +29,6 @@ const Login = ({ loaded }: LoginProps) => {
 			},
 		});
 	}, [navigate]);
-
-	const handleKeyPress = useCallback(
-		(event: React.KeyboardEvent<HTMLInputElement>) => {
-			if (event.key === "Enter") {
-				handleLogin();
-			}
-		},
-		[handleLogin]
-	);
 
 	const backgroundStyles = useMemo(
 		() => css`
@@ -76,7 +66,7 @@ const Login = ({ loaded }: LoginProps) => {
 						pauseOnHover={false}
 						theme={darkMode ? "light" : "dark"}
 					/>
-					<LoginProfile handleKeyPress={handleKeyPress} handleLogin={handleLogin} password={password} loginInput={loginInput} updateLoginInput={setLoginInput} />
+					<LoginProfile handleLogin={handleLogin} />
 				</>
 			)}
 		</main>

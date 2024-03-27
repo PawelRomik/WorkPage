@@ -12,6 +12,7 @@
 }
 .userAvatar {
 	width: 10rem;
+	height: 10rem;
 	border: 6px solid white;
 	border-radius: 400px;
 	-webkit-user-select: none;
@@ -95,6 +96,7 @@
 @media (min-width: 768px) {
 	.userAvatar {
 		width: 15rem;
+		height: 15rem;
 	}
 
 	.user {

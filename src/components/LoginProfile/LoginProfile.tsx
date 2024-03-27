@@ -1,4 +1,3 @@
-import React from "react";
 import "./LoginProfile.style.scss";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,10 +9,6 @@ import avatar from "../../assets/loginAvatar.png";
 
 type LoginProfileProps = {
 	handleLogin: () => void;
-	handleKeyPress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-	password: string;
-	loginInput: string;
-	updateLoginInput: (value: string) => void;
 };
 
 const LoginProfile = ({ handleLogin }: LoginProfileProps) => {
