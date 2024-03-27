@@ -13,7 +13,7 @@ type LoginProps = {
 };
 
 const Login = ({ loaded }: LoginProps) => {
-	const { darkMode, background, wallpaperStyle, color } = useSettingsContext();
+	const { darkMode, background, wallpaperStyle } = useSettingsContext();
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
@@ -33,14 +33,14 @@ const Login = ({ loaded }: LoginProps) => {
 	const backgroundStyles = useMemo(
 		() => css`
 			& {
-				background: linear-gradient(180deg, rgba(24, 24, 24, 0.2) 0%, ${color} 400%);
+				background: linear-gradient(180deg, rgba(24, 24, 24, 0.2) 0%, black 100%);
 			}
 			&.loginScreen::before {
 				background-image: url(${background});
 				background-size: ${wallpaperStyle};
 			}
 		`,
-		[background, wallpaperStyle, color]
+		[background, wallpaperStyle]
 	);
 
 	return (

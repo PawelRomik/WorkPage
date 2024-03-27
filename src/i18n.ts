@@ -44,6 +44,7 @@ const resources = {
 				loginUser: "User",
 				loginEnter: "Enter",
 				loginIn: "Login",
+				logout: "Logout",
 			},
 			Paint: {
 				swalSaveImage: "Save your image",
@@ -167,6 +168,7 @@ const resources = {
 				loginUser: "Użytkownik",
 				loginEnter: "Wejdź",
 				loginIn: "Zaloguj",
+				logout: "Wyloguj",
 			},
 			Paint: {
 				swalSaveImage: "Zapisz swój obraz",
