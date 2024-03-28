@@ -17,7 +17,7 @@ const Clock = () => {
 	}, []);
 
 	const clockValue = useMemo(() => {
-		return currentTime.toLocaleTimeString(settingsLanguage, {
+		return currentTime.toLocaleTimeString(settingsLanguage || "en", {
 			hour: "2-digit",
 			minute: "2-digit",
 		});

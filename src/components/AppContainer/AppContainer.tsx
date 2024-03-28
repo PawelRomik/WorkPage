@@ -26,7 +26,6 @@ const AppContainer = ({ app, closeApp, isOff, changeIsOff }: AppContainerProps) 
 	const { t } = useTranslation();
 	const { color, darkMode } = useSettingsContext();
 	const [clickTimeout, changeClickTimeout] = useState<null | number>(null);
-
 	const buttonStyles = useMemo(
 		() => css`
 			&:hover,

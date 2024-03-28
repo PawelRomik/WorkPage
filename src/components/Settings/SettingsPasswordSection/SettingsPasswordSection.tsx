@@ -123,11 +123,11 @@ const SettingsPasswordSection = () => {
 									throw new Error(t("Settings.toastUsernameTooShort"));
 								}
 								await user?.update({ username: usernameInput?.value }).catch(() => {
-									toast.error(t("Settings.toastGenericError"));
+									toast.error(t("Settings.toastWrongName"));
 									Swal.showValidationMessage(``);
 								});
 								await user?.reload();
-								const username = user!.username || "";
+								const username = user?.username || "";
 
 								changeUserName(username);
 							} catch (error) {

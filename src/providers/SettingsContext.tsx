@@ -1,5 +1,5 @@
-import { createContext, useState, useContext, ReactNode, useMemo, useEffect } from "react";
-import LocalStorageNames from "../utils/localstorageNames";
+import { createContext, useState, useContext, ReactNode, useEffect } from "react";
+import { useUser } from "@clerk/clerk-react";
 import { useTranslation } from "react-i18next";
 
 type SettingsContextProps = {
@@ -18,61 +18,43 @@ type SettingsContextProps = {
 const SettingsContext = createContext<SettingsContextProps | undefined>(undefined);
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
-	const { localSettingsBackground, localSettingsColor, localSettingsLanguage, localSettingsDarkMode, localSettingsWallpaperStyle } = useMemo(() => LocalStorageNames, []);
-	const [background, setBackground] = useState("https://uhdwallpapers.org/uploads/converted/19/07/07/windows-10-hero-redesign-wallpaper-1920x1080_899885-mm-90.jpg");
-	const [color, setColor] = useState("#CE17C5");
+	const [background, setBackground] = useState("");
+	const [color, setColor] = useState("");
 	const [darkMode, changeDarkMode] = useState(false);
-	const [wallpaperStyle, changeWallpaperStyle] = useState("cover");
-	const [settingsLanguage, changeSettingsLanguage] = useState("en");
+	const [wallpaperStyle, changeWallpaperStyle] = useState("");
+	const [settingsLanguage, changeSettingsLanguage] = useState("");
+	const { user } = useUser();
 	const { i18n } = useTranslation();
 
 	useEffect(() => {
-		const storedBackground = localStorage.getItem(localSettingsBackground);
+		const storedBackground =
+			user?.unsafeMetadata.background || "https://uhdwallpapers.org/uploads/converted/19/07/07/windows-10-hero-redesign-wallpaper-1920x1080_899885-mm-90.jpg";
 		if (storedBackground) {
-			setBackground(storedBackground);
+			setBackground(storedBackground.toString());
 		}
 
-		const storedLanguage = localStorage.getItem(localSettingsLanguage);
+		const storedLanguage = user?.unsafeMetadata?.settingsLanguage?.toString() || "en";
+		console.log("ee");
 		if (storedLanguage) {
 			changeSettingsLanguage(storedLanguage);
+			i18n.changeLanguage(storedLanguage);
 		}
 
-		const storedWallpaperStyle = localStorage.getItem(localSettingsWallpaperStyle);
+		const storedWallpaperStyle = user?.unsafeMetadata?.wallpaperStyle?.toString() || "cover";
 		if (storedWallpaperStyle) {
 			changeWallpaperStyle(storedWallpaperStyle);
 		}
 
-		const storedColor = localStorage.getItem(localSettingsColor);
+		const storedColor = user?.unsafeMetadata?.color?.toString() || "#CE17C5";
 		if (storedColor) {
 			setColor(storedColor);
 		}
 
-		const storedMode = localStorage.getItem(localSettingsDarkMode);
+		const storedMode = user?.unsafeMetadata?.darkMode?.toString() || "false";
 		if (storedMode) {
 			changeDarkMode(JSON.parse(storedMode));
 		}
-	}, [localSettingsBackground, localSettingsColor, localSettingsDarkMode, localSettingsWallpaperStyle, localSettingsLanguage]);
-
-	useEffect(() => {
-		localStorage.setItem(localSettingsBackground, background);
-	}, [background, localSettingsBackground]);
-
-	useEffect(() => {
-		localStorage.setItem(localSettingsLanguage, settingsLanguage);
-		i18n.changeLanguage(settingsLanguage);
-	}, [settingsLanguage, localSettingsLanguage, i18n]);
-
-	useEffect(() => {
-		localStorage.setItem(localSettingsWallpaperStyle, wallpaperStyle);
-	}, [wallpaperStyle, localSettingsWallpaperStyle]);
-
-	useEffect(() => {
-		localStorage.setItem(localSettingsColor, color);
-	}, [color, localSettingsColor]);
-
-	useEffect(() => {
-		localStorage.setItem(localSettingsDarkMode, JSON.stringify(darkMode));
-	}, [darkMode, localSettingsDarkMode]);
+	}, [user, i18n]);
 
 	return (
 		<SettingsContext.Provider
