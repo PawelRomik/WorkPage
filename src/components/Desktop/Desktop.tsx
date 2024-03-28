@@ -133,7 +133,7 @@ const Desktop = ({
 				<Global styles={desktopStyles} />
 				<ToastContainer
 					position='top-right'
-					limit={2}
+					limit={1}
 					autoClose={3000}
 					hideProgressBar={false}
 					newestOnTop

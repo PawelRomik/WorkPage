@@ -1,20 +1,15 @@
 const LocalStorageNames = {
 	localNotes: "notes",
+	localToDoListTasks: "tasks",
 	localPaintCanvas: "paintCanvas",
 	localPaintBackground: "paintBgc",
-	localSettingsColor: "color",
-	localSettingsDarkMode: "darkMode",
-	localToDoListTasks: "tasks",
-	localSettingsBackground: "background",
+	localPaintColors: "paintColors",
 	localTranslatorLanguageTo: "translatorLangTo",
 	localTranslatorLanguageFrom: "translatorLangFrom",
 	localWeatherLastFetchTime: "weatherLastFetchTime",
 	localWeatherData: "weatherData",
-	localSettingsWallpaperStyle: "wallpaperStyle",
-	localPaintColors: "paintColors",
-	localSaperBestTimes: "paintBestTimes",
+	localSaperBestTimes: "saperBestTimes",
 	localSoundValue: "localSoundValue",
-	localSettingsLanguage: "localLanguage",
 	localLoginAnimation: "loginAnimation",
 };
 

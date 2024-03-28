@@ -100,6 +100,7 @@ const resources = {
 				toastNewPasswordTooShort: "New passwords are too short! (min. 8 chars)",
 				toastNewPasswordNoMatch: "New passwords doesn't match!",
 				toastUsernameTooShort: "Username is too short! (min. 4 chars)",
+				toastWrongName: "Can't use that name! Please try another.",
 			},
 			Volume: {
 				volume: "Volume",
@@ -224,6 +225,7 @@ const resources = {
 				toastNewPasswordTooShort: "Nowe hasła są za krótkie! (min. 8 znaków)",
 				toastNewPasswordNoMatch: "Nowe hasła nie sa takie same!",
 				toastUsernameTooShort: "Nazwa jest za krótka! (min. 4 znaki)",
+				toastWrongName: "Nie można użyć tej nazwy! Prosze spróbuj innej.",
 			},
 			Volume: {
 				volume: "Głosność",

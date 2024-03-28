@@ -7,15 +7,15 @@ import { toast } from "react-toastify";
 import SettingsColorSection from "./SettingsColorsSection/SettingsColorsSection";
 import { useMemo } from "react";
 import { css } from "@emotion/react";
-import LocalStorageNames from "../../utils/localstorageNames";
 import { useTranslation } from "react-i18next";
+import { useUser } from "@clerk/clerk-react";
 
 const Settings = () => {
-	const { setBackground, settingsLanguage, changeSettingsLanguage, setColor, darkMode, changeDarkMode, changeWallpaperStyle } = useSettingsContext();
+	const { settingsLanguage, darkMode } = useSettingsContext();
 	const [backgroundInputValue, setBackgroundInputValue] = useState("");
 	const [darkModeInputValue, changeDarkModeInputValue] = useState("false");
-	const { t } = useTranslation();
-	const { localSettingsDarkMode } = useMemo(() => LocalStorageNames, []);
+	const { t, i18n } = useTranslation();
+	const { user } = useUser();
 
 	const darkModeStyles = useMemo(
 		() => css`
@@ -40,9 +40,9 @@ const Settings = () => {
 	);
 
 	useEffect(() => {
-		const mode = localStorage.getItem(localSettingsDarkMode);
-		if (mode) changeDarkModeInputValue(JSON.parse(mode));
-	}, [localSettingsDarkMode]);
+		const mode = darkMode || false;
+		changeDarkModeInputValue(mode.toString());
+	}, [darkMode]);
 
 	const changeBackground = useCallback(
 		(e: React.MouseEvent) => {
@@ -50,12 +50,25 @@ const Settings = () => {
 				const firstChild = e.currentTarget.children[0];
 				if (firstChild instanceof HTMLImageElement) {
 					const imageSrc = firstChild.src;
-					setBackground(imageSrc);
+
+					const updateUser = async () => {
+						if (user) {
+							await user.update({
+								unsafeMetadata: {
+									...user.unsafeMetadata,
+									background: imageSrc,
+								},
+							});
+						}
+					};
+					updateUser();
+					toast.dismiss();
+					toast.clearWaitingQueue();
 					toast.success(t("Settings.toastChangedWallpaper"));
 				}
 			}
 		},
-		[setBackground, t]
+		[user, t]
 	);
 
 	const handleCustomWallpaper = useCallback(() => {
@@ -63,12 +76,24 @@ const Settings = () => {
 			const img = new Image();
 			img.src = backgroundInputValue;
 			img.onload = () => {
-				setBackground(backgroundInputValue);
+				const updateUser = async () => {
+					if (user) {
+						await user.update({
+							unsafeMetadata: {
+								...user.unsafeMetadata,
+								background: backgroundInputValue,
+							},
+						});
+					}
+				};
+				updateUser();
 				setBackgroundInputValue("");
+				toast.dismiss();
+				toast.clearWaitingQueue();
 				toast.success(t("Settings.toastChangedWallpaper"));
 			};
 		}
-	}, [backgroundInputValue, setBackground, t]);
+	}, [backgroundInputValue, user, t]);
 
 	const handleInputKeyDown = useCallback(
 		(e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -81,10 +106,22 @@ const Settings = () => {
 
 	const handleColorChange = useCallback(
 		(newColor: string) => {
-			setColor(newColor);
+			const updateUser = async () => {
+				if (user) {
+					await user.update({
+						unsafeMetadata: {
+							...user.unsafeMetadata,
+							color: newColor,
+						},
+					});
+				}
+			};
+			updateUser();
+			toast.dismiss();
+			toast.clearWaitingQueue();
 			toast.success(t("Settings.toastChangedColor"));
 		},
-		[setColor, t]
+		[user, t]
 	);
 
 	const handleDarkModeChange = useCallback(() => {
@@ -93,8 +130,18 @@ const Settings = () => {
 			return JSON.stringify(newValue);
 		});
 		const mode: boolean = !darkMode;
-		changeDarkMode(mode);
-	}, [changeDarkMode, changeDarkModeInputValue, darkMode]);
+		const updateUser = async () => {
+			if (user) {
+				await user.update({
+					unsafeMetadata: {
+						...user.unsafeMetadata,
+						darkMode: mode,
+					},
+				});
+			}
+		};
+		updateUser();
+	}, [user, darkMode]);
 
 	const handleBackgroundInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setBackgroundInputValue(e.target.value);
@@ -103,19 +150,43 @@ const Settings = () => {
 	const changeWallpaperStyleOnClick = useCallback(
 		(e: React.MouseEvent<HTMLButtonElement>) => {
 			const chosenStyle = (e.target as HTMLButtonElement).textContent?.toLowerCase();
+
 			if (chosenStyle) {
-				changeWallpaperStyle(chosenStyle);
+				const updateUser = async () => {
+					if (user) {
+						await user.update({
+							unsafeMetadata: {
+								...user.unsafeMetadata,
+								wallpaperStyle: chosenStyle,
+							},
+						});
+					}
+				};
+				updateUser();
+				toast.dismiss();
+				toast.clearWaitingQueue();
 				toast.success(t("Settings.toastChangedWallpaperMode"));
 			}
 		},
-		[changeWallpaperStyle, t]
+		[t, user]
 	);
 
 	const changeLanguageOnChange = useCallback(
 		(e: React.ChangeEvent<HTMLSelectElement>) => {
-			changeSettingsLanguage(e.target.value);
+			i18n.changeLanguage(e.target.value);
+			const updateUser = async () => {
+				if (user) {
+					await user.update({
+						unsafeMetadata: {
+							...user.unsafeMetadata,
+							settingsLanguage: e.target.value,
+						},
+					});
+				}
+			};
+			updateUser();
 		},
-		[changeSettingsLanguage]
+		[user, i18n]
 	);
 
 	return (
