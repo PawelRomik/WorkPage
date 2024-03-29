@@ -78,25 +78,14 @@ const SettingsWallpaperSection = ({
 					border: 2px solid ${darkMode ? "white" : "black"};
 
 					&.chosenWallpaperStyle {
-						background-color: ${darkMode ? "black" : "white"};
-						color: ${darkMode ? "white" : "black"};
+						background-color: ${color};
+						color: white;
+						border-color: ${color};
 					}
 				}
 			}
 		`,
 		[darkMode]
-	);
-
-	const wallpaperStyleButtonsStyles = useMemo(
-		() => css`
-			& .wallpapersStyleButton:focus,
-			& .wallpapersStyleButton:hover {
-				background-color: ${color} !important;
-				border-color: ${color} !important;
-				color: white !important;
-			}
-		`,
-		[color]
 	);
 
 	const wallpapers = useMemo(
@@ -130,7 +119,7 @@ const SettingsWallpaperSection = ({
 				</div>
 
 				<div className='wallpapersSelection'>{wallpapers}</div>
-				<div className='wallpapersStyle' css={wallpaperStyleButtonsStyles}>
+				<div className='wallpapersStyle'>
 					<button className={`wallpapersStyleButton ${wallpaperStyle === "auto" ? "chosenWallpaperStyle" : ""}`} onClick={changeWallpaperStyleOnClick}>
 						{t("Settings.settingsWallpaperModeAuto")}
 					</button>
