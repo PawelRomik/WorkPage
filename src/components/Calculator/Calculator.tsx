@@ -1,15 +1,12 @@
-import React, { useCallback, useState } from "react";
-import "./Calculator.style.scss";
+import { useCallback, useState } from "react";
 import CalculatorButtons from "./CalculatorButtons/CalculatorButtons";
 import CalculatorResult from "./CalculatorResult/CalculatorResult";
-import { toast } from "react-toastify";
-import { useTranslation } from "react-i18next";
+import { calculatorStyles } from "./Calculator.styles";
 
-const Calculator: React.FC = () => {
+const Calculator = () => {
 	const [firstNumber, setFirstNumber] = useState<string | undefined>(undefined);
 	const [secondNumber, setSecondNumber] = useState<string | undefined>(undefined);
 	const [operator, setOperator] = useState<string | undefined>(undefined);
-	const { t } = useTranslation();
 
 	const handleAddNumber = useCallback(
 		(value: string) => {
@@ -115,15 +112,9 @@ const Calculator: React.FC = () => {
 		[firstNumber, secondNumber, performOperation, operator]
 	);
 
-	const copyContent = useCallback(() => {
-		const result = firstNumber !== undefined ? firstNumber : "0";
-		navigator.clipboard.writeText(result);
-		toast.success(t("Calculator.toastCopiedCalculator"));
-	}, [firstNumber, t]);
-
 	return (
-		<div className='calculator'>
-			<CalculatorResult firstNumber={firstNumber} operator={operator} secondNumber={secondNumber} copyContent={copyContent} />
+		<div className='calculator' css={calculatorStyles}>
+			<CalculatorResult firstNumber={firstNumber} operator={operator} secondNumber={secondNumber} />
 			<CalculatorButtons
 				handleOperation={handleOperation}
 				handleAddNumber={handleAddNumber}

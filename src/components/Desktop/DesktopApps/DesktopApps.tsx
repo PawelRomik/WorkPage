@@ -1,34 +1,30 @@
-import "./DesktopApps.style.scss";
 import { useMemo } from "react";
 import AppButton from "../DesktopAppButton/DesktopAppButton";
-import type { App } from "../Desktop";
-import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import appData from "../../../data/apps";
+import { desktopAppsContainerStyles } from "./DesktopApps.styles";
+import { launchToast } from "../../../utils/toastFunction";
 
 type DesktopAppsProps = {
-	appData: App[];
 	handleLaunchApp: (e: React.MouseEvent) => void;
 };
 
-const DesktopApps = ({ handleLaunchApp, appData }: DesktopAppsProps) => {
+const DesktopApps = ({ handleLaunchApp }: DesktopAppsProps) => {
 	const { t } = useTranslation();
+
 	const apps = useMemo(() => {
 		const hasTranslatorEnv = import.meta.env.VITE_TRANSLATOR_API;
-
-		return appData.map((app) => {
-			if (app.name === "Settings") {
-				return null;
-			}
+		return appData.slice(1).map((app) => {
 			if (app.name === "Translator" && !hasTranslatorEnv) {
-				toast.warn(t("Translator.toastNoApiKey"));
+				launchToast("error", t("Translator.toastNoApiKey"));
 				return null;
 			}
-			return <AppButton key={app.id} app={app} handleLaunchApp={handleLaunchApp} />;
+			return <AppButton app={app} key={app.id} handleLaunchApp={handleLaunchApp} />;
 		});
-	}, [appData, handleLaunchApp, t]);
+	}, [handleLaunchApp, t]);
 
 	return (
-		<div className='apps'>
+		<div className='desktopAppsContainer' css={desktopAppsContainerStyles}>
 			<section className='leftApps'>{apps}</section>
 			<section className='rightApps'>
 				<AppButton key={0} app={appData[0]} handleLaunchApp={handleLaunchApp} />

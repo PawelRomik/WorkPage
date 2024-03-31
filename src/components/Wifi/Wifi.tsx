@@ -1,45 +1,20 @@
-import { useCallback, useMemo } from "react";
-import "./Wifi.style.scss";
-import { css } from "@emotion/react";
+import { useCallback } from "react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { useTranslation } from "react-i18next";
+import { wifiContainerStyles } from "./Wifi.styles";
 
 const Wifi = () => {
 	const { color, darkMode } = useSettingsContext();
 	const { t } = useTranslation();
-
-	const wifiStyles = useMemo(
-		() => css`
-			& {
-				color: ${color};
-			}
-		`,
-		[color]
-	);
-
-	const darkModeStyles = useMemo(
-		() => css`
-			&.wifiContainer {
-				background-color: ${darkMode ? "white" : "black"};
-				color: ${darkMode ? "black" : "white"};
-
-				button {
-					background-color: ${darkMode ? "lightgray" : "rgb(29, 29, 29)"};
-					color: ${darkMode ? "black" : "white"};
-				}
-			}
-		`,
-		[darkMode]
-	);
 
 	const dontHideOnClick = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation();
 	}, []);
 
 	return (
-		<div className='wifiContainer' css={darkModeStyles} onClick={dontHideOnClick}>
+		<div className='wifiContainer' css={wifiContainerStyles(darkMode, color)} onClick={dontHideOnClick}>
 			<p>
-				<i className='fa-solid fa-wifi' css={wifiStyles}></i>
+				<i className='fa-solid fa-wifi'></i>
 				{t("Wifi.wifiConnected")}
 			</p>
 		</div>

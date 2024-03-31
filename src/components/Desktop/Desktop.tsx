@@ -1,5 +1,4 @@
-import "./Desktop.style.scss";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import appData from "../../data/apps";
 import AppContainer from "../AppContainer/AppContainer";
@@ -8,16 +7,11 @@ import CalendarWindow from "../CalendarWindow/CalendarWindow";
 import DesktopApps from "./DesktopApps/DesktopApps";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Global, css } from "@emotion/react";
 import Soundbar from "../Soundbar/Soundbar";
 import Wifi from "../Wifi/Wifi";
 import Weather from "../Weather/Weather";
-
-export type App = {
-	id: number;
-	name: string;
-	class: string;
-};
+import { appWrapperStyles, desktopStyles } from "./Desktop.styles";
+import type { App } from "../../views/System/System";
 
 type DesktopProps = {
 	userWindowState: boolean;
@@ -52,7 +46,7 @@ const Desktop = ({
 	isOff,
 	changeIsOff,
 }: DesktopProps) => {
-	const { background, darkMode, wallpaperStyle, color } = useSettingsContext();
+	const { background, darkMode, wallpaperStyle } = useSettingsContext();
 
 	const launchApp = useCallback(
 		(e: React.MouseEvent) => {
@@ -84,53 +78,9 @@ const Desktop = ({
 		[launchApp]
 	);
 
-	const desktopStyles = useMemo(
-		() => css`
-			:root {
-				--toastify-color-info: ${color};
-				--toastify-color-success: ${color};
-				--toastify-color-warning: ${color};
-				--toastify-color-error: ${color};
-			}
-			background-image: url(${background});
-			background-size: ${wallpaperStyle};
-		`,
-		[color, background, wallpaperStyle]
-	);
-
-	const swalStyles = useMemo(
-		() => css`
-			& .swal2-popup .swal2-styled:focus,
-			& .swal2-close:focus,
-			& .swal2-input:focus {
-				box-shadow: none !important;
-			}
-			& .swal2-close:hover,
-			& .swal2-close:focus {
-				color: ${color} !important;
-			}
-
-			& .swal2-input:focus {
-				border-color: ${color} !important;
-			}
-
-			& .swal2-actions button {
-				color: ${darkMode ? "black" : "white"} !important;
-
-				&:hover,
-				&:focus {
-					background-color: ${color} !important;
-					color: white !important;
-				}
-			}
-		`,
-		[color, darkMode]
-	);
-
 	return (
-		<main className='desktop' css={[desktopStyles, swalStyles]} onClick={hidePanels}>
-			<div className='appWrapper'>
-				<Global styles={desktopStyles} />
+		<main className='desktop' css={desktopStyles(background, wallpaperStyle)} onClick={hidePanels}>
+			<div className='appWrapper' css={appWrapperStyles}>
 				<ToastContainer
 					position='top-right'
 					limit={1}
@@ -149,7 +99,7 @@ const Desktop = ({
 				{calendarWindowState && <CalendarWindow />}
 				{soundbarWindowState && <Soundbar volume={volume} setVolume={setVolume} />}
 				{wifiWindowState && <Wifi />}
-				<DesktopApps appData={appData} handleLaunchApp={handleLaunchApp} />
+				<DesktopApps handleLaunchApp={handleLaunchApp} />
 				<Weather />
 			</div>
 		</main>

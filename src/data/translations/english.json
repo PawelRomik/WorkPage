@@ -1,0 +1,123 @@
+{
+	"Apps": {
+		"Notes": "Notes",
+		"ToDoList": "ToDoList",
+		"Calculator": "Calculator",
+		"Paint": "Paint",
+		"Minesweeper": "Minesweeper",
+		"Translator": "Translator",
+		"Settings": "Settings"
+	},
+	"Swal": {
+		"swalTitle": "Are you sure?",
+		"swalDesc": "You won't be able to revert this!",
+		"swalYes": "Confirm",
+		"swalNo": "Cancel"
+	},
+	"Notes": {
+		"toastRemovedNote": "Succesfully removed note!",
+		"noteCharsLeft": "chars left.",
+		"newNoteTitle": "Your new note.",
+		"newNoteDesc": "Feel free to write something!",
+		"noNotes": "No notes found, make a new one."
+	},
+	"Calculator": {
+		"toastCopiedCalculator": "Copied calculator's content.",
+		"calculatorCopyHover": "Click to copy content."
+	},
+	"Translator": {
+		"toastWrongApiKey": "Wrong ApiKey provided, translator won't work properly!",
+		"toastNoApiKey": "No Translator ApiKey found! Translator won't work without it!",
+		"translatorTranslating": "Translating...",
+		"translatorCopyHover": "Click to copy content.",
+		"toastCopiedTranslator": "Copied translator's content."
+	},
+	"LoginProfile": {
+		"loginUser": "User",
+		"loginEnter": "Enter",
+		"loginIn": "Login",
+		"logout": "Logout"
+	},
+	"Paint": {
+		"swalSaveImage": "Save your image",
+		"swalChangeName": "Change name:",
+		"swalDefaultInput": "Painting",
+		"paintBackground": "Background: ",
+		"paintColor": "Color:",
+		"paintSize": "Size:",
+		"toastSavedImage": "The image has been succesfully saved to your device!"
+	},
+	"Minesweeper": {
+		"minesweeperTitle": "Minesweeper",
+		"minesweeperTime": "Time",
+		"minesweeperWin": "You won!",
+		"minesweeperLose": "Game Over!",
+		"minesweeperButtonPlayAgain": "Play again",
+		"minesweeperButtonReset": "Reset",
+		"minesweeperStats": "Stats",
+		"minesweeperEasy": "Easy",
+		"minesweeperNormal": "Normal",
+		"minesweeperHard": "Hard",
+		"toastResetProgress": "This action will reset your game progress!"
+	},
+	"Settings": {
+		"settingsChangeColors": "CHANGE COLORS",
+		"settingsMainColor": "Main color",
+		"settingsMode": "Mode",
+		"settingsLanguage": "Language",
+		"settingsUserSection": "USER'S DATA",
+		"settingsUserSectionUsername": "Username: ",
+		"settingsUserSectionChangeUsername": "Change Username",
+		"settingsUserSectionPassword": "Password",
+		"settingsUserSectionChangePassword": "Change Password",
+		"settingsUserSectionOldPassword": "Old Password",
+		"settingsUserSectionNewPassword": "New Password",
+		"settingsUserSectionConfirmPassword": "Confirm Password",
+		"settingsUserSectionButtonText": "Change",
+		"settingsUserSectionAvatarHover": "Click to change avatar",
+		"settingsWallpaperSet": "SET YOUR WALLPAPER",
+		"settingsWallpaperInputText": "Custom wallpaper: (url)",
+		"settingsWallpaperModeAuto": "Auto",
+		"settingsWallpaperModeCover": "Cover",
+		"settingsWallpaperModeContain": "Contain",
+		"toastChangedWallpaper": "Succesfully changed wallpaper!",
+		"toastChangedLanguage": "Succesfully changed language!",
+		"toastChangedColor": "Succesfully changed app color!",
+		"toastChangedWallpaperMode": "Succesfully changed wallpaper mode!",
+		"toastOldPasswordNoMatch": "Old password doesn't match!",
+		"toastPasswordChanged": "Succesfully changed password!",
+		"toastGenericError": "An error occured! Please try again later.",
+		"toastUsernameChanged": "Succesfully changed username!",
+		"toastAvatarChanged": "Succesfully changed avatar!",
+		"toastNewPasswordTooShort": "New passwords are too short! (min. 8 chars)",
+		"toastNewPasswordNoMatch": "New passwords doesn't match!",
+		"toastUsernameTooShort": "Username is too short! (min. 4 chars)",
+		"toastWrongName": "Can't use that name! Please try another."
+	},
+	"Volume": {
+		"volume": "Volume"
+	},
+	"ToDoList": {
+		"toDoListTitle": "Title",
+		"toDoListTitleReqs": "Min. 3 chars.",
+		"toDoListDescription": "Description",
+		"toDoListDescriptionOptional": "(optional)",
+		"toDoListPriority": "Priority",
+		"toDoListFinishEditing": "Finish editing",
+		"toDoListAddNewTask": "Add new task",
+		"toDoListNoTasks": "No tasks found, create a new one.",
+		"toastRemovedTask": "Succesfully removed task!"
+	},
+	"UserWindow": {
+		"userWindowLoggedAs": "Logged as:",
+		"userWindowLogout": "Logout"
+	},
+	"Weather": {
+		"weatherFetchLocalizationError": "Can't fetch location, weather won't work properly!",
+		"weatherNoApiKey": "No Weather ApiKey found! Weather won't work without it!",
+		"weatherFetchWeatherError": "Can't fetch weather data, weather won't work properly!"
+	},
+	"Wifi": {
+		"wifiConnected": "Connected"
+	}
+}

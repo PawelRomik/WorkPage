@@ -1,8 +1,7 @@
-import "./Soundbar.style.scss";
 import { useCallback, useMemo, useState } from "react";
-import { css } from "@emotion/react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { useTranslation } from "react-i18next";
+import { soundbarSliderStyles, soundbarStyles } from "./Soundbar.styles";
 
 type SoundbarProps = {
 	volume: number;
@@ -13,30 +12,6 @@ const Soundbar = ({ volume, setVolume }: SoundbarProps) => {
 	const { color, darkMode } = useSettingsContext();
 	const [oldSoundVal, setOldSoundVal] = useState(volume);
 	const { t } = useTranslation();
-
-	const soundbarStyles = useMemo(
-		() => css`
-			&.soundbarSlider {
-				color: ${color};
-			}
-		`,
-		[color]
-	);
-
-	const darkModeStyles = useMemo(
-		() => css`
-			&.soundbar {
-				background-color: ${darkMode ? "white" : "black"};
-				color: ${darkMode ? "black" : "white"};
-
-				button {
-					background-color: ${darkMode ? "lightgray" : "rgb(29, 29, 29)"};
-					color: ${darkMode ? "black" : "white"};
-				}
-			}
-		`,
-		[darkMode]
-	);
 
 	const dontHideOnClick = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation();
@@ -62,11 +37,11 @@ const Soundbar = ({ volume, setVolume }: SoundbarProps) => {
 	const volumeClass = useMemo(() => (volume < 10 ? "fa-volume-xmark" : volume < 70 ? "fa-volume-low" : "fa-volume-high"), [volume]);
 
 	return (
-		<div className='soundbar' css={darkModeStyles} onClick={dontHideOnClick}>
+		<div className='soundbar' css={soundbarStyles(darkMode)} onClick={dontHideOnClick}>
 			<label htmlFor='soundbarSlider'>{t("Volume.volume")}:</label>
 			<div>
 				<i className={`fa-solid ${volumeClass}`} onClick={lowerVolumeOnIconClick}></i>{" "}
-				<input css={soundbarStyles} type='range' min='0' max='100' value={volume} onChange={changeVolume} className='soundbarSlider' id='soundbarSlider' />
+				<input css={soundbarSliderStyles(color)} type='range' min='0' max='100' value={volume} onChange={changeVolume} className='soundbarSlider' id='soundbarSlider' />
 			</div>
 		</div>
 	);

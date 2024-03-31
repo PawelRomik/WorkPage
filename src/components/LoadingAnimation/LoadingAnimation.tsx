@@ -1,6 +1,4 @@
-import "./LoadingAnimation.style.scss";
-import { useMemo } from "react";
-import { css } from "@emotion/react";
+import { loadingAnimationStyles } from "./LoadingAnimation.styles";
 
 type loadingAnimationProps = {
 	animationEnd?: () => void;
@@ -8,17 +6,8 @@ type loadingAnimationProps = {
 };
 
 const LoadingAnimation = ({ animationEnd, repeats }: loadingAnimationProps) => {
-	const animationStyles = useMemo(
-		() => css`
-			& div {
-				animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) ${repeats ? repeats : "infinite"};
-			}
-		`,
-
-		[repeats]
-	);
 	return (
-		<div className='lds-roller' onAnimationEnd={animationEnd} css={animationStyles}>
+		<div className='lds-roller' onAnimationEnd={animationEnd} css={loadingAnimationStyles(repeats)}>
 			{[...Array(8)].map((_, index) => {
 				return <div key={index}></div>;
 			})}

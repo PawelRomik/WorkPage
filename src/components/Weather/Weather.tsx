@@ -1,17 +1,18 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import weatherIcons from "../../data/weatherIcons";
-import "./Weather.style.scss";
-import { toast } from "react-toastify";
+import { weatherStyles } from "./Weather.styles";
 import LocalStorageNames from "../../utils/localstorageNames";
 import { useTranslation } from "react-i18next";
+import { launchToast } from "../../utils/toastFunction";
 
-interface WeatherData {
+type WeatherData = {
 	temp: number;
 	icon: keyof typeof weatherIcons | "";
-}
+};
+
+const { localWeatherData, localWeatherLastFetchTime } = LocalStorageNames;
 
 const Weather = () => {
-	const { localWeatherData, localWeatherLastFetchTime } = useMemo(() => LocalStorageNames, []);
 	const { t } = useTranslation();
 	const [data, setData] = useState<WeatherData>({
 		temp: 0,
@@ -42,13 +43,13 @@ const Weather = () => {
 				if (!lastFetchTime || currentTime - parseInt(lastFetchTime) >= fetchInterval) {
 					const location = await fetchLocation();
 					if (!location) {
-						toast.warn(t("Weather.weatherFetchLocalizationError"));
+						launchToast("error", t("Weather.weatherFetchLocalizationError"));
 						return;
 					}
 
 					const apiKey = import.meta.env.VITE_WEATHER_API;
 					if (!apiKey) {
-						toast.warn(t("Weather.weatherNoApiKey"));
+						launchToast("error", t("Weather.weatherNoApiKey"));
 						return;
 					}
 
@@ -57,7 +58,7 @@ const Weather = () => {
 					);
 
 					if (!response.ok) {
-						toast.error(t("Weather.weatherFetchWeatherError"));
+						launchToast("error", t("Weather.weatherFetchWeatherError"));
 						return;
 					}
 
@@ -88,14 +89,14 @@ const Weather = () => {
 		fetchWeather();
 		const intervalId = setInterval(fetchWeather, fetchInterval);
 		return () => clearInterval(intervalId);
-	}, [localWeatherData, localWeatherLastFetchTime, t]);
+	}, [t]);
 
 	if (!data.icon) {
 		return null;
 	}
 
 	return (
-		<div className='weather'>
+		<div className='weather' css={weatherStyles}>
 			<img src={weatherIcons[data.icon]} className='weatherIcon' alt={`Weather Icon - ${data.icon}`} />
 			<p>{data.temp} &#8451;</p>
 		</div>
