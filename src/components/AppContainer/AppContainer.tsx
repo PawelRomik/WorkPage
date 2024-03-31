@@ -9,7 +9,7 @@ import { useSettingsContext } from "../../providers/SettingsContext";
 import { useCallback, useMemo, useState } from "react";
 import { appContainerStyles, appContainerBackgroundStyles, appContainerContentStyles } from "./AppContainer.styles";
 import AppContainerHeader from "./AppContainerHeader.tsx/AppContainerHeader";
-import { App } from "../Desktop/Desktop";
+import type { App } from "../../views/System/System";
 
 type AppContainerProps = {
 	app: App;
