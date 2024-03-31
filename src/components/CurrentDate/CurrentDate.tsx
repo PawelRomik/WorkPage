@@ -1,8 +1,8 @@
 import { useCallback } from "react";
-import "./CurrentDate.style.scss";
+import { currentDateStyles } from "./CurrentDate.styles";
 
 const CurrentDate = () => {
-	const getFormattedDate = useCallback((): string => {
+	const getFormattedDate = useCallback(() => {
 		const today = new Date();
 		const day = today.getDate();
 		const month = today.getMonth() + 1;
@@ -14,7 +14,11 @@ const CurrentDate = () => {
 		return `${formattedDay}.${formattedMonth}.${year}`;
 	}, []);
 
-	return <p className='currentDate'>{getFormattedDate()}</p>;
+	return (
+		<p className='currentDate' css={currentDateStyles}>
+			{getFormattedDate()}
+		</p>
+	);
 };
 
 export default CurrentDate;

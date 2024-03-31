@@ -85,7 +85,7 @@ const SettingsWallpaperSection = ({
 				}
 			}
 		`,
-		[darkMode]
+		[darkMode, color]
 	);
 
 	const wallpapers = useMemo(

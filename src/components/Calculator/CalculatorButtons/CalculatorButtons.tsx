@@ -1,7 +1,5 @@
-import "./CalculatorButtons.style.scss";
 import { useSettingsContext } from "../../../providers/SettingsContext";
-import { css } from "@emotion/react";
-import { useMemo } from "react";
+import { calculatorButtonStyle, calculatorButtonsContainerStyle } from "./CalculatorButtons.styles";
 
 type CalculatorButtonsProps = {
 	handleOperation: (operation: string) => void;
@@ -16,33 +14,8 @@ type CalculatorButtonsProps = {
 const CalculatorButtons = ({ handleOperation, handleAddNumber, handleAddOperator, handleAddDot, handleClear, handleClearEntry, handleCalculate }: CalculatorButtonsProps) => {
 	const { color, darkMode } = useSettingsContext();
 
-	const buttonStyles = useMemo(
-		() => css`
-			& > button:hover,
-			& > button:focus {
-				background-color: ${color};
-				color: white;
-			}
-		`,
-		[color]
-	);
-
-	const darkModeStyles = useMemo(
-		() => css`
-			& {
-				background-color: ${darkMode ? "white" : "black"};
-				.calculatorButton {
-					background-color: ${darkMode ? " rgb(231,231,231)" : "rgb(77, 77, 77)"};
-					color: ${darkMode ? "black" : "white"};
-					border: 0.1rem ${darkMode ? "white" : "black"} solid;
-				}
-			}
-		`,
-		[darkMode]
-	);
-
 	return (
-		<section className='calculatorButtons' css={[darkModeStyles, buttonStyles]}>
+		<section className='calculatorButtonsContainer' css={[calculatorButtonsContainerStyle(darkMode), calculatorButtonStyle(darkMode, color)]}>
 			<button className='calculatorButton' onClick={() => handleOperation("percent")}>
 				<i className='fa-solid fa-percent'></i>
 			</button>

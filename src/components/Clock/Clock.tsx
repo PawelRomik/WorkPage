@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
-import "./Clock.style.scss";
 import { useSettingsContext } from "../../providers/SettingsContext";
+import { clockStyles } from "./Clock.styles";
 
 const Clock = () => {
 	const [currentTime, setCurrentTime] = useState(new Date());
@@ -24,7 +24,7 @@ const Clock = () => {
 	}, [currentTime, settingsLanguage]);
 
 	return (
-		<div className='clock'>
+		<div className='clock' css={clockStyles}>
 			<p className='clockValue'>{clockValue}</p>
 		</div>
 	);

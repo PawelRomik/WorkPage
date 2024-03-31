@@ -1,0 +1,123 @@
+{
+	"Apps": {
+		"Notes": "Notatki",
+		"ToDoList": "Zadania",
+		"Calculator": "Kalkulator",
+		"Paint": "Paint",
+		"Minesweeper": "Saper",
+		"Translator": "Tłumacz",
+		"Settings": "Ustawienia"
+	},
+	"Swal": {
+		"swalTitle": "Jesteś pewny?",
+		"swalDesc": "Nie będziesz mógł tego cofnąć!",
+		"swalYes": "Potwierdź",
+		"swalNo": "Anuluj"
+	},
+	"Notes": {
+		"toastRemovedNote": "Sukces! Usunięto notatkę",
+		"noteCharsLeft": "znaków zostało.",
+		"newNoteTitle": "Twoja nowa notatka.",
+		"newNoteDesc": "Śmiało, napisz coś!",
+		"noNotes": "Nie znaleziono żadnych notatek, stwórz nową."
+	},
+	"Calculator": {
+		"toastCopiedCalculator": "Skopiowano zawartość kalkulatora.",
+		"calculatorCopyHover": "Kliknij aby skopiować."
+	},
+	"Translator": {
+		"toastWrongApiKey": "Podany klucz API jest zły! Tłumacz nie będzie działać poprawnie!",
+		"toastNoApiKey": "Brak klucza API! Tłumacz nie będzie działać poprawnie!",
+		"translatorTranslating": "Tłumaczę...",
+		"translatorCopyHover": "Kliknij aby skopiować.",
+		"toastCopiedTranslator": "Skopiowano zawartość tłumacza."
+	},
+	"LoginProfile": {
+		"loginUser": "Użytkownik",
+		"loginEnter": "Wejdź",
+		"loginIn": "Zaloguj",
+		"logout": "Wyloguj"
+	},
+	"Paint": {
+		"swalSaveImage": "Zapisz swój obraz",
+		"swalChangeName": "Zmień nazwę:",
+		"swalDefaultInput": "Obraz",
+		"paintBackground": "Tło: ",
+		"paintColor": "Kolor:",
+		"paintSize": "Rozmiar:",
+		"toastSavedImage": "Sukces! Zapisano obraz na Twoje urządzenie!"
+	},
+	"Minesweeper": {
+		"minesweeperTitle": "Saper",
+		"minesweeperTime": "Czas",
+		"minesweeperWin": "Wygrałeś!",
+		"minesweeperLose": "Koniec gry!",
+		"minesweeperButtonPlayAgain": "Zagraj ponownie",
+		"minesweeperButtonReset": "Reset",
+		"minesweeperStats": "Statystyki",
+		"minesweeperEasy": "Łatwy",
+		"minesweeperNormal": "Normalny",
+		"minesweeperHard": "Trudny",
+		"toastResetProgress": "Twój progres zostanie zresetowany!"
+	},
+	"Settings": {
+		"settingsChangeColors": "ZMIEŃ KOLORY",
+		"settingsMainColor": "Kolor główny",
+		"settingsMode": "Tryb",
+		"settingsLanguage": "Język",
+		"settingsUserSection": "DANE UŻYTKOWNIKA",
+		"settingsUserSectionUsername": "Nazwa: ",
+		"settingsUserSectionChangeUsername": "Zmień nazwę:",
+		"settingsUserSectionPassword": "Hasło",
+		"settingsUserSectionChangePassword": "Zmień hasło",
+		"settingsUserSectionOldPassword": "Stare hasło",
+		"settingsUserSectionNewPassword": "Nowe hasło",
+		"settingsUserSectionConfirmPassword": "Potwierdź nowe hasło",
+		"settingsUserSectionButtonText": "Zmień",
+		"settingsUserSectionAvatarHover": "Kliknij by zmienić awatar",
+		"settingsWallpaperSet": "USTAW TAPETĘ",
+		"settingsWallpaperInputText": "Własna tapeta: (url)",
+		"settingsWallpaperModeAuto": "Auto",
+		"settingsWallpaperModeCover": "Zasłoń",
+		"settingsWallpaperModeContain": "Zmieść",
+		"toastChangedWallpaper": "Sukces! Zmieniono tapetę!",
+		"toastChangedLanguage": "Sukces! Język został zmieniony!",
+		"toastChangedColor": "Sukces! Zmieniono kolor aplikacji!",
+		"toastChangedWallpaperMode": "Sukces! Zmieniono styl tapety!",
+		"toastOldPasswordNoMatch": "Stare hasło się nie zgadza!",
+		"toastPasswordChanged": "Sukces! Zmieniono hasło!",
+		"toastGenericError": "Wystąpił błąd! Spróbuj ponownie później!",
+		"toastUsernameChanged": "Sukces! Zmieniono nazwę!",
+		"toastAvatarChanged": "Sukces! Zmieniono awatar!",
+		"toastNewPasswordTooShort": "Nowe hasła są za krótkie! (min. 8 znaków)",
+		"toastNewPasswordNoMatch": "Nowe hasła nie sa takie same!",
+		"toastUsernameTooShort": "Nazwa jest za krótka! (min. 4 znaki)",
+		"toastWrongName": "Nie można użyć tej nazwy! Prosze spróbuj innej."
+	},
+	"Volume": {
+		"volume": "Głosność"
+	},
+	"ToDoList": {
+		"toDoListTitle": "Tytuł",
+		"toDoListTitleReqs": "Min. 3 znaki.",
+		"toDoListDescription": "Opis",
+		"toDoListDescriptionOptional": "(opcjonalnie)",
+		"toDoListPriority": "Ważność",
+		"toDoListFinishEditing": "Skończ edycję",
+		"toDoListAddNewTask": "Dodaj zadanie",
+		"toDoListNoTasks": "Nie znaleziono żadnych zadań, stwórz nowe.",
+		"toastRemovedTask": "Sukces! Usunięto zadanie!"
+	},
+	"UserWindow": {
+		"userWindowLoggedAs": "Zalogowany jako:",
+		"userWindowLogout": "Wyloguj"
+	},
+	"Weather": {
+		"weatherFetchLocalizationError": "Nie można pobrać lokalizacji! Pogoda nie będzie działać poprawnie!",
+		"weatherNoApiKey": "Brak klucza API! Pogoda nie będzie działać poprawnie!",
+		"weatherFetchWeatherError": "Nie można pobrać pogody! Pogoda nie będzie działać poprawnie!"
+	},
+	"Wifi": {
+		"wifiConnected": "Połączono"
+	}
+}
