@@ -1,16 +1,13 @@
-// src/Tiptap.jsx
 import { EditorProvider } from "@tiptap/react";
 import MenuBar from "../MenuBar/MenuBar";
 import StarterKit from "@tiptap/starter-kit";
-import "./Tiptap.style.scss";
 import CharacterCount from "@tiptap/extension-character-count";
-import { css } from "@emotion/react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
-import { useMemo } from "react";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { useTranslation } from "react-i18next";
+import { noteEditStyles, noteInfoStyles, tiptapStyles } from "./Tiptap.styles";
 
 type tiptapProps = {
 	notesLength: number;
@@ -39,26 +36,18 @@ const extensions = [
 const Tiptap = ({ notesLength, noteValue, updateNote }: tiptapProps) => {
 	const { t } = useTranslation();
 	const { darkMode } = useSettingsContext();
-	const darkModeStyles = useMemo(
-		() => css`
-			& .ProseMirror {
-				background-color: ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
-				color: ${darkMode ? "black" : "white"};
-				border: 4px solid ${darkMode ? "white" : "black"};
-			}
-		`,
-		[darkMode]
-	);
 	return (
-		<section className='noteEdit'>
+		<section className='noteEdit' css={noteEditStyles}>
 			{notesLength > 0 ? (
-				<div className='tiptap' css={darkModeStyles}>
+				<div className='tiptap' css={tiptapStyles(darkMode)}>
 					<EditorProvider slotBefore={<MenuBar updateNote={updateNote} noteValue={noteValue} />} extensions={extensions}>
 						<></>
 					</EditorProvider>
 				</div>
 			) : (
-				<p className='notesInfo'>{t("Notes.noNotes")}</p>
+				<p className='noteInfo' css={noteInfoStyles(darkMode)}>
+					{t("Notes.noNotes")}
+				</p>
 			)}
 		</section>
 	);

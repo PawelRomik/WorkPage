@@ -1,45 +1,50 @@
-import { useCallback, useEffect, useState, useMemo } from "react";
-import "./Notes.style.scss";
-import NotesButton from "./NotesButton/NotesButton";
+import { useCallback, useEffect, useState } from "react";
+import NotesSelection from "./NotesSelection/NotesSelection";
 import Tiptap from "./Tiptap/Tiptap";
 import LocalStorageNames from "../../utils/localstorageNames";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import { useSettingsContext } from "../../providers/SettingsContext";
+import { notesContainerStyles } from "./Notes.styles";
 
 export type Note = {
 	id: number;
 	content: string;
 };
 
+const { localNotes } = LocalStorageNames;
+
 const Notes = () => {
 	const { t } = useTranslation();
 	const [noteValue, setNoteValue] = useState<string>("");
 	const [notes, setNotes] = useState<Note[]>([]);
 	const [selectedNoteId, setSelectedNoteId] = useState<number | undefined>(undefined);
-	const { localNotes } = useMemo(() => LocalStorageNames, []);
-	const { darkMode } = useSettingsContext();
 
 	useEffect(() => {
-		const storedNotes = localStorage.getItem(localNotes);
-		if (storedNotes) {
-			const parsedNotes: Note[] = JSON.parse(storedNotes);
-			setNotes(parsedNotes);
-			setSelectedNoteId(parsedNotes.length > 0 ? parsedNotes[0].id : undefined);
-		}
-	}, [localNotes]);
+		const getNotes = () => {
+			const storedNotes = localStorage.getItem(localNotes);
+			if (storedNotes) {
+				const parsedNotes: Note[] = JSON.parse(storedNotes);
+				setNotes(parsedNotes);
+				setSelectedNoteId(parsedNotes.length > 0 ? parsedNotes[0].id : undefined);
+			}
+		};
+		getNotes();
+	}, []);
 
 	useEffect(() => {
-		localStorage.setItem(localNotes, JSON.stringify(notes));
-	}, [notes, localNotes]);
+		const saveNotesOnChange = () => {
+			localStorage.setItem(localNotes, JSON.stringify(notes));
+		};
+		saveNotesOnChange();
+	}, [notes]);
 
 	useEffect(() => {
-		setNoteValue((prevNoteValue) => {
-			const selectedNote = notes.find((note) => note.id === selectedNoteId);
-			return selectedNote ? selectedNote.content : prevNoteValue;
-		});
+		const changeNoteContent = () => {
+			setNoteValue((prevNoteValue) => {
+				const selectedNote = notes.find((note) => note.id === selectedNoteId);
+				return selectedNote ? selectedNote.content : prevNoteValue;
+			});
+		};
+		changeNoteContent();
 	}, [selectedNoteId, notes]);
 
 	const changeNote = useCallback(
@@ -99,36 +104,9 @@ const Notes = () => {
 		[selectedNoteId]
 	);
 
-	const showConfirmDialog = useCallback(
-		(noteId: number, e: React.MouseEvent) => {
-			e.stopPropagation();
-			withReactContent(Swal)
-				.fire({
-					title: t("Swal.swalTitle"),
-					text: t("Swal.swalDesc"),
-					showCancelButton: true,
-					confirmButtonColor: darkMode ? "#dfdfdf" : "rgb(27, 27, 27)",
-					cancelButtonColor: darkMode ? "#dfdfdf" : "rgb(27, 27, 27)",
-					confirmButtonText: t("Swal.swalYes"),
-					cancelButtonText: t("Swal.swalNo"),
-					background: darkMode ? "white" : "black",
-					color: darkMode ? "black" : "white",
-					showCloseButton: true,
-					target: ".notesContainer",
-				})
-				.then((result) => {
-					if (result.isConfirmed) {
-						removeNote(noteId);
-						toast.success(t("Notes.toastRemovedNote"));
-					}
-				});
-		},
-		[removeNote, darkMode, t]
-	);
-
 	return (
-		<div className='notesContainer'>
-			<NotesButton notes={notes} selectedNoteId={selectedNoteId} changeNote={changeNote} showConfirmDialog={showConfirmDialog} createNewNote={createNewNote} />
+		<div className='notesContainer' css={notesContainerStyles}>
+			<NotesSelection notes={notes} selectedNoteId={selectedNoteId} changeNote={changeNote} removeNote={removeNote} createNewNote={createNewNote} />
 			<Tiptap notesLength={notes.length} noteValue={noteValue} updateNote={updateNote} />
 		</div>
 	);
