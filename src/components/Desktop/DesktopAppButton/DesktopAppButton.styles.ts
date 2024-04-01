@@ -21,7 +21,7 @@ export const desktopAppButtonStyles = (color: string) => css`
 		cursor: pointer;
 
 		&:focus {
-			background-color: ${color};
+			background-color: ${color}33;
 		}
 
 		& .desktopAppIcon {

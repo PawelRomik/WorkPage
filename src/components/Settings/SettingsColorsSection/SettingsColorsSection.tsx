@@ -64,14 +64,14 @@ const SettingsColorSection = ({ handleColorChange, darkModeInputValue, settingsL
 				<div className='colorsGroup'>
 					<p>{t("Settings.settingsMainColor")}:</p>
 					<div className='colorsButtonsContainer'>
-						<button onClick={() => handleColorChange("red")} className='colorButton'></button>
-						<button onClick={() => handleColorChange("orange")} className='colorButton'></button>
-						<button onClick={() => handleColorChange("lime")} className='colorButton'></button>
-						<button onClick={() => handleColorChange("darkgreen")} className='colorButton'></button>
-						<button onClick={() => handleColorChange("aqua")} className='colorButton'></button>
-						<button onClick={() => handleColorChange("blue")} className='colorButton'></button>
-						<button onClick={() => handleColorChange("purple")} className='colorButton'></button>
-						<button onClick={() => handleColorChange("magenta")} className='colorButton'></button>
+						<button onClick={() => handleColorChange("#FF0000")} className='colorButton'></button>
+						<button onClick={() => handleColorChange("#FFA500")} className='colorButton'></button>
+						<button onClick={() => handleColorChange("#00FF00")} className='colorButton'></button>
+						<button onClick={() => handleColorChange("#006400")} className='colorButton'></button>
+						<button onClick={() => handleColorChange("#00FFFF")} className='colorButton'></button>
+						<button onClick={() => handleColorChange("#0000FF")} className='colorButton'></button>
+						<button onClick={() => handleColorChange("#800080")} className='colorButton'></button>
+						<button onClick={() => handleColorChange("#FF00FF")} className='colorButton'></button>
 					</div>
 				</div>
 				<div className='colorsGroup'>

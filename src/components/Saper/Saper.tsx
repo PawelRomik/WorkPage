@@ -37,10 +37,13 @@ const Saper = () => {
 	const boardRef = useRef(null);
 
 	useEffect(() => {
-		const storedBestTimes = localStorage.getItem(localSaperBestTimes);
-		if (storedBestTimes) {
-			setBestTimes(JSON.parse(storedBestTimes));
-		}
+		const getBestTimes = () => {
+			const storedBestTimes = localStorage.getItem(localSaperBestTimes);
+			if (storedBestTimes) {
+				setBestTimes(JSON.parse(storedBestTimes));
+			}
+		};
+		getBestTimes();
 	}, []);
 
 	const saveBestTime = useCallback(
@@ -54,21 +57,24 @@ const Saper = () => {
 	);
 
 	useEffect(() => {
-		let resizeTimeout: NodeJS.Timeout;
+		const resizeWindowCheck = () => {
+			let resizeTimeout: NodeJS.Timeout;
 
-		const handleResize = () => {
-			clearTimeout(resizeTimeout);
-			resizeTimeout = setTimeout(() => {
-				if (window.innerWidth < 1200) {
-					setDifficulty(0);
-				}
-			}, 100);
-		};
+			const handleResize = () => {
+				clearTimeout(resizeTimeout);
+				resizeTimeout = setTimeout(() => {
+					if (window.innerWidth < 1200) {
+						setDifficulty(0);
+					}
+				}, 100);
+			};
 
-		window.addEventListener("resize", handleResize);
-		return () => {
-			window.removeEventListener("resize", handleResize);
+			window.addEventListener("resize", handleResize);
+			return () => {
+				window.removeEventListener("resize", handleResize);
+			};
 		};
+		resizeWindowCheck();
 	}, []);
 
 	const initializeBoard = useCallback(() => {
@@ -217,15 +223,18 @@ const Saper = () => {
 	);
 
 	useEffect(() => {
-		if (victory) {
-			setGameOver(true);
-			stopTimer();
-			const currentTime = gameTime;
-			const bestTime = bestTimes[difficulty];
-			if (!bestTime || currentTime < bestTime) {
-				saveBestTime(currentTime);
+		const stopGameOnVictory = () => {
+			if (victory) {
+				setGameOver(true);
+				stopTimer();
+				const currentTime = gameTime;
+				const bestTime = bestTimes[difficulty];
+				if (!bestTime || currentTime < bestTime) {
+					saveBestTime(currentTime);
+				}
 			}
-		}
+		};
+		stopGameOnVictory();
 	}, [victory, stopTimer, bestTimes, difficulty, gameTime, saveBestTime]);
 
 	const resetGame = useCallback(() => {
