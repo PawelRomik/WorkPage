@@ -1,12 +1,11 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import Clock from "../../components/Clock/Clock";
-import "./Login.style.scss";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 import LoginProfile from "../../components/LoginProfile/LoginProfile";
 import { ToastContainer } from "react-toastify";
-import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
+import { loginStyles } from "./Login.styles";
 
 type LoginProps = {
 	loaded?: boolean;
@@ -30,21 +29,8 @@ const Login = ({ loaded }: LoginProps) => {
 		});
 	}, [navigate]);
 
-	const backgroundStyles = useMemo(
-		() => css`
-			& {
-				background: linear-gradient(180deg, rgba(24, 24, 24, 0.2) 0%, black 100%);
-			}
-			&.loginScreen::before {
-				background-image: url(${background});
-				background-size: ${wallpaperStyle};
-			}
-		`,
-		[background, wallpaperStyle]
-	);
-
 	return (
-		<main className={`loginScreen`} css={backgroundStyles}>
+		<main className='loginScreen' css={loginStyles(background, wallpaperStyle)}>
 			<div className='loginTimer'>
 				<Clock />
 			</div>
