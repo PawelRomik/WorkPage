@@ -1,5 +1,5 @@
-import { useSettingsContext } from "../../../providers/SettingsContext";
-import "./SettingsSwitch.style.scss";
+import { useSettingsContext } from "../../../../providers/SettingsContext";
+import { settingsSwitchStyles } from "./SettingsSwitch.style";
 
 type SettingsSwitchProps = {
 	darkModeInputValue: string;
@@ -10,7 +10,7 @@ const SettingsSwitch = ({ darkModeInputValue, handleDarkModeChange }: SettingsSw
 	const { darkMode } = useSettingsContext();
 	return (
 		<div>
-			<label className='switch' htmlFor='switch'>
+			<label className='switch' htmlFor='switch' css={settingsSwitchStyles}>
 				<input id='switch' type='checkbox' className='circle' value={darkModeInputValue} checked={darkMode} onChange={handleDarkModeChange} />
 				<svg viewBox='0 0 384 512' xmlns='http://www.w3.org/2000/svg' className='moon svg'>
 					!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.
