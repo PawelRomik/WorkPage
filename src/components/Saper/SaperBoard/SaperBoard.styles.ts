@@ -71,10 +71,12 @@ export const saperBoardStyles = (darkMode: boolean, color: string) => css`
 	}
 
 	@media (min-width: 768px) {
-		& .saperCell {
-			width: 4rem;
-			height: 4rem;
-			font-size: 2rem;
+		&.saperBoardContainer {
+			& .saperCell {
+				width: 4rem;
+				height: 4rem;
+				font-size: 2rem;
+			}
 		}
 	}
 

@@ -111,6 +111,7 @@ export const todolistTaskStyles = (darkMode: boolean, color: string) => css`
 
 				scrollbar-color: black;
 				scrollbar-width: thin;
+				overflow-x: auto;
 
 				&::-webkit-scrollbar {
 					margin: 5px;
@@ -140,7 +141,7 @@ export const todolistTaskStyles = (darkMode: boolean, color: string) => css`
 
 	@media (min-width: 768px) {
 		& .toDoInfo {
-			font-size: 2rem;
+			font-size: 2rem !important;
 		}
 	}
 `;
