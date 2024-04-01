@@ -1,8 +1,6 @@
 import TranslatorLanguages from "../TranslatorLanguages/TranslatorLanguages";
-import "./TranslatorSettings.style.scss";
-import { css } from "@emotion/react";
-import { useMemo } from "react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
+import { translatorSettingsStyles } from "./TranslatorSettings.styles";
 
 type TranslatorSettingsProps = {
 	selectedLanguageFrom: string;
@@ -14,37 +12,10 @@ type TranslatorSettingsProps = {
 };
 
 const TranslatorSettings = ({ selectedLanguageFrom, selectedLanguageTo, clear, swapLanguages, handleLanguageFromChange, handleLanguageToChange }: TranslatorSettingsProps) => {
-	const { color, darkMode } = useSettingsContext();
-
-	const translatorTopSectionButtonStyles = useMemo(
-		() => css`
-			button:focus,
-			button:hover {
-				border: 4px solid ${color};
-				background-color: ${color};
-				color: white;
-			}
-		`,
-		[color]
-	);
-
-	const darkModeStyles = useMemo(
-		() => css`
-			&.translatorTopSection {
-				background-color: ${darkMode ? "#dfdfdf" : "rgb(27,27,27)"};
-
-				button {
-					background-color: ${darkMode ? "white" : "black"};
-					color: ${darkMode ? "black" : "white"};
-					border: 4px solid ${darkMode ? "white" : "black"};
-				}
-			}
-		`,
-		[darkMode]
-	);
+	const { darkMode, color } = useSettingsContext();
 
 	return (
-		<section className='translatorTopSection' css={[darkModeStyles, translatorTopSectionButtonStyles]}>
+		<section className='translatorTopSection' css={translatorSettingsStyles(darkMode, color)}>
 			<button onClick={clear} className='translationClearButton'>
 				<i className='fa-solid fa-eraser'></i>
 			</button>
