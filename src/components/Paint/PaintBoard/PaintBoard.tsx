@@ -1,4 +1,4 @@
-import "./PaintBoard.style.scss";
+import { paintBoardStyles } from "./PaintBoard.styles";
 
 type PaintBoardProps = {
 	canvasRef: React.RefObject<HTMLCanvasElement> | null;
@@ -11,7 +11,7 @@ type PaintBoardProps = {
 
 const PaintBoard = ({ canvasRef, backgroundColor, startPaint, paint, endPaint, disableEraserOnRightClick }: PaintBoardProps) => {
 	return (
-		<section className='paintBoard'>
+		<section className='paintBoard' css={paintBoardStyles}>
 			<canvas
 				ref={canvasRef}
 				className='paintCanvas'

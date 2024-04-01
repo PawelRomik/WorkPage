@@ -19,32 +19,23 @@ const Notes = () => {
 	const [selectedNoteId, setSelectedNoteId] = useState<number | undefined>(undefined);
 
 	useEffect(() => {
-		const getNotes = () => {
-			const storedNotes = localStorage.getItem(localNotes);
-			if (storedNotes) {
-				const parsedNotes: Note[] = JSON.parse(storedNotes);
-				setNotes(parsedNotes);
-				setSelectedNoteId(parsedNotes.length > 0 ? parsedNotes[0].id : undefined);
-			}
-		};
-		getNotes();
+		const storedNotes = localStorage.getItem(localNotes);
+		if (storedNotes) {
+			const parsedNotes: Note[] = JSON.parse(storedNotes);
+			setNotes(parsedNotes);
+			setSelectedNoteId(parsedNotes.length > 0 ? parsedNotes[0].id : undefined);
+		}
 	}, []);
 
 	useEffect(() => {
-		const saveNotesOnChange = () => {
-			localStorage.setItem(localNotes, JSON.stringify(notes));
-		};
-		saveNotesOnChange();
+		localStorage.setItem(localNotes, JSON.stringify(notes));
 	}, [notes]);
 
 	useEffect(() => {
-		const changeNoteContent = () => {
-			setNoteValue((prevNoteValue) => {
-				const selectedNote = notes.find((note) => note.id === selectedNoteId);
-				return selectedNote ? selectedNote.content : prevNoteValue;
-			});
-		};
-		changeNoteContent();
+		setNoteValue((prevNoteValue) => {
+			const selectedNote = notes.find((note) => note.id === selectedNoteId);
+			return selectedNote ? selectedNote.content : prevNoteValue;
+		});
 	}, [selectedNoteId, notes]);
 
 	const changeNote = useCallback(

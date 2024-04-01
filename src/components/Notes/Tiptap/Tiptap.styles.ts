@@ -52,6 +52,7 @@ export const tiptapStyles = (darkMode: boolean) => css`
 			outline: none;
 			resize: none;
 			padding: 0.5rem;
+			padding-top: 1rem;
 			position: absolute;
 			overflow-y: auto;
 			width: 100%;

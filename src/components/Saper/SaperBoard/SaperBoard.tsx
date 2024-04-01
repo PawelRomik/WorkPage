@@ -2,10 +2,9 @@ import config from "../saper.config";
 import { Cell } from "../Saper";
 import { useMemo } from "react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
-import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
-import "./SaperBoard.style.scss";
 import LoadingAnimation from "../../LoadingAnimation/LoadingAnimation";
+import { saperBoardStyles } from "./SaperBoard.styles";
 
 type SaperBoardProps = {
 	board: Cell[][];
@@ -18,19 +17,11 @@ type SaperBoardProps = {
 	animationEnd: () => void;
 };
 
-const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTouchStart, animationEnd, loading }: SaperBoardProps) => {
-	const { color } = useSettingsContext();
-	const { t } = useTranslation();
-	const saperBombStyles = useMemo(
-		() => css`
-			&.saperBomb {
-				background-color: ${color} !important;
-			}
-		`,
-		[color]
-	);
+const { colors } = config;
 
-	const { colors } = useMemo(() => config, []);
+const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTouchStart, animationEnd, loading }: SaperBoardProps) => {
+	const { darkMode, color } = useSettingsContext();
+	const { t } = useTranslation();
 
 	const renderedBoard = useMemo(
 		() =>
@@ -38,7 +29,6 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 				<div key={rowIndex} className='saperRow'>
 					{row.map((cell, colIndex) => (
 						<div
-							css={saperBombStyles}
 							key={colIndex}
 							className={`saperCell${cell.isRevealed ? " saperCellRevealed" : ""}${gameOver && cell.isBomb && !victory ? " saperBomb" : ""}${
 								cell.isFlagged ? " saperFlagged" : ""
@@ -58,28 +48,20 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 					))}
 				</div>
 			)),
-		[board, colors, gameOver, handleTouchStart, placeFlag, revealCell, victory, saperBombStyles]
+		[board, gameOver, handleTouchStart, placeFlag, revealCell, victory]
 	);
 
 	const saperClass = useMemo(() => `saperBoard ${gameOver && "saperGameOver"}`, [gameOver]);
 	const gameOverText = useMemo(() => (gameOver ? (victory ? t("Minesweeper.minesweeperWin") : t("Minesweeper.minesweeperLose")) : ""), [gameOver, victory, t]);
-	const gameOverStyles = useMemo(
-		() => css`
-			& > span {
-				background-color: ${color};
-			}
-		`,
-		[color]
-	);
 
 	return (
-		<div className='saperBoardContainer'>
+		<div className='saperBoardContainer' css={saperBoardStyles(darkMode, color)}>
 			{loading ? (
 				<LoadingAnimation animationEnd={animationEnd} repeats={1} />
 			) : (
 				<div className={saperClass}>
 					{gameOver && (
-						<p className='game-over' css={gameOverStyles}>
+						<p className='game-over'>
 							<span>{gameOverText}</span>
 						</p>
 					)}

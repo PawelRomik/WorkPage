@@ -1,10 +1,9 @@
 import React from "react";
 import { Task } from "../ToDoList";
-import "./ToDoListAddTask.style.scss";
 import { useMemo } from "react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
-import { css } from "@emotion/react";
 import { useTranslation } from "react-i18next";
+import { allowEditButtonStyles, todolistAddTaskStyles } from "./ToDoListAddTask.styles";
 
 type ToDoListAddTaskProps = {
 	allowEdit: boolean;
@@ -32,80 +31,6 @@ const ToDoListAddTask = ({
 	const { color, darkMode } = useSettingsContext();
 	const { t } = useTranslation();
 
-	const editButtonStyles = useMemo(
-		() => css`
-			,
-			& .ToDoListInput:focus {
-				border: 2px solid ${color} !important;
-			}
-
-			& .ToDoListButton:not(:disabled):focus,
-			& .ToDoListButton:not(:disabled):hover {
-				background-color: ${color} !important;
-				color: white !important;
-			}
-			&:focus,
-			&:hover {
-				color: ${color} !important;
-			}
-		`,
-		[color]
-	);
-
-	const darkModeStyles = useMemo(
-		() => css`
-			&.allowEditBtn {
-				background-color: ${darkMode ? "white" : "black"};
-				color: ${darkMode ? "black" : "white"};
-				border: 2px solid ${darkMode ? "white" : "black"};
-			}
-
-			& .ToDoListInputWrapper p {
-				color: ${color};
-			}
-
-			& .starButton {
-				color: ${darkMode ? "black" : "white"};
-				&.starActive {
-					color: ${color};
-				}
-			}
-
-			&.ToDoListAddTask {
-				background-color: ${darkMode ? "white" : "black"};
-				border: 2px solid ${darkMode ? "white" : "black"};
-
-				label {
-					color: ${darkMode ? "black" : "white"};
-				}
-
-				.hideEditBtn {
-					background-color: ${darkMode ? "white" : "black"};
-					color: ${darkMode ? "black" : "white"};
-				}
-
-				.ToDoListInput {
-					border: 2px solid ${darkMode ? "black" : "white"};
-					background-color: ${darkMode ? "white" : "black"};
-					color: ${darkMode ? "black" : "white"};
-				}
-
-				.ToDoListButton {
-					border: 2px solid ${darkMode ? "black" : "white"};
-					background-color: ${darkMode ? "white" : "black"};
-					opacity: 0.5;
-					color: gray;
-				}
-
-				.ToDoListButton:not(:disabled) {
-					opacity: 1;
-					color: ${darkMode ? "black" : "white"};
-				}
-			}
-		`,
-		[darkMode, color]
-	);
-
 	const disabledButton = useMemo(() => {
 		return inputValues.taskName.length < 3;
 	}, [inputValues]);
@@ -113,8 +38,8 @@ const ToDoListAddTask = ({
 	return (
 		<>
 			{allowEdit ? (
-				<section className='ToDoListAddTask' css={[darkModeStyles, editButtonStyles]}>
-					<button className='hideEditBtn' onClick={closeEdit} css={editButtonStyles}>
+				<section className='ToDoListAddTask' css={todolistAddTaskStyles(darkMode, color)}>
+					<button className='hideEditBtn' onClick={closeEdit}>
 						X
 					</button>
 					<div className='ToDoListInputWrapper'>
@@ -152,7 +77,7 @@ const ToDoListAddTask = ({
 					)}
 				</section>
 			) : (
-				<button className='allowEditBtn' css={[darkModeStyles, editButtonStyles]} onClick={() => changeAllowEdit(true)}>
+				<button className='allowEditBtn' css={allowEditButtonStyles(darkMode, color)} onClick={() => changeAllowEdit(true)}>
 					+
 				</button>
 			)}

@@ -7,16 +7,13 @@ const Clock = () => {
 	const { settingsLanguage } = useSettingsContext();
 
 	useEffect(() => {
-		const setTimer = () => {
-			const timerId = setInterval(() => {
-				setCurrentTime(new Date());
-			}, 1000);
+		const timerId = setInterval(() => {
+			setCurrentTime(new Date());
+		}, 1000);
 
-			return () => {
-				clearInterval(timerId);
-			};
+		return () => {
+			clearInterval(timerId);
 		};
-		setTimer();
 	}, []);
 
 	const clockValue = useMemo(() => {

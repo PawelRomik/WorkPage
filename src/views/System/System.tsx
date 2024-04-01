@@ -1,14 +1,17 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import Desktop from "../../components/Desktop/Desktop";
 import LocalStorageNames from "../../utils/localstorageNames";
 import Taskbar from "../../components/Taskbar/Taskbar";
 import Login from "../Login/Login";
 import { useLocation } from "react-router-dom";
+import { fakeLoginStyles } from "./System.styles";
 export type App = {
 	id: number;
 	name: string;
 	class: string;
 };
+
+const { localSoundValue } = LocalStorageNames;
 
 const System = () => {
 	const [userWindowState, changeUserWindowState] = useState(false);
@@ -16,7 +19,6 @@ const System = () => {
 	const [soundbarWindowState, changeSoundbarWindowState] = useState(false);
 	const [wifiWindowState, changeWifiWindowState] = useState(false);
 	const [volume, setVolume] = useState(50);
-	const { localSoundValue } = useMemo(() => LocalStorageNames, []);
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 	const [isOff, changeIsOff] = useState(false);
 	const [loadingAnimation, changeLoadingAnimation] = useState(true);
@@ -27,18 +29,20 @@ const System = () => {
 		if (storedSoundValue) {
 			setVolume(JSON.parse(storedSoundValue));
 		}
+	}, []);
 
+	useEffect(() => {
 		if (location && location?.state?.loginAnimation) {
 			changeLoadingAnimation(location.state.loginAnimation);
 			window.history.replaceState({}, "");
 		} else {
 			changeLoadingAnimation(false);
 		}
-	}, [localSoundValue, location]);
+	}, [location]);
 
 	useEffect(() => {
 		localStorage.setItem(localSoundValue, JSON.stringify(volume));
-	}, [volume, localSoundValue]);
+	}, [volume]);
 
 	const displayUserWindowState = () => {
 		changeUserWindowState((prevState) => !prevState);
@@ -87,7 +91,7 @@ const System = () => {
 	return (
 		<>
 			{loadingAnimation && (
-				<div className='fakeLogin' onAnimationEnd={() => changeLoadingAnimation(false)}>
+				<div className='fakeLogin' css={fakeLoginStyles} onAnimationEnd={() => changeLoadingAnimation(false)}>
 					<Login loaded={true} />
 				</div>
 			)}

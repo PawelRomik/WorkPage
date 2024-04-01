@@ -1,19 +1,21 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import translate from "translate";
-import "./Translator.style.scss";
 import TranslatorSettings from "./TranslatorSettings/TranslatorSettings";
 import TranslatorTextArea from "./TranslatorTextArea/TranslatorTextArea";
-import { toast } from "react-toastify";
 import LocalStorageNames from "../../utils/localstorageNames";
 import { useTranslation } from "react-i18next";
+import { launchToast } from "../../utils/toastFunction";
+import { translatorContainerStyles } from "./Translator.styles";
+
+const { localTranslatorLanguageTo, localTranslatorLanguageFrom } = LocalStorageNames;
 
 const Translator = () => {
 	const [inputValue, changeInputValue] = useState("");
 	const [translated, changeTranslated] = useState<string | undefined | number>("");
 	const [selectedLanguageTo, setSelectedLanguageTo] = useState("en");
 	const [selectedLanguageFrom, setSelectedLanguageFrom] = useState("pl");
-	const { localTranslatorLanguageTo, localTranslatorLanguageFrom } = useMemo(() => LocalStorageNames, []);
 	const { t } = useTranslation();
+
 	useEffect(() => {
 		const storedLangTo = localStorage.getItem(localTranslatorLanguageTo);
 		if (storedLangTo) {
@@ -23,7 +25,7 @@ const Translator = () => {
 		if (storedLangFrom) {
 			setSelectedLanguageFrom(JSON.parse(storedLangFrom));
 		}
-	}, [localTranslatorLanguageTo, localTranslatorLanguageFrom]);
+	}, []);
 
 	const translation = useCallback(
 		async (text: string) => {
@@ -41,7 +43,7 @@ const Translator = () => {
 				}
 			} catch (error) {
 				if (error instanceof Error && error.message.includes("Auth Error")) {
-					toast.warn(t("Translator.toastWrongApiKey"));
+					launchToast("error", t("Translator.toastWrongApiKey"));
 				}
 				changeTranslated("");
 			}
@@ -76,7 +78,7 @@ const Translator = () => {
 				localStorage.setItem(localTranslatorLanguageTo, JSON.stringify(selectedLanguageFrom));
 			}
 		},
-		[selectedLanguageFrom, selectedLanguageTo, localTranslatorLanguageFrom, localTranslatorLanguageTo]
+		[selectedLanguageFrom, selectedLanguageTo]
 	);
 
 	const handleLanguageToChange = useCallback(
@@ -90,7 +92,7 @@ const Translator = () => {
 				localStorage.setItem(localTranslatorLanguageFrom, JSON.stringify(selectedLanguageTo));
 			}
 		},
-		[selectedLanguageFrom, selectedLanguageTo, localTranslatorLanguageFrom, localTranslatorLanguageTo]
+		[selectedLanguageFrom, selectedLanguageTo]
 	);
 
 	const swapLanguages = useCallback(() => {
@@ -98,7 +100,7 @@ const Translator = () => {
 		setSelectedLanguageTo(selectedLanguageFrom);
 		localStorage.setItem(localTranslatorLanguageFrom, JSON.stringify(selectedLanguageTo));
 		localStorage.setItem(localTranslatorLanguageTo, JSON.stringify(selectedLanguageFrom));
-	}, [selectedLanguageFrom, selectedLanguageTo, localTranslatorLanguageFrom, localTranslatorLanguageTo]);
+	}, [selectedLanguageFrom, selectedLanguageTo]);
 
 	const clear = useCallback(() => {
 		changeInputValue("");
@@ -109,7 +111,7 @@ const Translator = () => {
 	};
 
 	return (
-		<div className='translatorContainer'>
+		<div className='translatorContainer' css={translatorContainerStyles}>
 			<TranslatorSettings
 				selectedLanguageFrom={selectedLanguageFrom}
 				handleLanguageToChange={handleLanguageToChange}

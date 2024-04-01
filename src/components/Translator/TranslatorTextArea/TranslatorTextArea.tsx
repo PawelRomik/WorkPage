@@ -1,10 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import LoadingAnimation from "../../LoadingAnimation/LoadingAnimation";
-import "./TranslatorTextArea.style.scss";
-import { css } from "@emotion/react";
-import { useCallback, useMemo } from "react";
-import { toast } from "react-toastify";
+import { useCallback } from "react";
+import { launchToast } from "../../../utils/toastFunction";
+import { translatorTextAreaStyles } from "./TranslatorTextArea.styles";
 
 type TranslatorTextAreaProps = {
 	inputValue: string;
@@ -16,37 +15,15 @@ const TranslatorTextArea = ({ inputValue, updateInputValue, translated }: Transl
 	const { color, darkMode } = useSettingsContext();
 	const { t } = useTranslation();
 
-	const translatorTextAreaStyles = useMemo(
-		() => css`
-			& {
-				background-color: ${darkMode ? "white" : "rgb(54,54,54)"};
-				border: 2px solid ${darkMode ? "white" : "rgb(54,54,54)"};
-				color: ${darkMode ? "black" : "white"};
-			}
-			&:focus {
-				border: 2px solid ${color};
-			}
-		`,
-		[color, darkMode]
-	);
-
 	const copyContent = useCallback(() => {
 		if (translated && typeof translated === "string") navigator.clipboard.writeText(translated);
-		toast.success(t("Translator.toastCopiedTranslator"));
+		launchToast("success", t("Translator.toastCopiedTranslator"));
 	}, [translated, t]);
 
 	return (
-		<section className='translatorBottomSection'>
-			<textarea
-				className='translateTextArea'
-				id='translateTextArea'
-				css={translatorTextAreaStyles}
-				name='translateTextArea'
-				value={inputValue}
-				maxLength={1000}
-				onChange={updateInputValue}
-			></textarea>
-			<div className='translateResult' css={translatorTextAreaStyles}>
+		<section className='translatorBottomSection' css={translatorTextAreaStyles(darkMode, color)}>
+			<textarea className='translateTextArea' id='translateTextArea' name='translateTextArea' value={inputValue} maxLength={1000} onChange={updateInputValue}></textarea>
+			<div className='translateResult'>
 				{translated === 0 ? (
 					<div className='translatorLoading'>
 						<LoadingAnimation />
