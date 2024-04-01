@@ -1,7 +1,8 @@
 import SaperBoard from "../SaperBoard/SaperBoard";
 import { Cell } from "../Saper";
-import "./SaperCenter.style.scss";
 import { useTranslation } from "react-i18next";
+import { saperCenterStyles } from "./SaperCenter.styles";
+import { useSettingsContext } from "../../../providers/SettingsContext";
 
 type SaperCenterProps = {
 	board: Cell[][];
@@ -17,8 +18,10 @@ type SaperCenterProps = {
 
 const SaperCenter = ({ board, victory, gameOver, gameTime, handleTouchStart, revealCell, animationEnd, placeFlag, loading }: SaperCenterProps) => {
 	const { t } = useTranslation();
+	const { darkMode } = useSettingsContext();
+
 	return (
-		<div className='saperCenter'>
+		<div className='saperCenter' css={saperCenterStyles(darkMode)}>
 			<div className='saperTitle'>
 				<h1>{t("Minesweeper.minesweeperTitle")}</h1>
 				<p className='saperTimer'>{`${t("Minesweeper.minesweeperTime")}: ${gameTime}s`}</p>

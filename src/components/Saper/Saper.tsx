@@ -1,8 +1,6 @@
-import "./Saper.style.scss";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Confetti from "react-confetti";
 import config from "./saper.config";
-import { css } from "@emotion/react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import LocalStorageNames from "../../utils/localstorageNames";
 import SaperCenter from "./SaperCenter/SaperCenter";
@@ -10,6 +8,7 @@ import SaperEndScreen from "./SaperEndScreen/SaperEndScreen";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
+import { saperContainerStyles } from "./Saper.styles";
 
 export type Cell = {
 	isBomb: boolean;
@@ -18,111 +17,11 @@ export type Cell = {
 	isFlagged: boolean;
 };
 
+const { localSaperBestTimes } = LocalStorageNames;
+
 const Saper = () => {
-	const { darkMode, color } = useSettingsContext();
+	const { darkMode } = useSettingsContext();
 	const { t } = useTranslation();
-
-	const darkModeStyles = useMemo(
-		() => css`
-
-		
-			&.saperContainer {
-				background-color: ${darkMode ? "white" : "black"};
-				color: ${darkMode ? "black" : "white"};
-
-				.saperTitle {
-					background-color: ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
-				}
-				
-				.saperBoard {
-					border: 5px solid ${darkMode ? "#dfdfdf" : "gray"};
-
-					&:not(.saperGameOver) .saperCell:not(.saperCellRevealed):focus,  &:not(.saperGameOver) .saperCell:not(.saperCellRevealed):hover {
-						background-color: ${color} !important;
-						cursor: pointer;
-					}
-				}
-
-				
-
-				.saperCell {
-					background-color: ${darkMode ? "#dfdfdf" : "rgb(54,54,54)"};
-					border: 1px solid ${darkMode ? "gray" : "black"};
-				}
-
-				.saperCellRevealed {
-					background-color: ${darkMode ? "white" : "gray"} ;
-				}
-
-				.saperButton {
-					color: ${darkMode ? "black" : "white"};
-					background-color: ${darkMode ? "white" : "black"};
-						border: 2px solid ${darkMode ? "white" : "black"};
-					transition: 0.2s opacity;
-
-					&:disabled {
-						opacity: 0.2;
-
-						cursor: default;
-					}
-				}
-
-				.saperDifficultyButton {
-					background-color: ${darkMode ? "white" : "black"};
-					color: ${darkMode ? "black" : "white"};
-					border: 2px solid ${darkMode ? "white" : "black"};
-
-					&.saperEasy.saperDifficultyActive {
-						background-color: green;
-						color: white;
-					}
-
-					&.saperNormal.saperDifficultyActive {
-						background-color: orange;
-						color: white;
-					}
-
-					&.saperHard.saperDifficultyActive {
-						background-color: red;
-						color: white;
-					}
-				}
-
-				.saperStats {
-					background-color: ${darkMode ? "white" : "black"};
-					border-radius: 20px;
-					color: ${darkMode ? "black" : "white"};
-				}
-
-				.saperEndScreen {
-					background-color: ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
-				}
-
-				@media (min-width: 1200px) {
-					.saperEndScreen {
-						background-color: ${darkMode ? "#dfdfdf" : "rgb(27, 27, 27)"};
-					}
-
-					.saperTitle {
-						border-bottom: 3px solid gray;
-					}
-
-					.saperCenter {
-						border-left: 3px solid gray;
-					}
-
-					.saperEndScreen {
-						border-left: 3px solid gray;
-						border-right: 3px solid gray;
-					}
-
-					.saperButton {
-						
-				}
-			}
-		`,
-		[darkMode, color]
-	);
 
 	const [board, setBoard] = useState<Cell[][]>([]);
 	const [difficulty, setDifficulty] = useState(0);
@@ -134,7 +33,6 @@ const Saper = () => {
 	const { rows, columns, totalBombs } = useMemo(() => config, []);
 	const victory = useMemo(() => revealedCount === rows[difficulty] * columns[difficulty] - totalBombs[difficulty], [revealedCount, columns, rows, totalBombs, difficulty]);
 	const [bestTimes, setBestTimes] = useState<number[]>([]);
-	const { localSaperBestTimes } = useMemo(() => LocalStorageNames, []);
 	const [loading, changeIsLoading] = useState(false);
 	const boardRef = useRef(null);
 
@@ -143,7 +41,7 @@ const Saper = () => {
 		if (storedBestTimes) {
 			setBestTimes(JSON.parse(storedBestTimes));
 		}
-	}, [localSaperBestTimes]);
+	}, []);
 
 	const saveBestTime = useCallback(
 		(time: number) => {
@@ -152,7 +50,7 @@ const Saper = () => {
 			localStorage.setItem(localSaperBestTimes, JSON.stringify(updatedBestTimes));
 			setBestTimes(updatedBestTimes);
 		},
-		[bestTimes, difficulty, localSaperBestTimes]
+		[bestTimes, difficulty]
 	);
 
 	useEffect(() => {
@@ -402,7 +300,7 @@ const Saper = () => {
 	);
 
 	return (
-		<div className='saperContainer' css={darkModeStyles} ref={boardRef}>
+		<div className='saperContainer' css={saperContainerStyles(darkMode)} ref={boardRef}>
 			{victory && <Confetti width={window.innerWidth} height={window.innerHeight} />}
 			<SaperCenter
 				board={board}
