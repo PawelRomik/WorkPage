@@ -29,48 +29,39 @@ const Paint = () => {
 	const { t } = useTranslation();
 
 	useEffect(() => {
-		const getColors = () => {
-			const storedColors = localStorage.getItem(localPaintColors);
-			if (storedColors) {
-				const parsedColors = JSON.parse(storedColors);
-				changePaintColors(parsedColors);
-				setBrushColor(parsedColors[0]);
-			}
-		};
-		getColors();
+		const storedColors = localStorage.getItem(localPaintColors);
+		if (storedColors) {
+			const parsedColors = JSON.parse(storedColors);
+			changePaintColors(parsedColors);
+			setBrushColor(parsedColors[0]);
+		}
 	}, []);
 
 	useEffect(() => {
-		const initializeCanvas = () => {
-			const canvas = canvasRef.current;
-			if (canvas) {
-				const context = canvas.getContext("2d", { willReadFrequently: true });
-				ctxRef.current = context;
-			}
-		};
-		initializeCanvas();
+		const canvas = canvasRef.current;
+		if (canvas) {
+			const context = canvas.getContext("2d", { willReadFrequently: true });
+			ctxRef.current = context;
+		}
 	}, []);
 
 	useEffect(() => {
-		const getSavedImage = () => {
-			const savedCanvasData = localStorage.getItem(localPaintCanvas);
-			if (savedCanvasData) {
-				const img = new Image();
-				img.src = JSON.parse(savedCanvasData);
-				img.onload = () => {
-					if (ctxRef.current) {
-						ctxRef.current.drawImage(img, 0, 0);
-					}
-				};
-			}
-			const savedBgc = localStorage.getItem(localPaintBackground);
-			if (savedBgc) {
-				setBackgroundColor(JSON.parse(savedBgc));
-			} else {
-				setBackgroundColor(darkMode ? "#ffffff" : "#363636");
-			}
-		};
-		getSavedImage();
+		const savedCanvasData = localStorage.getItem(localPaintCanvas);
+		if (savedCanvasData) {
+			const img = new Image();
+			img.src = JSON.parse(savedCanvasData);
+			img.onload = () => {
+				if (ctxRef.current) {
+					ctxRef.current.drawImage(img, 0, 0);
+				}
+			};
+		}
+		const savedBgc = localStorage.getItem(localPaintBackground);
+		if (savedBgc) {
+			setBackgroundColor(JSON.parse(savedBgc));
+		} else {
+			setBackgroundColor(darkMode ? "#ffffff" : "#363636");
+		}
 	}, [darkMode]);
 
 	const saveToLocalStorage = useCallback(() => {

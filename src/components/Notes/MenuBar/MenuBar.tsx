@@ -15,25 +15,22 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 	const [selection, changeSelection] = useState(0);
 
 	useEffect(() => {
-		const updateContent = () => {
-			if (editor) {
-				const content = noteValue;
-				const pattern = /rgb\(.{1,4},.{1,4},.{1,4}\)/g;
+		if (editor) {
+			const content = noteValue;
+			const pattern = /rgb\(.{1,4},.{1,4},.{1,4}\)/g;
 
-				const newContent = content.replace(pattern, color);
+			const newContent = content.replace(pattern, color);
 
-				editor.commands.setContent(newContent, false, { preserveWhitespace: "full" });
-				editor.commands.setTextSelection(selection);
+			editor.commands.setContent(newContent, false, { preserveWhitespace: "full" });
+			editor.commands.setTextSelection(selection);
 
-				editor.off("update");
-				editor.on("update", ({ editor }) => {
-					const html = editor.getHTML();
-					updateNote(html);
-					changeSelection(editor.state.selection.anchor);
-				});
-			}
-		};
-		updateContent();
+			editor.off("update");
+			editor.on("update", ({ editor }) => {
+				const html = editor.getHTML();
+				updateNote(html);
+				changeSelection(editor.state.selection.anchor);
+			});
+		}
 	}, [noteValue, editor, updateNote, color, selection]);
 
 	const setColors = useCallback(() => {

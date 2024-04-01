@@ -17,17 +17,14 @@ const Translator = () => {
 	const { t } = useTranslation();
 
 	useEffect(() => {
-		const getStoredLangs = () => {
-			const storedLangTo = localStorage.getItem(localTranslatorLanguageTo);
-			if (storedLangTo) {
-				setSelectedLanguageTo(JSON.parse(storedLangTo));
-			}
-			const storedLangFrom = localStorage.getItem(localTranslatorLanguageFrom);
-			if (storedLangFrom) {
-				setSelectedLanguageFrom(JSON.parse(storedLangFrom));
-			}
-		};
-		getStoredLangs();
+		const storedLangTo = localStorage.getItem(localTranslatorLanguageTo);
+		if (storedLangTo) {
+			setSelectedLanguageTo(JSON.parse(storedLangTo));
+		}
+		const storedLangFrom = localStorage.getItem(localTranslatorLanguageFrom);
+		if (storedLangFrom) {
+			setSelectedLanguageFrom(JSON.parse(storedLangFrom));
+		}
 	}, []);
 
 	const translation = useCallback(
@@ -55,22 +52,19 @@ const Translator = () => {
 	);
 
 	useEffect(() => {
-		const translateOnChange = () => {
-			if (inputValue) {
-				changeTranslated(0);
-			} else {
-				changeTranslated("");
-			}
+		if (inputValue) {
+			changeTranslated(0);
+		} else {
+			changeTranslated("");
+		}
 
-			const timeoutId = setTimeout(() => {
-				translation(inputValue);
-			}, 2000);
+		const timeoutId = setTimeout(() => {
+			translation(inputValue);
+		}, 2000);
 
-			return () => {
-				clearTimeout(timeoutId);
-			};
+		return () => {
+			clearTimeout(timeoutId);
 		};
-		translateOnChange();
 	}, [inputValue, translation]);
 
 	const handleLanguageFromChange = useCallback(

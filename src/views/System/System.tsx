@@ -25,32 +25,23 @@ const System = () => {
 	const location = useLocation();
 
 	useEffect(() => {
-		const getSoundBarValue = () => {
-			const storedSoundValue = localStorage.getItem(localSoundValue);
-			if (storedSoundValue) {
-				setVolume(JSON.parse(storedSoundValue));
-			}
-		};
-		getSoundBarValue();
+		const storedSoundValue = localStorage.getItem(localSoundValue);
+		if (storedSoundValue) {
+			setVolume(JSON.parse(storedSoundValue));
+		}
 	}, []);
 
 	useEffect(() => {
-		const changeSiteOnAnimationEnd = () => {
-			if (location && location?.state?.loginAnimation) {
-				changeLoadingAnimation(location.state.loginAnimation);
-				window.history.replaceState({}, "");
-			} else {
-				changeLoadingAnimation(false);
-			}
-		};
-		changeSiteOnAnimationEnd();
+		if (location && location?.state?.loginAnimation) {
+			changeLoadingAnimation(location.state.loginAnimation);
+			window.history.replaceState({}, "");
+		} else {
+			changeLoadingAnimation(false);
+		}
 	}, [location]);
 
 	useEffect(() => {
-		const setSoundbarValue = () => {
-			localStorage.setItem(localSoundValue, JSON.stringify(volume));
-		};
-		setSoundbarValue();
+		localStorage.setItem(localSoundValue, JSON.stringify(volume));
 	}, [volume]);
 
 	const displayUserWindowState = () => {

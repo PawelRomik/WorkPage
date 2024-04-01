@@ -1,14 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import "./ToDoList.style.scss";
+import { useCallback, useEffect, useState } from "react";
 import ToDoListAddTask from "./ToDoListAddTask/ToDoListAddTask";
 import ToDoListTask from "./ToDoListTask/ToDoListTask";
 import { useSettingsContext } from "../../providers/SettingsContext";
-import { css } from "@emotion/react";
 import LocalStorageNames from "../../utils/localstorageNames";
-import withReactContent from "sweetalert2-react-content";
-import Swal from "sweetalert2";
-import { toast } from "react-toastify";
-import { useTranslation } from "react-i18next";
+import { todolistContainerStyles } from "./ToDoList.styles";
 
 export type Task = {
 	taskName: string;
@@ -16,23 +11,14 @@ export type Task = {
 	taskPriority: number;
 };
 
+const { localToDoListTasks } = LocalStorageNames;
+
 const ToDoList = () => {
 	const { darkMode } = useSettingsContext();
-	const { t } = useTranslation();
 	const [tasks, changeTasks] = useState<Task[]>([]);
 	const [inputValues, changeInputValues] = useState<Task>({ taskName: "", taskContent: "", taskPriority: 1 });
 	const [allowEdit, changeAllowEdit] = useState(false);
 	const [currentlyEdited, setCurrentlyEdited] = useState<number | null>(null);
-	const { localToDoListTasks } = useMemo(() => LocalStorageNames, []);
-
-	const darkModeStyles = useMemo(
-		() => css`
-			&.ToDoListContainer {
-				background-color: ${darkMode ? "lightgray" : "rgb(31, 30, 30)"};
-			}
-		`,
-		[darkMode]
-	);
 
 	useEffect(() => {
 		const storedTasks = localStorage.getItem(localToDoListTasks);
@@ -40,11 +26,11 @@ const ToDoList = () => {
 			const parsedTasks: Task[] = JSON.parse(storedTasks);
 			changeTasks(parsedTasks);
 		}
-	}, [localToDoListTasks]);
+	}, []);
 
 	useEffect(() => {
 		localStorage.setItem(localToDoListTasks, JSON.stringify(tasks));
-	}, [tasks, localToDoListTasks]);
+	}, [tasks]);
 
 	const addNewTask = useCallback(() => {
 		const { taskName, taskContent, taskPriority } = inputValues;
@@ -74,33 +60,6 @@ const ToDoList = () => {
 			changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 		},
 		[tasks]
-	);
-
-	const showConfirmDialog = useCallback(
-		(taskId: number, e: React.MouseEvent) => {
-			e.stopPropagation();
-			withReactContent(Swal)
-				.fire({
-					title: t("Swal.swalTitle"),
-					text: t("Swal.swalDesc"),
-					showCancelButton: true,
-					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
-					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
-					confirmButtonText: t("Swal.swalYes"),
-					cancelButtonText: t("Swal.swalNo"),
-					background: darkMode ? "white" : "black",
-					color: darkMode ? "black" : "white",
-					showCloseButton: true,
-					target: ".ToDoListContainer",
-				})
-				.then((result) => {
-					if (result.isConfirmed) {
-						removeTask(taskId);
-						toast.success(t("ToDoList.toastRemovedTask"));
-					}
-				});
-		},
-		[removeTask, darkMode, t]
 	);
 
 	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -191,8 +150,8 @@ const ToDoList = () => {
 	}, []);
 
 	return (
-		<div className='ToDoListContainer' css={darkModeStyles}>
-			<ToDoListTask currentlyEdited={currentlyEdited} tasks={tasks} startEditing={startEditing} priorityStyling={priorityStyling} showConfirmDialog={showConfirmDialog} />
+		<div className='ToDoListContainer' css={todolistContainerStyles(darkMode)}>
+			<ToDoListTask currentlyEdited={currentlyEdited} tasks={tasks} startEditing={startEditing} priorityStyling={priorityStyling} removeTask={removeTask} />
 			<ToDoListAddTask
 				allowEdit={allowEdit}
 				handlePriorityChange={handlePriorityChange}
