@@ -1,7 +1,6 @@
-import "./PaintSavedColors.style.scss";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { useMemo } from "react";
-import { css } from "@emotion/react";
+import { paintSavedColorsStyles } from "./PaintSavedColors.styles";
 
 type PaintToolsProps = {
 	paintColors: string[];
@@ -10,15 +9,6 @@ type PaintToolsProps = {
 
 const PaintSavedColors = ({ paintColors, handleOnButtonClickColorChange }: PaintToolsProps) => {
 	const { darkMode } = useSettingsContext();
-
-	const paintSavedColorButtonStyles = useMemo(
-		() => css`
-			& .paintSavedColor {
-				border: 2px solid ${darkMode ? "white" : "black"};
-			}
-		`,
-		[darkMode]
-	);
 
 	const mappedColors = useMemo(() => {
 		const arr = [...paintColors];
@@ -31,7 +21,7 @@ const PaintSavedColors = ({ paintColors, handleOnButtonClickColorChange }: Paint
 	}, [paintColors, handleOnButtonClickColorChange]);
 
 	return (
-		<div className='paintToolsGroup paintSavedColors' css={paintSavedColorButtonStyles}>
+		<div className='paintSavedColors' css={paintSavedColorsStyles(darkMode)}>
 			{mappedColors}
 		</div>
 	);

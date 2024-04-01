@@ -1,9 +1,11 @@
-import "./PaintTools.style.scss";
 import { useSettingsContext } from "../../../providers/SettingsContext";
-import { useMemo } from "react";
-import { css } from "@emotion/react";
+import { useCallback } from "react";
 import PaintSavedColors from "../PaintSavedColors/PaintSavedColors";
 import { useTranslation } from "react-i18next";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+import { launchToast } from "../../../utils/toastFunction";
+import { paintToolsStyles } from "./PaintTools.styles";
 
 enum BrushShape {
 	Square = "square",
@@ -22,7 +24,7 @@ type PaintToolsProps = {
 	backgroundColor: string;
 	handleBackgroundColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	clearCanvas: () => void;
-	showSaveDialog: (e: React.MouseEvent) => void;
+	saveImage: (imageName: string) => void;
 	paintColors: string[];
 	addToSavedColors: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleOnButtonClickColorChange: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -40,7 +42,7 @@ const PaintTools = ({
 	backgroundColor,
 	handleBackgroundColorChange,
 	clearCanvas,
-	showSaveDialog,
+	saveImage,
 	paintColors,
 	addToSavedColors,
 	handleOnButtonClickColorChange,
@@ -48,98 +50,48 @@ const PaintTools = ({
 	const { color, darkMode } = useSettingsContext();
 	const { t } = useTranslation();
 
-	const paintInputColorStyles = useMemo(
-		() => css`
-			&:focus-within::-webkit-color-swatch {
-				border: 2px solid ${color};
-			}
-
-			&:focus-within::-moz-color-swatch {
-				border: 2px solid ${color};
-			}
-		`,
-		[color]
-	);
-
-	const paintInputThicknessStyles = useMemo(
-		() => css`
-			&:focus::-webkit-slider-thumb {
-				border: 2px solid ${color};
-			}
-
-			&:focus {
-				border: 2px solid ${color};
-				color: ${color};
-			}
-		`,
-		[color]
-	);
-
-	const paintButtonStyles = useMemo(
-		() => css`
-			& .paintButton:hover,
-			& .paintButton:focus {
-				border: 2px solid ${color};
-				color: ${color};
-			}
-		`,
-		[color]
-	);
-
-	const darkModeStyles = useMemo(
-		() => css`
-			&.paintTools {
-				background-color: ${darkMode ? "lightgray" : "rgb(27,27,27)"};
-				color: ${darkMode ? "black" : "white"};
-
-				.paintInputColor {
-					&::-webkit-color-swatch {
-						border: 2px solid ${darkMode ? "black" : "white"};
+	const showSaveDialog = useCallback(
+		(e: React.MouseEvent) => {
+			e.stopPropagation();
+			withReactContent(Swal)
+				.fire({
+					title: t("Paint.swalSaveImage"),
+					inputLabel: t("Paint.swalChangeName"),
+					inputValue: t("Paint.swalDefaultInput"),
+					showCancelButton: true,
+					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
+					confirmButtonText: t("Swal.swalYes"),
+					cancelButtonText: t("Swal.swalNo"),
+					input: "text",
+					background: darkMode ? "white" : "black",
+					color: darkMode ? "black" : "white",
+					showCloseButton: true,
+					target: ".paintContainer",
+				})
+				.then((result) => {
+					if (result.isConfirmed) {
+						saveImage(result.value);
+						launchToast("success", t("Paint.toastSavedImage"));
 					}
-
-					&::-moz-color-swatch {
-						border: 2px solid ${darkMode ? "black" : "white"};
-					}
-				}
-
-				.paintInputThickness {
-					background-color: ${darkMode ? "white" : "black"};
-					color: ${darkMode ? "black" : "white"};
-					border: 2px solid ${darkMode ? "black" : "white"};
-
-					&::-webkit-slider-thumb {
-						border: 2px solid ${darkMode ? "black" : "white"};
-					}
-				}
-
-				.paintButton {
-					background-color: ${darkMode ? "white" : "black"};
-					color: ${darkMode ? "black" : "white"};
-					border: 2px solid ${darkMode ? "black" : "white"};
-
-					&.paintEraserActive {
-						color: ${darkMode ? "white" : "black"};
-						background-color: ${darkMode ? "black" : "white"};
-					}
-				}
-			}
-		`,
-		[darkMode]
+				});
+		},
+		[darkMode, saveImage, t]
 	);
 
 	return (
-		<section className='paintTools' css={darkModeStyles}>
-			<div className='paintToolsWrapper' css={paintButtonStyles}>
+		<section className='paintTools' css={paintToolsStyles(darkMode, color)}>
+			<div className='paintToolsWrapper'>
 				<div className='paintToolsGroup'>
 					<div className='paintInputContainer'>
 						<p>{t("Paint.paintColor")} </p>
-						<input className='paintInputColor' onBlur={addToSavedColors} css={paintInputColorStyles} type='color' value={brushColor} onChange={handleColorChange} />
+						<input className='paintInputColor' onBlur={addToSavedColors} type='color' value={brushColor} onChange={handleColorChange} />
 					</div>
 					<div className='paintInputContainer'>
 						<p className='paintSizeParagraph'>
 							{t("Paint.paintSize")} {thickness}
 						</p>
-						<input className='paintInputThickness' min={1} max={20} css={paintInputThicknessStyles} type='range' value={thickness} onChange={handleThicknessChange} />
+						<input className='paintInputThickness' min={1} max={20} type='range' value={thickness} onChange={handleThicknessChange} />
 					</div>
 					<button className='paintButton' onClick={toggleBrushShape}>
 						{brushShape === BrushShape.Square ? <i className='fa-regular fa-square'></i> : <i className='fa-regular fa-circle'></i>}
@@ -151,7 +103,7 @@ const PaintTools = ({
 				<div className='paintToolsGroup'>
 					<div className='paintInputContainer'>
 						<p>{t("Paint.paintBackground")} </p>
-						<input className='paintInputColor' css={paintInputColorStyles} type='color' value={backgroundColor} onChange={handleBackgroundColorChange} />
+						<input className='paintInputColor' type='color' value={backgroundColor} onChange={handleBackgroundColorChange} />
 					</div>
 					<div className='paintButtons'>
 						<button className='paintButton' onClick={clearCanvas}>

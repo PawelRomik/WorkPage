@@ -1,18 +1,19 @@
-import React, { useRef, useState, useEffect, useCallback, useMemo } from "react";
-import "./Paint.style.scss";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import PaintTools from "./PaintTools/PaintTools";
 import PaintBoard from "./PaintBoard/PaintBoard";
 import LocalStorageNames from "../../utils/localstorageNames";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { useTranslation } from "react-i18next";
+import { paintContainerStyles } from "./Paint.styles";
 
 enum BrushShape {
 	Square = "square",
 	Circle = "circle",
 }
+
+const { localPaintBackground, localPaintCanvas, localPaintColors } = LocalStorageNames;
 
 const Paint = () => {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -25,47 +26,56 @@ const Paint = () => {
 	const [brushShape, setBrushShape] = useState<BrushShape>(BrushShape.Square);
 	const { darkMode } = useSettingsContext();
 	const [paintColors, changePaintColors] = useState<string[]>([]);
-	const { localPaintCanvas, localPaintBackground, localPaintColors } = useMemo(() => LocalStorageNames, []);
 	const { t } = useTranslation();
-	useEffect(() => {
-		const storedColors = localStorage.getItem(localPaintColors);
-		if (storedColors) {
-			const parsedColors = JSON.parse(storedColors);
-			changePaintColors(parsedColors);
-			setBrushColor(parsedColors[0]);
-		}
-	}, [localPaintColors]);
 
 	useEffect(() => {
-		const canvas = canvasRef.current;
-		if (canvas) {
-			const context = canvas.getContext("2d", { willReadFrequently: true });
-			ctxRef.current = context;
-		}
+		const getColors = () => {
+			const storedColors = localStorage.getItem(localPaintColors);
+			if (storedColors) {
+				const parsedColors = JSON.parse(storedColors);
+				changePaintColors(parsedColors);
+				setBrushColor(parsedColors[0]);
+			}
+		};
+		getColors();
 	}, []);
 
 	useEffect(() => {
-		const savedCanvasData = localStorage.getItem(localPaintCanvas);
-		if (savedCanvasData) {
-			const img = new Image();
-			img.src = JSON.parse(savedCanvasData);
-			img.onload = () => {
-				if (ctxRef.current) {
-					ctxRef.current.drawImage(img, 0, 0);
-				}
-			};
-		}
-		const savedBgc = localStorage.getItem(localPaintBackground);
-		if (savedBgc) {
-			setBackgroundColor(JSON.parse(savedBgc));
-		} else {
-			setBackgroundColor(darkMode ? "#ffffff" : "#363636");
-		}
-	}, [localPaintBackground, localPaintCanvas, darkMode]);
+		const initializeCanvas = () => {
+			const canvas = canvasRef.current;
+			if (canvas) {
+				const context = canvas.getContext("2d", { willReadFrequently: true });
+				ctxRef.current = context;
+			}
+		};
+		initializeCanvas();
+	}, []);
+
+	useEffect(() => {
+		const getSavedImage = () => {
+			const savedCanvasData = localStorage.getItem(localPaintCanvas);
+			if (savedCanvasData) {
+				const img = new Image();
+				img.src = JSON.parse(savedCanvasData);
+				img.onload = () => {
+					if (ctxRef.current) {
+						ctxRef.current.drawImage(img, 0, 0);
+					}
+				};
+			}
+			const savedBgc = localStorage.getItem(localPaintBackground);
+			if (savedBgc) {
+				setBackgroundColor(JSON.parse(savedBgc));
+			} else {
+				setBackgroundColor(darkMode ? "#ffffff" : "#363636");
+			}
+		};
+		getSavedImage();
+	}, [darkMode]);
 
 	const saveToLocalStorage = useCallback(() => {
 		localStorage.setItem(localPaintCanvas, JSON.stringify(canvasRef.current!.toDataURL("image/png")));
-	}, [localPaintCanvas]);
+	}, []);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -136,20 +146,17 @@ const Paint = () => {
 			localStorage.setItem(localPaintColors, JSON.stringify(array));
 			changePaintColors([...array]);
 		},
-		[paintColors, localPaintColors]
+		[paintColors]
 	);
 
 	const handleThicknessChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setThickness(Number(e.target.value));
 	}, []);
 
-	const handleBackgroundColorChange = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) => {
-			setBackgroundColor(e.target.value);
-			localStorage.setItem(localPaintBackground, JSON.stringify(e.target.value));
-		},
-		[localPaintBackground]
-	);
+	const handleBackgroundColorChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		setBackgroundColor(e.target.value);
+		localStorage.setItem(localPaintBackground, JSON.stringify(e.target.value));
+	}, []);
 
 	const toggleEraser = useCallback(() => {
 		setIsEraserOn(!isEraserOn);
@@ -184,7 +191,7 @@ const Paint = () => {
 			});
 
 		saveToLocalStorage();
-	}, [saveToLocalStorage, darkMode, t, localPaintBackground]);
+	}, [saveToLocalStorage, darkMode, t]);
 
 	const toggleBrushShape = useCallback(() => {
 		setBrushShape((prevShape) => (prevShape === BrushShape.Square ? BrushShape.Circle : BrushShape.Square));
@@ -285,37 +292,8 @@ const Paint = () => {
 		[isEraserOn]
 	);
 
-	const showSaveDialog = useCallback(
-		(e: React.MouseEvent) => {
-			e.stopPropagation();
-			withReactContent(Swal)
-				.fire({
-					title: t("Paint.swalSaveImage"),
-					inputLabel: t("Paint.swalChangeName"),
-					inputValue: t("Paint.swalDefaultInput"),
-					showCancelButton: true,
-					confirmButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
-					cancelButtonColor: darkMode ? "lightgray" : "rgb(27, 27, 27)",
-					confirmButtonText: t("Swal.swalYes"),
-					cancelButtonText: t("Swal.swalNo"),
-					input: "text",
-					background: darkMode ? "white" : "black",
-					color: darkMode ? "black" : "white",
-					showCloseButton: true,
-					target: ".paintContainer",
-				})
-				.then((result) => {
-					if (result.isConfirmed) {
-						saveImage(result.value);
-						toast.success(t("Paint.toastSavedImage"));
-					}
-				});
-		},
-		[darkMode, saveImage, t]
-	);
-
 	return (
-		<div className='paintContainer'>
+		<div className='paintContainer' css={paintContainerStyles}>
 			<PaintTools
 				brushColor={brushColor}
 				handleColorChange={handleColorChange}
@@ -328,7 +306,7 @@ const Paint = () => {
 				backgroundColor={backgroundColor}
 				handleBackgroundColorChange={handleBackgroundColorChange}
 				clearCanvas={clearCanvas}
-				showSaveDialog={showSaveDialog}
+				saveImage={saveImage}
 				paintColors={paintColors}
 				addToSavedColors={addToSavedColors}
 				handleOnButtonClickColorChange={handleOnButtonClickColorChange}
