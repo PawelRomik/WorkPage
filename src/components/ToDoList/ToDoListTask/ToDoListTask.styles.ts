@@ -7,7 +7,7 @@ export const todolistTaskStyles = (darkMode: boolean, color: string) => css`
 		display: flex;
 		flex: 1 0 0;
 		flex-direction: column;
-		overflow: auto;
+		overflow: hidden;
 		align-items: flex-start;
 		padding: 0.5rem;
 		gap: 0.5rem;
