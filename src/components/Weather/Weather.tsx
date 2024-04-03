@@ -14,6 +14,7 @@ const { localWeatherData, localWeatherLastFetchTime } = LocalStorageNames;
 
 const Weather = () => {
 	const { t } = useTranslation();
+	const [error, changeError] = useState(0);
 	const [data, setData] = useState<WeatherData>({
 		temp: 0,
 		icon: "",
@@ -43,12 +44,14 @@ const Weather = () => {
 				if (!lastFetchTime || currentTime - parseInt(lastFetchTime) >= fetchInterval) {
 					const location = await fetchLocation();
 					if (!location) {
+						changeError(1);
 						launchToast("error", t("Weather.weatherFetchLocalizationError"));
 						return;
 					}
 
 					const apiKey = import.meta.env.VITE_WEATHER_API;
 					if (!apiKey) {
+						changeError(1);
 						launchToast("error", t("Weather.weatherNoApiKey"));
 						return;
 					}
@@ -58,6 +61,7 @@ const Weather = () => {
 					);
 
 					if (!response.ok) {
+						changeError(1);
 						launchToast("error", t("Weather.weatherFetchWeatherError"));
 						return;
 					}
@@ -85,11 +89,13 @@ const Weather = () => {
 				console.error(error);
 			}
 		};
+		if (error === 0) {
+			fetchWeather();
+		}
 
-		fetchWeather();
 		const intervalId = setInterval(fetchWeather, fetchInterval);
 		return () => clearInterval(intervalId);
-	}, [t]);
+	}, [t, error]);
 
 	if (!data.icon) {
 		return null;
