@@ -34,7 +34,6 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 		}
 
 		const storedLanguage = user?.unsafeMetadata?.settingsLanguage?.toString() || "en";
-		console.log("ee");
 		if (storedLanguage) {
 			changeSettingsLanguage(storedLanguage);
 			i18n.changeLanguage(storedLanguage);
