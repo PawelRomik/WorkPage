@@ -59,4 +59,4 @@ Note: If you want to run this application locally, you need the [VITE_CLERK_PUBL
 | `npm run build`           | Create optimized build        |
 
 ## Live :round_pushpin:
-> https://eloquent-treacle-cf19f9.netlify.app
+> https://work-page.netlify.app
