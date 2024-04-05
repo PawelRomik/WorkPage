@@ -12,6 +12,8 @@ export const desktopAppsContainerStyles = () => css`
 			margin: 1rem;
 			gap: 1.5rem;
 			justify-content: flex-start;
+			flex-wrap: wrap;
+			height: 35rem;
 		}
 
 		& .rightApps {
@@ -28,6 +30,7 @@ export const desktopAppsContainerStyles = () => css`
 			& .leftApps {
 				margin: 2rem;
 				gap: 3rem;
+				height: 51rem;
 			}
 
 			& .rightApps {

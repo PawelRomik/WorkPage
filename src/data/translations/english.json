@@ -6,7 +6,8 @@
 		"Paint": "Paint",
 		"Minesweeper": "Minesweeper",
 		"Translator": "Translator",
-		"Settings": "Settings"
+		"Settings": "Settings",
+		"Player": "Player"
 	},
 	"Swal": {
 		"swalTitle": "Are you sure?",
