@@ -7,10 +7,15 @@ import { useSettingsContext } from "../../providers/SettingsContext";
 
 const { localCurrentVideo } = LocalStorageNames;
 
+type Video = {
+	thumbnail: string;
+	videoUrl: string;
+};
+
 const VideoPlayer = () => {
 	const [videoInputValue, changeVideoInputValue] = useState("");
 	const [currentVideoUrl, changeCurrentVideoUrl] = useState("");
-	const [thumbnails, setThumbnails] = useState([]);
+	const [videoData, setVideoData] = useState<Video[]>([]);
 	const [videoHistory, changeVideoHistory] = useState<string[]>([]);
 	const { darkMode } = useSettingsContext();
 
@@ -54,9 +59,15 @@ const VideoPlayer = () => {
 	useEffect(() => {
 		const fetchThumbnails = async () => {
 			try {
-				const thumbnailPromises = videoHistory.map((e) => fetchThumbnail(e)); // Utwórz tablicę obietnic dla pobierania miniatur
-				const thumbnailUrls = await Promise.all(thumbnailPromises); // Poczekaj na zakończenie wszystkich obietnic
-				setThumbnails(thumbnailUrls); // Ustaw miniatury w stanie komponentu, usuń null wartości
+				const thumbnailPromises = videoHistory.map((e) => fetchThumbnail(e));
+				const thumbnailUrls = await Promise.all(thumbnailPromises);
+
+				const videos: Video[] = thumbnailUrls.map((thumbnailUrl) => ({
+					thumbnail: thumbnailUrl?.thumbnail || "",
+					videoUrl: thumbnailUrl?.videoUrl || "",
+				}));
+
+				setVideoData(videos);
 			} catch (error) {
 				console.error(error);
 			}
@@ -66,10 +77,10 @@ const VideoPlayer = () => {
 	}, [videoHistory]);
 
 	const videoHistoryElements = Array.from({ length: 8 }, (_, index) => {
-		if (index < thumbnails.length) {
+		if (index < videoData.length) {
 			return (
 				<div className='videoHistoryItem' key={index}>
-					<img src={thumbnails[index].thumbnail} onClick={() => changeCurrentVideoUrl(thumbnails[index].videoUrl)} />
+					<img src={videoData[index].thumbnail} onClick={() => changeCurrentVideoUrl(videoData[index].videoUrl)} />
 				</div>
 			);
 		} else {
