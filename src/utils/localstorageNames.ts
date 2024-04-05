@@ -13,6 +13,7 @@ const LocalStorageNames = {
 	localLoginAnimation: "loginAnimation",
 	localCurrentVideo: "currentVideo",
 	localVideoHistory: "videoHistory",
+	localVideoLength: "videoLength",
 };
 
 export default LocalStorageNames;
