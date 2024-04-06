@@ -21,6 +21,8 @@ export const videoHistorySectionStyles = (darkMode: boolean, color: string) => c
 		}
 
 		& > div {
+			width: 100%;
+			height: 100%;
 			display: grid;
 			gap: 0.5rem;
 			grid-template-columns: repeat(2, 1fr);
@@ -37,8 +39,8 @@ export const videoHistorySectionStyles = (darkMode: boolean, color: string) => c
 			border: 3px solid ${darkMode ? "white" : "black"};
 
 			color: ${darkMode ? "white" : "black"};
-			&:hover,
-			&:focus {
+			&.hasVideo:hover,
+			&.hasVideo:focus {
 				border-color: ${color};
 			}
 
@@ -93,6 +95,10 @@ export const videoHistorySectionStyles = (darkMode: boolean, color: string) => c
 	@media (min-width: 1200px) {
 		&.videoHistorySection {
 			min-height: 80%;
+
+			& > div {
+				width: 80%;
+			}
 		}
 	}
 `;

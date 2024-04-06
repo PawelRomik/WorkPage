@@ -18,7 +18,7 @@ const VideoHistory = ({ videoData, changeCurrentVideoUrl }: VideoHistoryProps) =
 			Array.from({ length: 8 }, (_, index) => {
 				if (index < videoData.length) {
 					return (
-						<div className='videoHistoryItem' key={index}>
+						<div className='videoHistoryItem hasVideo' key={index}>
 							<img src={videoData[index].thumbnail} title={t("Player.videoHistoryHoverText")} onClick={() => changeCurrentVideoUrl(videoData[index].videoUrl)} />
 						</div>
 					);
