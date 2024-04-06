@@ -1,14 +1,18 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { launchToast } from "../../utils/toastFunction";
 import LocalStorageNames from "../../utils/localstorageNames";
-import { videoContainerSectionStyles, videoHistorySectionStyles, videoInputSectionStyles, videoPlayerStyles } from "./VideoPlayer.styles";
+import { videoPlayerStyles } from "./VideoPlayer.styles";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import nothumbnail from "../../assets/video/nothumbnail.png";
+import VideoContainer from "./VideoContainer/VideoContainer";
+import VideoHistory from "./VideoHistory/VideoHistory";
+import VideoInput from "./VideoInput/VideoInput";
+import { useTranslation } from "react-i18next";
 
 const { localCurrentVideo, localVideoLength, localVideoHistory } = LocalStorageNames;
 
-type Video = {
+export type Video = {
 	thumbnail: string;
 	videoUrl: string;
 };
@@ -18,13 +22,9 @@ const VideoPlayer = () => {
 	const [currentVideoUrl, changeCurrentVideoUrl] = useState("");
 	const [videoData, setVideoData] = useState<Video[]>([]);
 	const [videoHistory, changeVideoHistory] = useState<string[]>([]);
-	const { darkMode, color } = useSettingsContext();
-	const videoRef = useRef<ReactPlayer>(null);
+	const { darkMode } = useSettingsContext();
 	const [videoTime, changeVideoTime] = useState(0);
-
-	const changeInputValueOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		changeVideoInputValue(e.target.value);
-	}, []);
+	const { t } = useTranslation();
 
 	const setVideo = useCallback(() => {
 		if (ReactPlayer.canPlay(videoInputValue)) {
@@ -42,15 +42,15 @@ const VideoPlayer = () => {
 			localStorage.setItem(localVideoLength, JSON.stringify(0));
 		} else {
 			changeVideoInputValue("");
-			launchToast("error", "Cannot find video with that url!");
+			launchToast("error", t("Player.noVideo"));
 		}
-	}, [videoInputValue, videoHistory, currentVideoUrl]);
+	}, [videoInputValue, videoHistory, currentVideoUrl, t]);
 
-	const fetchThumbnail = async (url: string) => {
+	const fetchThumbnail = useCallback(async (url: string) => {
 		try {
-			const videoResponse = await fetch(`http://noembed.com/embed?url=${url}`);
+			const videoResponse = await fetch(`${import.meta.env.VITE_NOEMBED_URL}${url}`);
 			if (!videoResponse.ok) {
-				throw new Error("Failed to fetch location");
+				throw new Error("Failed to fetch thumbnail");
 			}
 
 			const videoResult = await videoResponse.json();
@@ -58,39 +58,7 @@ const VideoPlayer = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	};
-
-	const videoHistoryElements = Array.from({ length: 8 }, (_, index) => {
-		if (index < videoData.length) {
-			return (
-				<div className='videoHistoryItem' key={index}>
-					<img src={videoData[index].thumbnail} title='click to play' onClick={() => changeCurrentVideoUrl(videoData[index].videoUrl)} />
-				</div>
-			);
-		} else {
-			return (
-				<div className='videoHistoryItem' key={index}>
-					<p>
-						<i className='fa-solid fa-circle-play'></i>
-						No video found
-					</p>
-				</div>
-			);
-		}
-	});
-
-	const updateTime = useCallback(() => {
-		if (videoRef.current) {
-			const time = videoRef.current.getCurrentTime();
-			localStorage.setItem(localVideoLength, JSON.stringify(time));
-		}
 	}, []);
-
-	const setTime = useCallback(() => {
-		if (videoRef.current) {
-			videoRef.current.seekTo(videoTime);
-		}
-	}, [videoTime]);
 
 	useEffect(() => {
 		const fetchThumbnails = async () => {
@@ -110,7 +78,7 @@ const VideoPlayer = () => {
 		};
 
 		fetchThumbnails();
-	}, [videoHistory]);
+	}, [videoHistory, fetchThumbnail]);
 
 	useEffect(() => {
 		const storedCurrVideo = localStorage.getItem(localCurrentVideo);
@@ -143,28 +111,9 @@ const VideoPlayer = () => {
 
 	return (
 		<div className='videoPlayer' css={videoPlayerStyles(darkMode)}>
-			<section className='videoInputSection' css={videoInputSectionStyles(darkMode, color)}>
-				<label htmlFor='videoInput'>Input Url:</label>
-				<div>
-					<input type='text' id='videoInput' placeholder='Url:' className='videoInput' value={videoInputValue} onChange={changeInputValueOnChange} />
-					<button className='videoInputButton' onClick={setVideo}>
-						<i className='fa-solid fa-arrow-right-to-bracket'></i>
-					</button>
-				</div>
-			</section>
-			<section className='videoContainerSection' css={videoContainerSectionStyles(darkMode)}>
-				<div className='playerWrapper'>
-					{currentVideoUrl ? (
-						<ReactPlayer ref={videoRef} progressInterval={10000} onProgress={updateTime} onStart={setTime} url={currentVideoUrl} controls={true} width='100%' height='100%' />
-					) : (
-						"Please provide video url"
-					)}
-				</div>
-			</section>
-			<section className='videoHistorySection' css={videoHistorySectionStyles(darkMode, color)}>
-				<p>History:</p>
-				<div>{videoHistoryElements}</div>
-			</section>
+			<VideoInput setVideo={setVideo} videoInputValue={videoInputValue} changeVideoInputValue={changeVideoInputValue} />
+			<VideoContainer currentVideoUrl={currentVideoUrl} videoTime={videoTime} />
+			<VideoHistory videoData={videoData} changeCurrentVideoUrl={changeCurrentVideoUrl} />
 		</div>
 	);
 };

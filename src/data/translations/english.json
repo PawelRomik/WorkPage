@@ -120,5 +120,13 @@
 	},
 	"Wifi": {
 		"wifiConnected": "Connected"
+	},
+	"Player": {
+		"noVideo": "Cannot play requested url!",
+		"inputPlaceholder": "Video url:",
+		"videoHistoryHoverText": "Click to play video.",
+		"videoHistoryNoVideo": "No video found",
+		"videoHistoryTitle": "History:",
+		"videoContainerNoVideo": "Please provide any video url."
 	}
 }
