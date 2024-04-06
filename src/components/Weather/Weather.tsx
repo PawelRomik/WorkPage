@@ -57,7 +57,7 @@ const Weather = () => {
 					}
 
 					const response = await fetch(
-						`${import.meta.env.VITE_WEATHER_API_URL}VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=${apiKey}&contentType=json`
+						`${import.meta.env.VITE_WEATHER_API_URL}/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=${apiKey}&contentType=json`
 					);
 
 					if (!response.ok) {

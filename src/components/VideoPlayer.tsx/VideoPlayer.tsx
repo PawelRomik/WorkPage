@@ -48,7 +48,7 @@ const VideoPlayer = () => {
 
 	const fetchThumbnail = useCallback(async (url: string) => {
 		try {
-			const videoResponse = await fetch(`${import.meta.env.VITE_NOEMBED_URL}${url}`);
+			const videoResponse = await fetch(`${import.meta.env.VITE_NOEMBED_URL}/embed?url=${url}`);
 			if (!videoResponse.ok) {
 				throw new Error("Failed to fetch thumbnail");
 			}
