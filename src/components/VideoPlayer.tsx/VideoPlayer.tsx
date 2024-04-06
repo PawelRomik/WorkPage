@@ -28,7 +28,7 @@ const VideoPlayer = () => {
 
 	const setVideo = useCallback(() => {
 		if (ReactPlayer.canPlay(videoInputValue)) {
-			if (!videoHistory.includes(videoInputValue) && currentVideoUrl != "") {
+			if (!videoHistory.includes(videoInputValue)) {
 				if (videoHistory.length >= 8) {
 					const newVideoHistory = [videoInputValue, ...videoHistory.slice(0, 7)];
 					changeVideoHistory(newVideoHistory);
@@ -44,7 +44,7 @@ const VideoPlayer = () => {
 			changeVideoInputValue("");
 			launchToast("error", t("Player.noVideo"));
 		}
-	}, [videoInputValue, videoHistory, currentVideoUrl, t]);
+	}, [videoInputValue, videoHistory, t]);
 
 	const fetchThumbnail = useCallback(async (url: string) => {
 		try {
