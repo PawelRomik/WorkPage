@@ -54,8 +54,9 @@ A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>,
 To install this project run:
 > npm install
 
-Note: If you want to run this application locally, you need the [VITE_CLERK_PUBLISHABLE_KEY](https://clerk.com)!
+Note: If you want to run this application locally, you need to have the [VITE_CLERK_PUBLISHABLE_KEY](https://clerk.com) in your .env file!
 <br>If you want the weather and translator modules to work, you'll need [VITE_WEATHER_API](https://www.visualcrossing.com) and [VITE_TRANSLATOR_API](www.deepl.com) as well.
+Example .env values can be found in .env.example.
 ## Available scripts
 
 | Command                   | Description                   |
