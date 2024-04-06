@@ -3,9 +3,9 @@
 ## Project Overview :tada:
 <h3>Workpage</h3> 
 <p align="center">
-     <img src="https://github.com/LeQu15/WorkPage/assets/78439105/68657542-d6f7-4c92-a16a-e6e46bd63b68" alt="desktop">
+     <img src="https://github.com/LeQu15/WorkPage/assets/78439105/d5b97671-05f3-4ade-9a08-c319d72d4a3d" alt="desktop">
 </p>
-A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>, <b>Notes</b>, <b>Paint</b> or <b>Translator</b>. Boost your productivity and keep everything in one convenient place!
+A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>, <b>Notes</b>, <b>Paint</b>, <b>Video Player</b> or <b>Translator</b>. Boost your productivity and keep everything in one convenient place!
 
 ## Tech/framework used :wrench:
 * [Vite](https://github.com/vitejs/vite)
@@ -13,7 +13,8 @@ A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>,
 * [React](https://github.com/facebook/react)
 * [React-calendar](https://github.com/wojtekmaj/react-calendar)
 * [React-confetti](https://github.com/alampros/react-confetti)
-* [React-toastify](https://github.com/fkhadra/react-toastify)          
+* [React-toastify](https://github.com/fkhadra/react-toastify)
+* [React-player](https://github.com/cookpete/react-player)          
 * [Tiptap](https://github.com/ueberdosis/tiptap)
 * [i18next](https://github.com/i18next/react-i18next)
 * [SweetAlert2](https://github.com/sweetalert2/sweetalert2)
@@ -43,6 +44,10 @@ A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>,
 
 <p align="center">
     <img src="https://github.com/LeQu15/WorkPage/assets/78439105/eef76b16-e072-41ee-a3da-4d56315fa451" alt="Translator">
+</p>
+
+<p align="center">
+    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/7af5e513-7d22-411a-bb65-69b80800b4bc" alt="Video Player">
 </p>
 
 ## Installation :floppy_disk:
