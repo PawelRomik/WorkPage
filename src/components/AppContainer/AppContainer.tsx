@@ -10,6 +10,7 @@ import { useCallback, useMemo, useState } from "react";
 import { appContainerStyles, appContainerBackgroundStyles, appContainerContentStyles } from "./AppContainer.styles";
 import AppContainerHeader from "./AppContainerHeader.tsx/AppContainerHeader";
 import type { App } from "../../views/System/System";
+import VideoPlayer from "../VideoPlayer.tsx/VideoPlayer";
 
 type AppContainerProps = {
 	app: App;
@@ -39,6 +40,8 @@ const AppContainer = ({ app, closeApp, isOff, changeIsOff }: AppContainerProps) 
 				return <Paint />;
 			case "Minesweeper":
 				return <Saper />;
+			case "Player":
+				return <VideoPlayer />;
 			default:
 				return null;
 		}

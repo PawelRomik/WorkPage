@@ -34,4 +34,9 @@ export default [
 		name: "Translator",
 		class: "fa-solid fa-language",
 	},
+	{
+		id: 7,
+		name: "Player",
+		class: "fa-solid fa-circle-play",
+	},
 ];

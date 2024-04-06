@@ -11,6 +11,9 @@ const LocalStorageNames = {
 	localSaperBestTimes: "saperBestTimes",
 	localSoundValue: "localSoundValue",
 	localLoginAnimation: "loginAnimation",
+	localCurrentVideo: "currentVideo",
+	localVideoHistory: "videoHistory",
+	localVideoLength: "videoLength",
 };
 
 export default LocalStorageNames;

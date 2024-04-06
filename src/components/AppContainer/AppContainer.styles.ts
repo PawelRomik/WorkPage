@@ -102,5 +102,6 @@ export const appContainerStyles = (darkMode: boolean) => css`
 export const appContainerContentStyles = () => css`
 	&.appContainerContent {
 		flex: 1;
+		overflow: hidden;
 	}
 `;

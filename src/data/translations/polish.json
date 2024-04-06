@@ -6,7 +6,8 @@
 		"Paint": "Paint",
 		"Minesweeper": "Saper",
 		"Translator": "Tłumacz",
-		"Settings": "Ustawienia"
+		"Settings": "Ustawienia",
+		"Player": "Odtwarzacz"
 	},
 	"Swal": {
 		"swalTitle": "Jesteś pewny?",
@@ -119,5 +120,13 @@
 	},
 	"Wifi": {
 		"wifiConnected": "Połączono"
+	},
+	"Player": {
+		"noVideo": "Nie można odtworzyć podanego url!",
+		"inputPlaceholder": "Url wideo:",
+		"videoHistoryHoverText": "Kliknij aby włączyć wideo.",
+		"videoHistoryNoVideo": "Brak wideo",
+		"videoHistoryTitle": "Historia:",
+		"videoContainerNoVideo": "Prosze podaj url wideo."
 	}
 }
