@@ -127,6 +127,7 @@
 		"videoHistoryHoverText": "Click to play video.",
 		"videoHistoryNoVideo": "No video found",
 		"videoHistoryTitle": "History:",
-		"videoContainerNoVideo": "Please provide any video url."
+		"videoContainerNoVideo": "Please provide any video url.",
+		"videoChangeModal": "This will change the displayed video!"
 	}
 }

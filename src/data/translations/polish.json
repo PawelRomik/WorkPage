@@ -127,6 +127,7 @@
 		"videoHistoryHoverText": "Kliknij aby włączyć wideo.",
 		"videoHistoryNoVideo": "Brak wideo",
 		"videoHistoryTitle": "Historia:",
-		"videoContainerNoVideo": "Prosze podaj url wideo."
+		"videoContainerNoVideo": "Prosze podaj url wideo.",
+		"videoChangeModal": "To zmieni wyświetlane wideo!"
 	}
 }
