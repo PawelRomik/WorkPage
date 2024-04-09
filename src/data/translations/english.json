@@ -119,7 +119,9 @@
 		"weatherFetchWeatherError": "Can't fetch weather data, weather won't work properly!"
 	},
 	"Wifi": {
-		"wifiConnected": "Connected"
+		"wifiConnected": "Connected",
+		"hideIp": "Hide",
+		"showIp": "Show"
 	},
 	"Player": {
 		"noVideo": "Cannot play requested url!",

@@ -119,7 +119,9 @@
 		"weatherFetchWeatherError": "Nie można pobrać pogody! Pogoda nie będzie działać poprawnie!"
 	},
 	"Wifi": {
-		"wifiConnected": "Połączono"
+		"wifiConnected": "Połączono",
+		"hideIp": "Schowaj",
+		"showIp": "Pokaż"
 	},
 	"Player": {
 		"noVideo": "Nie można odtworzyć podanego url!",
