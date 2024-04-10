@@ -14,7 +14,7 @@ const { localVideoLength } = LocalStorageNames;
 
 const VideoContainer = ({ videoTime, currentVideoUrl }: VideoContainerProps) => {
 	const videoRef = useRef<ReactPlayer>(null);
-	const { darkMode } = useSettingsContext();
+	const { darkMode, sound } = useSettingsContext();
 	const { t } = useTranslation();
 
 	const updateTime = useCallback(() => {
@@ -34,7 +34,17 @@ const VideoContainer = ({ videoTime, currentVideoUrl }: VideoContainerProps) => 
 		<section className='videoContainerSection' css={videoContainerSectionStyles(darkMode)}>
 			<div className='playerWrapper'>
 				{currentVideoUrl ? (
-					<ReactPlayer ref={videoRef} progressInterval={10000} onProgress={updateTime} onStart={setTime} url={currentVideoUrl} controls={true} width='100%' height='100%' />
+					<ReactPlayer
+						ref={videoRef}
+						volume={sound / 100}
+						progressInterval={10000}
+						onProgress={updateTime}
+						onStart={setTime}
+						url={currentVideoUrl}
+						controls={true}
+						width='100%'
+						height='100%'
+					/>
 				) : (
 					t("Player.videoContainerNoVideo")
 				)}

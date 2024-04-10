@@ -10,12 +10,11 @@ type TaskbarProps = {
 	displayCalendarWindow: () => void;
 	displaySoundbarWindow: () => void;
 	displayWifiWindow: () => void;
-	volume: number;
 	changeIsOff: (newValue: boolean) => void;
 	chosenApp: App | null;
 };
 
-const Taskbar = ({ displayUserWindowState, changeIsOff, chosenApp, displayCalendarWindow, displaySoundbarWindow, displayWifiWindow, volume }: TaskbarProps) => {
+const Taskbar = ({ displayUserWindowState, changeIsOff, chosenApp, displayCalendarWindow, displaySoundbarWindow, displayWifiWindow }: TaskbarProps) => {
 	const { darkMode } = useSettingsContext();
 
 	return (
@@ -23,7 +22,7 @@ const Taskbar = ({ displayUserWindowState, changeIsOff, chosenApp, displayCalend
 			<div className='taskbarWrapper'>
 				<TaskbarSystemButton displayUserWindowState={displayUserWindowState} />
 				{chosenApp && <TaskbarCenterApp changeIsOff={changeIsOff} chosenApp={chosenApp} />}
-				<TaskbarRightContainer volume={volume} displayCalendarWindow={displayCalendarWindow} displaySoundbarWindow={displaySoundbarWindow} displayWifiWindow={displayWifiWindow} />
+				<TaskbarRightContainer displayCalendarWindow={displayCalendarWindow} displaySoundbarWindow={displaySoundbarWindow} displayWifiWindow={displayWifiWindow} />
 			</div>
 		</footer>
 	);

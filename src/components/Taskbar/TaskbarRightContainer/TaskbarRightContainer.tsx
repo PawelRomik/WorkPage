@@ -7,12 +7,11 @@ type TaskbarRightContainerProps = {
 	displayCalendarWindow: () => void;
 	displaySoundbarWindow: () => void;
 	displayWifiWindow: () => void;
-	volume: number;
 };
 
-const TaskbarRightContainer = ({ volume, displaySoundbarWindow, displayWifiWindow, displayCalendarWindow }: TaskbarRightContainerProps) => {
-	const { darkMode, color } = useSettingsContext();
-	const volumeClass = useMemo(() => (volume < 10 ? "fa-volume-xmark" : volume < 70 ? "fa-volume-low" : "fa-volume-high"), [volume]);
+const TaskbarRightContainer = ({ displaySoundbarWindow, displayWifiWindow, displayCalendarWindow }: TaskbarRightContainerProps) => {
+	const { darkMode, color, sound } = useSettingsContext();
+	const volumeClass = useMemo(() => (sound < 10 ? "fa-volume-xmark" : sound < 70 ? "fa-volume-low" : "fa-volume-high"), [sound]);
 
 	return (
 		<div className='rightTaskbarContainer' css={taskbarRightContainerStyles(darkMode, color)}>
