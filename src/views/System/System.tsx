@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Desktop from "../../components/Desktop/Desktop";
-import LocalStorageNames from "../../utils/localstorageNames";
 import Taskbar from "../../components/Taskbar/Taskbar";
 import Login from "../Login/Login";
 import { useLocation } from "react-router-dom";
@@ -11,25 +10,15 @@ export type App = {
 	class: string;
 };
 
-const { localSoundValue } = LocalStorageNames;
-
 const System = () => {
 	const [userWindowState, changeUserWindowState] = useState(false);
 	const [calendarWindowState, changeCalendarWindowState] = useState(false);
 	const [soundbarWindowState, changeSoundbarWindowState] = useState(false);
 	const [wifiWindowState, changeWifiWindowState] = useState(false);
-	const [volume, setVolume] = useState(50);
 	const [chosenApp, changeChosenApp] = useState<App | null>(null);
 	const [isOff, changeIsOff] = useState(false);
 	const [loadingAnimation, changeLoadingAnimation] = useState(true);
 	const location = useLocation();
-
-	useEffect(() => {
-		const storedSoundValue = localStorage.getItem(localSoundValue);
-		if (storedSoundValue) {
-			setVolume(JSON.parse(storedSoundValue));
-		}
-	}, []);
 
 	useEffect(() => {
 		if (location && location?.state?.loginAnimation) {
@@ -39,10 +28,6 @@ const System = () => {
 			changeLoadingAnimation(false);
 		}
 	}, [location]);
-
-	useEffect(() => {
-		localStorage.setItem(localSoundValue, JSON.stringify(volume));
-	}, [volume]);
 
 	const displayUserWindowState = () => {
 		changeUserWindowState((prevState) => !prevState);
@@ -104,8 +89,6 @@ const System = () => {
 				hideUserWindowState={hideUserWindowState}
 				calendarWindowState={calendarWindowState}
 				hideCalendarWindow={hideCalendarWindowState}
-				volume={volume}
-				setVolume={setVolume}
 				chosenApp={chosenApp}
 				changeChosenApp={changeChosenApp}
 				isOff={isOff}
@@ -116,7 +99,6 @@ const System = () => {
 				displayCalendarWindow={displayCalendarWindowState}
 				displaySoundbarWindow={displaySoundbarWindowState}
 				displayWifiWindow={displayWifiWindowState}
-				volume={volume}
 				chosenApp={chosenApp}
 				changeIsOff={changeIsOff}
 			/>

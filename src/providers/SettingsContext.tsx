@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, ReactNode, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useTranslation } from "react-i18next";
+import LocalStorageNames from "../utils/localstorageNames";
 
 type SettingsContextProps = {
 	background: string;
@@ -13,7 +14,11 @@ type SettingsContextProps = {
 	changeDarkMode: (newMode: boolean) => void;
 	wallpaperStyle: string;
 	changeWallpaperStyle: (newStyle: string) => void;
+	sound: number;
+	changeSound: (newSound: number) => void;
 };
+
+const { localSoundValue } = LocalStorageNames;
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(undefined);
 
@@ -21,6 +26,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 	const [background, setBackground] = useState("");
 	const [color, setColor] = useState("");
 	const [darkMode, changeDarkMode] = useState(false);
+	const [sound, changeSound] = useState(100);
 	const [wallpaperStyle, changeWallpaperStyle] = useState("");
 	const [settingsLanguage, changeSettingsLanguage] = useState("");
 	const { user } = useUser();
@@ -44,6 +50,11 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 			changeWallpaperStyle(storedWallpaperStyle);
 		}
 
+		const storedSound = Number(JSON.parse(localStorage.getItem(localSoundValue) || "100"));
+		if (storedSound) {
+			changeSound(storedSound);
+		}
+
 		const storedColor = user?.unsafeMetadata?.color?.toString() || "#CE17C5";
 		if (storedColor) {
 			setColor(storedColor);
@@ -54,6 +65,10 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 			changeDarkMode(JSON.parse(storedMode));
 		}
 	}, [user, i18n]);
+
+	useEffect(() => {
+		localStorage.setItem(localSoundValue, JSON.stringify(sound));
+	}, [sound]);
 
 	return (
 		<SettingsContext.Provider
@@ -68,6 +83,8 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 				changeDarkMode,
 				wallpaperStyle,
 				changeWallpaperStyle,
+				sound,
+				changeSound,
 			}}
 		>
 			{children}

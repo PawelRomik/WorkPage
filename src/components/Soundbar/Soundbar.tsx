@@ -3,14 +3,9 @@ import { useSettingsContext } from "../../providers/SettingsContext";
 import { useTranslation } from "react-i18next";
 import { soundbarSliderStyles, soundbarStyles } from "./Soundbar.styles";
 
-type SoundbarProps = {
-	volume: number;
-	setVolume: (value: number) => void;
-};
-
-const Soundbar = ({ volume, setVolume }: SoundbarProps) => {
-	const { color, darkMode } = useSettingsContext();
-	const [oldSoundVal, setOldSoundVal] = useState(volume);
+const Soundbar = () => {
+	const { color, darkMode, sound, changeSound } = useSettingsContext();
+	const [oldSoundVal, setOldSoundVal] = useState(0);
 	const { t } = useTranslation();
 
 	const dontHideOnClick = useCallback((e: React.MouseEvent) => {
@@ -20,28 +15,29 @@ const Soundbar = ({ volume, setVolume }: SoundbarProps) => {
 	const changeVolume = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const volume = Number(e.target.value);
-			setVolume(volume);
-			setOldSoundVal(volume);
+			setOldSoundVal(sound);
+			changeSound(volume);
 		},
-		[setVolume]
+		[sound, changeSound]
 	);
 
 	const lowerVolumeOnIconClick = useCallback(() => {
-		if (volume == 0) {
-			setVolume(oldSoundVal == 0 ? 50 : oldSoundVal);
+		if (sound == 0) {
+			changeSound(oldSoundVal);
 		} else {
-			setVolume(0);
+			setOldSoundVal(sound);
+			changeSound(0);
 		}
-	}, [setVolume, volume, oldSoundVal]);
+	}, [oldSoundVal, changeSound, sound]);
 
-	const volumeClass = useMemo(() => (volume < 10 ? "fa-volume-xmark" : volume < 70 ? "fa-volume-low" : "fa-volume-high"), [volume]);
+	const volumeClass = useMemo(() => (sound < 10 ? "fa-volume-xmark" : sound < 70 ? "fa-volume-low" : "fa-volume-high"), [sound]);
 
 	return (
 		<div className='soundbar' css={soundbarStyles(darkMode)} onClick={dontHideOnClick}>
 			<label htmlFor='soundbarSlider'>{t("Volume.volume")}:</label>
 			<div>
 				<i className={`fa-solid ${volumeClass}`} onClick={lowerVolumeOnIconClick}></i>{" "}
-				<input css={soundbarSliderStyles(color)} type='range' min='0' max='100' value={volume} onChange={changeVolume} className='soundbarSlider' id='soundbarSlider' />
+				<input css={soundbarSliderStyles(color)} type='range' min='0' max='100' value={sound} onChange={changeVolume} className='soundbarSlider' id='soundbarSlider' />
 			</div>
 		</div>
 	);
