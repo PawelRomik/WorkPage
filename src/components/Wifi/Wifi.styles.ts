@@ -42,7 +42,7 @@ export const wifiContainerStyles = (darkMode: boolean, color: string) => css`
 
 			&.ipParagraph {
 				cursor: pointer;
-				padding: 0.25rem 0.5rem;
+				padding: 0.25rem;
 				background-color: ${darkMode ? "#dfdfdf" : "rgb(27,27,27)"};
 				color: ${darkMode ? "black" : "white"};
 			}
