@@ -36,13 +36,6 @@ const Saper = () => {
 	const [loading, changeIsLoading] = useState(false);
 	const boardRef = useRef(null);
 
-	useEffect(() => {
-		const storedBestTimes = localStorage.getItem(localSaperBestTimes);
-		if (storedBestTimes) {
-			setBestTimes(JSON.parse(storedBestTimes));
-		}
-	}, []);
-
 	const saveBestTime = useCallback(
 		(time: number) => {
 			const updatedBestTimes = [...bestTimes];
@@ -52,24 +45,6 @@ const Saper = () => {
 		},
 		[bestTimes, difficulty]
 	);
-
-	useEffect(() => {
-		let resizeTimeout: NodeJS.Timeout;
-
-		const handleResize = () => {
-			clearTimeout(resizeTimeout);
-			resizeTimeout = setTimeout(() => {
-				if (window.innerWidth < 1200) {
-					setDifficulty(0);
-				}
-			}, 100);
-		};
-
-		window.addEventListener("resize", handleResize);
-		return () => {
-			window.removeEventListener("resize", handleResize);
-		};
-	}, []);
 
 	const initializeBoard = useCallback(() => {
 		const newBoard: Cell[][] = [];
@@ -110,10 +85,6 @@ const Saper = () => {
 			setTimer(null);
 		}
 	}, [timer]);
-
-	useEffect(() => {
-		setBoard(initializeBoard());
-	}, [initializeBoard]);
 
 	const placeFlag = useCallback(
 		(row: number, col: number) => {
@@ -216,18 +187,6 @@ const Saper = () => {
 		[board, firstClick, gameOver, initializeBoard, revealHelper, startTimer]
 	);
 
-	useEffect(() => {
-		if (victory) {
-			setGameOver(true);
-			stopTimer();
-			const currentTime = gameTime;
-			const bestTime = bestTimes[difficulty];
-			if (!bestTime || currentTime < bestTime) {
-				saveBestTime(currentTime);
-			}
-		}
-	}, [victory, stopTimer, bestTimes, difficulty, gameTime, saveBestTime]);
-
 	const resetGame = useCallback(() => {
 		setBoard(initializeBoard());
 		setGameOver(false);
@@ -298,6 +257,47 @@ const Saper = () => {
 		},
 		[resetGame, darkMode, firstClick, gameOver, t]
 	);
+
+	useEffect(() => {
+		let resizeTimeout: NodeJS.Timeout;
+
+		const handleResize = () => {
+			clearTimeout(resizeTimeout);
+			resizeTimeout = setTimeout(() => {
+				if (window.innerWidth < 1200) {
+					setDifficulty(0);
+				}
+			}, 100);
+		};
+
+		window.addEventListener("resize", handleResize);
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (victory) {
+			setGameOver(true);
+			stopTimer();
+			const currentTime = gameTime;
+			const bestTime = bestTimes[difficulty];
+			if (!bestTime || currentTime < bestTime) {
+				saveBestTime(currentTime);
+			}
+		}
+	}, [victory, stopTimer, bestTimes, difficulty, gameTime, saveBestTime]);
+
+	useEffect(() => {
+		const storedBestTimes = localStorage.getItem(localSaperBestTimes);
+		if (storedBestTimes) {
+			setBestTimes(JSON.parse(storedBestTimes));
+		}
+	}, []);
+
+	useEffect(() => {
+		setBoard(initializeBoard());
+	}, [initializeBoard]);
 
 	return (
 		<div className='saperContainer' css={saperContainerStyles(darkMode)} ref={boardRef}>

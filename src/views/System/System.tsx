@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Desktop from "../../components/Desktop/Desktop";
 import Taskbar from "../../components/Taskbar/Taskbar";
 import Login from "../Login/Login";
@@ -20,6 +20,50 @@ const System = () => {
 	const [loadingAnimation, changeLoadingAnimation] = useState(true);
 	const location = useLocation();
 
+	const displayUserWindowState = useCallback(() => {
+		changeUserWindowState((prevState) => !prevState);
+		changeCalendarWindowState(false);
+		changeSoundbarWindowState(false);
+		changeWifiWindowState(false);
+	}, []);
+
+	const hideUserWindowState = useCallback(() => {
+		changeUserWindowState(false);
+	}, []);
+
+	const displaySoundbarWindowState = useCallback(() => {
+		changeSoundbarWindowState((prevState) => !prevState);
+		changeCalendarWindowState(false);
+		changeUserWindowState(false);
+		changeWifiWindowState(false);
+	}, []);
+
+	const hideSoundbarWindowState = useCallback(() => {
+		changeSoundbarWindowState(false);
+	}, []);
+
+	const displayCalendarWindowState = useCallback(() => {
+		changeCalendarWindowState((prevState) => !prevState);
+		changeUserWindowState(false);
+		changeSoundbarWindowState(false);
+		changeWifiWindowState(false);
+	}, []);
+
+	const hideCalendarWindowState = useCallback(() => {
+		changeCalendarWindowState(false);
+	}, []);
+
+	const displayWifiWindowState = useCallback(() => {
+		changeWifiWindowState((prevState) => !prevState);
+		changeCalendarWindowState(false);
+		changeSoundbarWindowState(false);
+		changeUserWindowState(false);
+	}, []);
+
+	const hideWifiWindowState = useCallback(() => {
+		changeWifiWindowState(false);
+	}, []);
+
 	useEffect(() => {
 		if (location && location?.state?.loginAnimation) {
 			changeLoadingAnimation(location.state.loginAnimation);
@@ -28,50 +72,6 @@ const System = () => {
 			changeLoadingAnimation(false);
 		}
 	}, [location]);
-
-	const displayUserWindowState = () => {
-		changeUserWindowState((prevState) => !prevState);
-		changeCalendarWindowState(false);
-		changeSoundbarWindowState(false);
-		changeWifiWindowState(false);
-	};
-
-	const hideUserWindowState = () => {
-		changeUserWindowState(false);
-	};
-
-	const displaySoundbarWindowState = () => {
-		changeSoundbarWindowState((prevState) => !prevState);
-		changeCalendarWindowState(false);
-		changeUserWindowState(false);
-		changeWifiWindowState(false);
-	};
-
-	const hideSoundbarWindowState = () => {
-		changeSoundbarWindowState(false);
-	};
-
-	const displayCalendarWindowState = () => {
-		changeCalendarWindowState((prevState) => !prevState);
-		changeUserWindowState(false);
-		changeSoundbarWindowState(false);
-		changeWifiWindowState(false);
-	};
-
-	const hideCalendarWindowState = () => {
-		changeCalendarWindowState(false);
-	};
-
-	const displayWifiWindowState = () => {
-		changeWifiWindowState((prevState) => !prevState);
-		changeCalendarWindowState(false);
-		changeSoundbarWindowState(false);
-		changeUserWindowState(false);
-	};
-
-	const hideWifiWindowState = () => {
-		changeWifiWindowState(false);
-	};
 
 	return (
 		<>

@@ -14,11 +14,6 @@ const Settings = () => {
 	const { t, i18n } = useTranslation();
 	const { user } = useUser();
 
-	useEffect(() => {
-		const mode = darkMode || false;
-		changeDarkModeInputValue(mode.toString());
-	}, [darkMode]);
-
 	const handleColorChange = useCallback(
 		(newColor: string) => {
 			const updateUser = async () => {
@@ -73,6 +68,11 @@ const Settings = () => {
 		},
 		[user, i18n]
 	);
+
+	useEffect(() => {
+		const mode = darkMode || false;
+		changeDarkModeInputValue(mode.toString());
+	}, [darkMode]);
 
 	return (
 		<div className='settingsContainer' css={settingsContainerStyles(darkMode)}>

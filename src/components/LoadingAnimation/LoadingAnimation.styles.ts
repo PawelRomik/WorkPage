@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-export const loadingAnimationStyles = (repeats: number | undefined) => css`
+export const loadingAnimationStyles = (repeats: number | undefined, darkMode: boolean) => css`
 	&.lds-roller {
 		display: inline-block;
 		position: relative;
@@ -18,7 +18,7 @@ export const loadingAnimationStyles = (repeats: number | undefined) => css`
 		width: 7px;
 		height: 7px;
 		border-radius: 50%;
-		background: #fff;
+		background: ${darkMode ? "black" : "white"};
 		margin: -4px 0 0 -4px;
 	}
 	&.lds-roller div:nth-of-type(1) {

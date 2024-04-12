@@ -28,74 +28,9 @@ const Paint = () => {
 	const [paintColors, changePaintColors] = useState<string[]>([]);
 	const { t } = useTranslation();
 
-	useEffect(() => {
-		const storedColors = localStorage.getItem(localPaintColors);
-		if (storedColors) {
-			const parsedColors = JSON.parse(storedColors);
-			changePaintColors(parsedColors);
-			setBrushColor(parsedColors[0]);
-		}
-	}, []);
-
-	useEffect(() => {
-		const canvas = canvasRef.current;
-		if (canvas) {
-			const context = canvas.getContext("2d", { willReadFrequently: true });
-			ctxRef.current = context;
-		}
-	}, []);
-
-	useEffect(() => {
-		const savedCanvasData = localStorage.getItem(localPaintCanvas);
-		if (savedCanvasData) {
-			const img = new Image();
-			img.src = JSON.parse(savedCanvasData);
-			img.onload = () => {
-				if (ctxRef.current) {
-					ctxRef.current.drawImage(img, 0, 0);
-				}
-			};
-		}
-		const savedBgc = localStorage.getItem(localPaintBackground);
-		if (savedBgc) {
-			setBackgroundColor(JSON.parse(savedBgc));
-		} else {
-			setBackgroundColor(darkMode ? "#ffffff" : "#363636");
-		}
-	}, [darkMode]);
-
 	const saveToLocalStorage = useCallback(() => {
 		localStorage.setItem(localPaintCanvas, JSON.stringify(canvasRef.current!.toDataURL("image/png")));
 	}, []);
-
-	useEffect(() => {
-		const handleResize = () => {
-			const canvas = canvasRef.current;
-			if (!canvas) return;
-			const imageData = ctxRef.current?.getImageData(0, 0, canvas.width, canvas.height);
-			canvas.width = 0;
-			canvas.height = 0;
-
-			const parent = canvas.parentElement;
-			if (!parent) return;
-
-			canvas.width = parent.clientWidth;
-			canvas.height = parent.clientHeight;
-
-			if (imageData) {
-				ctxRef.current?.putImageData(imageData, 0, 0);
-			}
-			saveToLocalStorage();
-		};
-
-		window.addEventListener("resize", handleResize);
-
-		handleResize();
-
-		return () => {
-			window.removeEventListener("resize", handleResize);
-		};
-	}, [saveToLocalStorage]);
 
 	const handleColorChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setBrushColor(e.target.value);
@@ -282,6 +217,71 @@ const Paint = () => {
 		},
 		[isEraserOn]
 	);
+
+	useEffect(() => {
+		const storedColors = localStorage.getItem(localPaintColors);
+		if (storedColors) {
+			const parsedColors = JSON.parse(storedColors);
+			changePaintColors(parsedColors);
+			setBrushColor(parsedColors[0]);
+		}
+	}, []);
+
+	useEffect(() => {
+		const canvas = canvasRef.current;
+		if (canvas) {
+			const context = canvas.getContext("2d", { willReadFrequently: true });
+			ctxRef.current = context;
+		}
+	}, []);
+
+	useEffect(() => {
+		const savedCanvasData = localStorage.getItem(localPaintCanvas);
+		if (savedCanvasData) {
+			const img = new Image();
+			img.src = JSON.parse(savedCanvasData);
+			img.onload = () => {
+				if (ctxRef.current) {
+					ctxRef.current.drawImage(img, 0, 0);
+				}
+			};
+		}
+		const savedBgc = localStorage.getItem(localPaintBackground);
+		if (savedBgc) {
+			setBackgroundColor(JSON.parse(savedBgc));
+		} else {
+			setBackgroundColor(darkMode ? "#ffffff" : "#363636");
+		}
+	}, [darkMode]);
+
+	useEffect(() => {
+		const handleResize = () => {
+			const canvas = canvasRef.current;
+			if (!canvas) return;
+			const imageData = ctxRef.current?.getImageData(0, 0, canvas.width, canvas.height);
+			canvas.width = 0;
+			canvas.height = 0;
+
+			const parent = canvas.parentElement;
+			if (!parent) return;
+
+			canvas.width = parent.clientWidth;
+			canvas.height = parent.clientHeight;
+
+			if (imageData) {
+				ctxRef.current?.putImageData(imageData, 0, 0);
+			}
+			saveToLocalStorage();
+		};
+
+		window.addEventListener("resize", handleResize);
+
+		handleResize();
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, [saveToLocalStorage]);
 
 	return (
 		<div className='paintContainer' css={paintContainerStyles}>
