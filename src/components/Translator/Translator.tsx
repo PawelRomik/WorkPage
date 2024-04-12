@@ -16,17 +16,6 @@ const Translator = () => {
 	const [selectedLanguageFrom, setSelectedLanguageFrom] = useState("pl");
 	const { t } = useTranslation();
 
-	useEffect(() => {
-		const storedLangTo = localStorage.getItem(localTranslatorLanguageTo);
-		if (storedLangTo) {
-			setSelectedLanguageTo(JSON.parse(storedLangTo));
-		}
-		const storedLangFrom = localStorage.getItem(localTranslatorLanguageFrom);
-		if (storedLangFrom) {
-			setSelectedLanguageFrom(JSON.parse(storedLangFrom));
-		}
-	}, []);
-
 	const translation = useCallback(
 		async (text: string) => {
 			try {
@@ -50,22 +39,6 @@ const Translator = () => {
 		},
 		[selectedLanguageTo, selectedLanguageFrom, t]
 	);
-
-	useEffect(() => {
-		if (inputValue) {
-			changeTranslated(0);
-		} else {
-			changeTranslated("");
-		}
-
-		const timeoutId = setTimeout(() => {
-			translation(inputValue);
-		}, 2000);
-
-		return () => {
-			clearTimeout(timeoutId);
-		};
-	}, [inputValue, translation]);
 
 	const handleLanguageFromChange = useCallback(
 		(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -106,9 +79,36 @@ const Translator = () => {
 		changeInputValue("");
 	}, []);
 
-	const updateInputValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const updateInputValue = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		changeInputValue(e.target.value);
-	};
+	}, []);
+
+	useEffect(() => {
+		const storedLangTo = localStorage.getItem(localTranslatorLanguageTo);
+		if (storedLangTo) {
+			setSelectedLanguageTo(JSON.parse(storedLangTo));
+		}
+		const storedLangFrom = localStorage.getItem(localTranslatorLanguageFrom);
+		if (storedLangFrom) {
+			setSelectedLanguageFrom(JSON.parse(storedLangFrom));
+		}
+	}, []);
+
+	useEffect(() => {
+		if (inputValue) {
+			changeTranslated(0);
+		} else {
+			changeTranslated("");
+		}
+
+		const timeoutId = setTimeout(() => {
+			translation(inputValue);
+		}, 2000);
+
+		return () => {
+			clearTimeout(timeoutId);
+		};
+	}, [inputValue, translation]);
 
 	return (
 		<div className='translatorContainer' css={translatorContainerStyles}>

@@ -20,18 +20,6 @@ const ToDoList = () => {
 	const [allowEdit, changeAllowEdit] = useState(false);
 	const [currentlyEdited, setCurrentlyEdited] = useState<number | null>(null);
 
-	useEffect(() => {
-		const storedTasks = localStorage.getItem(localToDoListTasks);
-		if (storedTasks) {
-			const parsedTasks: Task[] = JSON.parse(storedTasks);
-			changeTasks(parsedTasks);
-		}
-	}, []);
-
-	useEffect(() => {
-		localStorage.setItem(localToDoListTasks, JSON.stringify(tasks));
-	}, [tasks]);
-
 	const addNewTask = useCallback(() => {
 		const { taskName, taskContent, taskPriority } = inputValues;
 
@@ -148,6 +136,18 @@ const ToDoList = () => {
 		setCurrentlyEdited(null);
 		changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 	}, []);
+
+	useEffect(() => {
+		const storedTasks = localStorage.getItem(localToDoListTasks);
+		if (storedTasks) {
+			const parsedTasks: Task[] = JSON.parse(storedTasks);
+			changeTasks(parsedTasks);
+		}
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem(localToDoListTasks, JSON.stringify(tasks));
+	}, [tasks]);
 
 	return (
 		<div className='ToDoListContainer' css={todolistContainerStyles(darkMode)}>

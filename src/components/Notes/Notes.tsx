@@ -18,26 +18,6 @@ const Notes = () => {
 	const [notes, setNotes] = useState<Note[]>([]);
 	const [selectedNoteId, setSelectedNoteId] = useState<number | undefined>(undefined);
 
-	useEffect(() => {
-		const storedNotes = localStorage.getItem(localNotes);
-		if (storedNotes) {
-			const parsedNotes: Note[] = JSON.parse(storedNotes);
-			setNotes(parsedNotes);
-			setSelectedNoteId(parsedNotes.length > 0 ? parsedNotes[0].id : undefined);
-		}
-	}, []);
-
-	useEffect(() => {
-		localStorage.setItem(localNotes, JSON.stringify(notes));
-	}, [notes]);
-
-	useEffect(() => {
-		setNoteValue((prevNoteValue) => {
-			const selectedNote = notes.find((note) => note.id === selectedNoteId);
-			return selectedNote ? selectedNote.content : prevNoteValue;
-		});
-	}, [selectedNoteId, notes]);
-
 	const changeNote = useCallback(
 		(id: number) => {
 			const selectedNote = notes.find((note) => note.id === id);
@@ -94,6 +74,26 @@ const Notes = () => {
 		},
 		[selectedNoteId]
 	);
+
+	useEffect(() => {
+		const storedNotes = localStorage.getItem(localNotes);
+		if (storedNotes) {
+			const parsedNotes: Note[] = JSON.parse(storedNotes);
+			setNotes(parsedNotes);
+			setSelectedNoteId(parsedNotes.length > 0 ? parsedNotes[0].id : undefined);
+		}
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem(localNotes, JSON.stringify(notes));
+	}, [notes]);
+
+	useEffect(() => {
+		setNoteValue((prevNoteValue) => {
+			const selectedNote = notes.find((note) => note.id === selectedNoteId);
+			return selectedNote ? selectedNote.content : prevNoteValue;
+		});
+	}, [selectedNoteId, notes]);
 
 	return (
 		<div className='notesContainer' css={notesContainerStyles}>

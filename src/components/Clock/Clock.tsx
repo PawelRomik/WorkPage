@@ -6,6 +6,13 @@ const Clock = () => {
 	const [currentTime, setCurrentTime] = useState(new Date());
 	const { settingsLanguage } = useSettingsContext();
 
+	const clockValue = useMemo(() => {
+		return currentTime.toLocaleTimeString(settingsLanguage || "en", {
+			hour: "2-digit",
+			minute: "2-digit",
+		});
+	}, [currentTime, settingsLanguage]);
+
 	useEffect(() => {
 		const timerId = setInterval(() => {
 			setCurrentTime(new Date());
@@ -15,13 +22,6 @@ const Clock = () => {
 			clearInterval(timerId);
 		};
 	}, []);
-
-	const clockValue = useMemo(() => {
-		return currentTime.toLocaleTimeString(settingsLanguage || "en", {
-			hour: "2-digit",
-			minute: "2-digit",
-		});
-	}, [currentTime, settingsLanguage]);
 
 	return (
 		<div className='clock' css={clockStyles}>

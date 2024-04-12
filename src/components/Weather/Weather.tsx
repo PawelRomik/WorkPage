@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import weatherIcons from "../../data/weatherIcons";
 import { weatherStyles } from "./Weather.styles";
 import LocalStorageNames from "../../utils/localstorageNames";
@@ -20,7 +20,7 @@ const Weather = () => {
 		icon: "",
 	});
 
-	const fetchLocation = async () => {
+	const fetchLocation = useCallback(async () => {
 		try {
 			const locationResponse = await fetch(import.meta.env.VITE_GEOLOCATION_API_URL);
 			if (!locationResponse.ok) {
@@ -32,7 +32,7 @@ const Weather = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	};
+	}, []);
 
 	useEffect(() => {
 		const fetchInterval = 3600000;
@@ -95,7 +95,7 @@ const Weather = () => {
 
 		const intervalId = setInterval(fetchWeather, fetchInterval);
 		return () => clearInterval(intervalId);
-	}, [t, error]);
+	}, [t, error, fetchLocation]);
 
 	if (!data.icon) {
 		return null;

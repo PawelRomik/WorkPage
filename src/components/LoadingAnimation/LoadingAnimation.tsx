@@ -1,3 +1,4 @@
+import { useSettingsContext } from "../../providers/SettingsContext";
 import { loadingAnimationStyles } from "./LoadingAnimation.styles";
 
 type loadingAnimationProps = {
@@ -6,8 +7,9 @@ type loadingAnimationProps = {
 };
 
 const LoadingAnimation = ({ animationEnd, repeats }: loadingAnimationProps) => {
+	const { darkMode } = useSettingsContext();
 	return (
-		<div className='lds-roller' onAnimationEnd={animationEnd} css={loadingAnimationStyles(repeats)}>
+		<div className='lds-roller' onAnimationEnd={animationEnd} css={loadingAnimationStyles(repeats, darkMode)}>
 			{[...Array(8)].map((_, index) => {
 				return <div key={index}></div>;
 			})}

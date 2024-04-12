@@ -14,6 +14,18 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 	const { color, darkMode } = useSettingsContext();
 	const [selection, changeSelection] = useState(0);
 
+	const setColors = useCallback(() => {
+		if (editor?.isActive("textStyle")) {
+			editor?.chain().focus().unsetColor().run();
+		} else {
+			editor?.chain().focus().setColor(color).run();
+		}
+	}, [color, editor]);
+
+	const clearContent = useCallback(() => {
+		updateNote("");
+	}, [updateNote]);
+
 	useEffect(() => {
 		if (editor) {
 			const content = noteValue;
@@ -32,18 +44,6 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 			});
 		}
 	}, [noteValue, editor, updateNote, color, selection]);
-
-	const setColors = useCallback(() => {
-		if (editor?.isActive("textStyle")) {
-			editor?.chain().focus().unsetColor().run();
-		} else {
-			editor?.chain().focus().setColor(color).run();
-		}
-	}, [color, editor]);
-
-	const clearContent = useCallback(() => {
-		updateNote("");
-	}, [updateNote]);
 
 	if (!editor) {
 		return null;
