@@ -5,7 +5,7 @@ type TaskbarSystemButtonProps = {
 	displayUserWindowState: () => void;
 };
 
-const TaskbarSystemButton = ({ displayUserWindowState }: TaskbarSystemButtonProps) => {
+export const TaskbarSystemButton = ({ displayUserWindowState }: TaskbarSystemButtonProps) => {
 	const { darkMode, color } = useSettingsContext();
 
 	return (
@@ -14,5 +14,3 @@ const TaskbarSystemButton = ({ displayUserWindowState }: TaskbarSystemButtonProp
 		</button>
 	);
 };
-
-export default TaskbarSystemButton;

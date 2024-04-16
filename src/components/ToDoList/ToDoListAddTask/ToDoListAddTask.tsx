@@ -7,7 +7,7 @@ import { allowEditButtonStyles, todolistAddTaskStyles } from "./ToDoListAddTask.
 
 type ToDoListAddTaskProps = {
 	allowEdit: boolean;
-	changeAllowEdit: React.Dispatch<React.SetStateAction<boolean>>;
+	setAllowEdit: React.Dispatch<React.SetStateAction<boolean>>;
 	inputValues: Task;
 	handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	addNewTask: () => void;
@@ -17,9 +17,9 @@ type ToDoListAddTaskProps = {
 	handlePriorityChange: (value: number) => void;
 };
 
-const ToDoListAddTask = ({
+export const ToDoListAddTask = ({
 	allowEdit,
-	changeAllowEdit,
+	setAllowEdit,
 	handlePriorityChange,
 	inputValues,
 	handleInputChange,
@@ -77,12 +77,10 @@ const ToDoListAddTask = ({
 					)}
 				</section>
 			) : (
-				<button className='allowEditBtn' css={allowEditButtonStyles(darkMode, color)} onClick={() => changeAllowEdit(true)}>
+				<button className='allowEditBtn' css={allowEditButtonStyles(darkMode, color)} onClick={() => setAllowEdit(true)}>
 					+
 				</button>
 			)}
 		</>
 	);
 };
-
-export default ToDoListAddTask;

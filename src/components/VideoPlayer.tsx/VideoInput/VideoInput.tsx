@@ -6,18 +6,18 @@ import { useTranslation } from "react-i18next";
 type VideoInputProps = {
 	setVideo: () => void;
 	videoInputValue: string;
-	changeVideoInputValue: (newValue: string) => void;
+	setVideoInputValue: (newValue: string) => void;
 };
 
-const VideoInput = ({ setVideo, videoInputValue, changeVideoInputValue }: VideoInputProps) => {
+export const VideoInput = ({ setVideo, videoInputValue, setVideoInputValue }: VideoInputProps) => {
 	const { darkMode, color } = useSettingsContext();
 	const { t } = useTranslation();
 
 	const changeInputValueOnChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
-			changeVideoInputValue(e.target.value);
+			setVideoInputValue(e.target.value);
 		},
-		[changeVideoInputValue]
+		[setVideoInputValue]
 	);
 
 	return (
@@ -32,5 +32,3 @@ const VideoInput = ({ setVideo, videoInputValue, changeVideoInputValue }: VideoI
 		</section>
 	);
 };
-
-export default VideoInput;

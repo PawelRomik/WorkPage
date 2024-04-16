@@ -1,9 +1,9 @@
-import config from "../saper.config";
+import { config } from "../saper.config";
 import { Cell } from "../Saper";
 import { useMemo } from "react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { useTranslation } from "react-i18next";
-import LoadingAnimation from "../../LoadingAnimation/LoadingAnimation";
+import { LoadingAnimation } from "../../LoadingAnimation/LoadingAnimation";
 import { saperBoardStyles } from "./SaperBoard.styles";
 
 type SaperBoardProps = {
@@ -19,7 +19,7 @@ type SaperBoardProps = {
 
 const { colors } = config;
 
-const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTouchStart, animationEnd, loading }: SaperBoardProps) => {
+export const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTouchStart, animationEnd, loading }: SaperBoardProps) => {
 	const { darkMode, color } = useSettingsContext();
 	const { t } = useTranslation();
 
@@ -27,23 +27,21 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 		() =>
 			board.map((row, rowIndex) => (
 				<div key={rowIndex} className='saperRow'>
-					{row.map((cell, colIndex) => (
+					{row.map(({ isBomb, isFlagged, neighborBombs, isRevealed }, colIndex) => (
 						<div
 							key={colIndex}
-							className={`saperCell${cell.isRevealed ? " saperCellRevealed" : ""}${gameOver && cell.isBomb && !victory ? " saperBomb" : ""}${
-								cell.isFlagged ? " saperFlagged" : ""
-							}`}
+							className={`saperCell${isRevealed ? " saperCellRevealed" : ""}${gameOver && isBomb && !victory ? " saperBomb" : ""}${isFlagged ? " saperFlagged" : ""}`}
 							onClick={() => revealCell(rowIndex, colIndex)}
 							onContextMenu={(e) => {
 								e.preventDefault();
 								placeFlag(rowIndex, colIndex);
 							}}
 							onTouchStart={() => handleTouchStart(rowIndex, colIndex)}
-							style={{ color: colors[cell.neighborBombs] }}
+							style={{ color: colors[neighborBombs] }}
 						>
-							{cell.isRevealed && !cell.isBomb ? cell.neighborBombs || "" : ""}
-							{gameOver && !victory && cell.isBomb && !cell.isFlagged ? "💣" : ""}
-							{cell.isFlagged && !cell.isRevealed ? "🚩" : ""}
+							{isRevealed && !isBomb ? neighborBombs || "" : ""}
+							{gameOver && !victory && isBomb && !isFlagged ? "💣" : ""}
+							{isFlagged && !isRevealed ? "🚩" : ""}
 						</div>
 					))}
 				</div>
@@ -71,5 +69,3 @@ const SaperBoard = ({ board, victory, gameOver, placeFlag, revealCell, handleTou
 		</div>
 	);
 };
-
-export default SaperBoard;

@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
-import Clock from "../../components/Clock/Clock";
+import { Clock } from "../../components/Clock/Clock";
 import { useSettingsContext } from "../../providers/SettingsContext";
-import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
-import LoginProfile from "../../components/LoginProfile/LoginProfile";
+import { LoadingAnimation } from "../../components/LoadingAnimation/LoadingAnimation";
+import { LoginProfile } from "../../components/LoginProfile/LoginProfile";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { loginStyles } from "./Login.styles";
@@ -11,7 +11,7 @@ type LoginProps = {
 	loaded?: boolean;
 };
 
-const Login = ({ loaded }: LoginProps) => {
+export const Login = ({ loaded }: LoginProps) => {
 	const { darkMode, background, wallpaperStyle } = useSettingsContext();
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
@@ -58,5 +58,3 @@ const Login = ({ loaded }: LoginProps) => {
 		</main>
 	);
 };
-
-export default Login;

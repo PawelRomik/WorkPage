@@ -6,7 +6,7 @@ type SaperStatsProps = {
 	bestTimes: number[];
 };
 
-const SaperStats = ({ bestTimes }: SaperStatsProps) => {
+export const SaperStats = ({ bestTimes }: SaperStatsProps) => {
 	const { t } = useTranslation();
 	const { darkMode } = useSettingsContext();
 
@@ -25,5 +25,3 @@ const SaperStats = ({ bestTimes }: SaperStatsProps) => {
 		</div>
 	);
 };
-
-export default SaperStats;

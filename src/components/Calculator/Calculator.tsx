@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
-import CalculatorButtons from "./CalculatorButtons/CalculatorButtons";
-import CalculatorResult from "./CalculatorResult/CalculatorResult";
+import { CalculatorButtons } from "./CalculatorButtons/CalculatorButtons";
+import { CalculatorResult } from "./CalculatorResult/CalculatorResult";
 import { calculatorStyles } from "./Calculator.styles";
 
-const Calculator = () => {
+export const Calculator = () => {
 	const [firstNumber, setFirstNumber] = useState<string | undefined>(undefined);
 	const [secondNumber, setSecondNumber] = useState<string | undefined>(undefined);
 	const [operator, setOperator] = useState<string | undefined>(undefined);

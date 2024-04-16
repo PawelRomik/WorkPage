@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { useClerk } from "@clerk/clerk-react";
 import avatar from "../../assets/login/loginAvatar.png";
-import LoginPanel from "./LoginPanel/LoginPanel";
+import { LoginPanel } from "./LoginPanel/LoginPanel";
 import { avatarStyles, loginProfileStyles, userNameStyles } from "./LoginProfile.styles";
 
 type LoginProfileProps = {
 	handleLogin: () => void;
 };
 
-const LoginProfile = ({ handleLogin }: LoginProfileProps) => {
+export const LoginProfile = ({ handleLogin }: LoginProfileProps) => {
 	const { t } = useTranslation();
 	const { color, darkMode } = useSettingsContext();
 	const { user } = useClerk();
@@ -28,5 +28,3 @@ const LoginProfile = ({ handleLogin }: LoginProfileProps) => {
 		</div>
 	);
 };
-
-export default LoginProfile;

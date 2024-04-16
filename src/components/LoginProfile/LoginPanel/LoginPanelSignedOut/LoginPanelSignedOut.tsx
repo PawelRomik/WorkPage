@@ -1,7 +1,7 @@
 import { SignUpButton } from "@clerk/clerk-react";
 import { useTranslation } from "react-i18next";
 
-const LoginPanelSignedOut = () => {
+export const LoginPanelSignedOut = () => {
 	const { t } = useTranslation();
 
 	return (
@@ -19,5 +19,3 @@ const LoginPanelSignedOut = () => {
 		</div>
 	);
 };
-
-export default LoginPanelSignedOut;

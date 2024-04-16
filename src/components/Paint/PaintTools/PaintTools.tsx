@@ -1,6 +1,6 @@
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { useCallback } from "react";
-import PaintSavedColors from "../PaintSavedColors/PaintSavedColors";
+import { PaintSavedColors } from "../PaintSavedColors/PaintSavedColors";
 import { useTranslation } from "react-i18next";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
@@ -30,7 +30,7 @@ type PaintToolsProps = {
 	handleOnButtonClickColorChange: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const PaintTools = ({
+export const PaintTools = ({
 	brushColor,
 	handleColorChange,
 	thickness,
@@ -119,5 +119,3 @@ const PaintTools = ({
 		</section>
 	);
 };
-
-export default PaintTools;

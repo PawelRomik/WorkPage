@@ -1,20 +1,20 @@
 import { useCallback, useMemo } from "react";
 import type { App } from "../../../views/System/System";
-import appData from "../../../data/apps";
+import { appData } from "../../../data/appData";
 import { taskbarCenterAppStyles } from "./TaskbarCenterApp.styles";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 
 type TaskbarCenterAppProps = {
-	changeIsOff: (newValue: boolean) => void;
+	setIsOff: (newValue: boolean) => void;
 	chosenApp: App;
 };
 
-const TaskbarCenterApp = ({ changeIsOff, chosenApp }: TaskbarCenterAppProps) => {
+export const TaskbarCenterApp = ({ setIsOff, chosenApp }: TaskbarCenterAppProps) => {
 	const { darkMode, color } = useSettingsContext();
 
 	const turnOffApp = useCallback(() => {
-		changeIsOff(true);
-	}, [changeIsOff]);
+		setIsOff(true);
+	}, [setIsOff]);
 
 	const icon = useMemo(() => (chosenApp ? appData[chosenApp.id].class : ""), [chosenApp]);
 
@@ -24,4 +24,3 @@ const TaskbarCenterApp = ({ changeIsOff, chosenApp }: TaskbarCenterAppProps) => 
 		</div>
 	);
 };
-export default TaskbarCenterApp;

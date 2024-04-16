@@ -1,4 +1,4 @@
-import languageOptions from "../../../data/language";
+import { languageOptions } from "../../../data/language";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { translatorLanguagesStyles } from "./TranslatorLanguages.styles";
 
@@ -7,18 +7,16 @@ type translatorLanguagesProps = {
 	onValueChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-const TranslatorLanguages = ({ passedValue, onValueChange }: translatorLanguagesProps) => {
+export const TranslatorLanguages = ({ passedValue, onValueChange }: translatorLanguagesProps) => {
 	const { color, darkMode } = useSettingsContext();
 
 	return (
 		<select value={passedValue} className='translatorLanguagesSelect' onChange={onValueChange} css={translatorLanguagesStyles(darkMode, color)}>
-			{languageOptions.map((option) => (
-				<option key={option.code} value={option.code}>
-					{option.label}
+			{languageOptions.map(({ code, label }) => (
+				<option key={code} value={code}>
+					{label}
 				</option>
 			))}
 		</select>
 	);
 };
-
-export default TranslatorLanguages;

@@ -9,7 +9,7 @@ type PaintBoardProps = {
 	disableEraserOnRightClick: (event: React.MouseEvent<HTMLCanvasElement>) => void;
 };
 
-const PaintBoard = ({ canvasRef, backgroundColor, startPaint, paint, endPaint, disableEraserOnRightClick }: PaintBoardProps) => {
+export const PaintBoard = ({ canvasRef, backgroundColor, startPaint, paint, endPaint, disableEraserOnRightClick }: PaintBoardProps) => {
 	return (
 		<section className='paintBoard' css={paintBoardStyles}>
 			<canvas
@@ -28,5 +28,3 @@ const PaintBoard = ({ canvasRef, backgroundColor, startPaint, paint, endPaint, d
 		</section>
 	);
 };
-
-export default PaintBoard;

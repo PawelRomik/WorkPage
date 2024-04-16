@@ -11,7 +11,15 @@ type CalculatorButtonsProps = {
 	handleCalculate: () => void;
 };
 
-const CalculatorButtons = ({ handleOperation, handleAddNumber, handleAddOperator, handleAddDot, handleClear, handleClearEntry, handleCalculate }: CalculatorButtonsProps) => {
+export const CalculatorButtons = ({
+	handleOperation,
+	handleAddNumber,
+	handleAddOperator,
+	handleAddDot,
+	handleClear,
+	handleClearEntry,
+	handleCalculate,
+}: CalculatorButtonsProps) => {
 	const { color, darkMode } = useSettingsContext();
 
 	return (
@@ -93,5 +101,3 @@ const CalculatorButtons = ({ handleOperation, handleAddNumber, handleAddOperator
 		</section>
 	);
 };
-
-export default CalculatorButtons;

@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { useSettingsContext } from "../../../../providers/SettingsContext";
 import { wallpaperStylesStyles } from "./WallpaperStyles.styles";
 
-const WallpaperStyles = () => {
+export const WallpaperStyles = () => {
 	const { t } = useTranslation();
 	const { user } = useClerk();
 	const { wallpaperStyle, darkMode, color } = useSettingsContext();
@@ -46,5 +46,3 @@ const WallpaperStyles = () => {
 		</div>
 	);
 };
-
-export default WallpaperStyles;

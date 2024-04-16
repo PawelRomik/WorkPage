@@ -1,14 +1,14 @@
 import { SignedOut, SignedIn } from "@clerk/clerk-react";
 import { loginButtonStyles, loginPanelStyles } from "./LoginPanel.styles";
-import LoginPanelSignedOut from "./LoginPanelSignedOut/LoginPanelSignedOut";
-import LoginPanelSignedIn from "./LoginPanelSignedIn/LoginPanelSignedIn";
+import { LoginPanelSignedOut } from "./LoginPanelSignedOut/LoginPanelSignedOut";
+import { LoginPanelSignedIn } from "./LoginPanelSignedIn/LoginPanelSignedIn";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 
 type LoginPanelProps = {
 	handleLogin: () => void;
 };
 
-const LoginPanel = ({ handleLogin }: LoginPanelProps) => {
+export const LoginPanel = ({ handleLogin }: LoginPanelProps) => {
 	const { darkMode, color } = useSettingsContext();
 	return (
 		<div className='loginPanel' css={[loginPanelStyles, loginButtonStyles(darkMode, color)]}>
@@ -22,5 +22,3 @@ const LoginPanel = ({ handleLogin }: LoginPanelProps) => {
 		</div>
 	);
 };
-
-export default LoginPanel;

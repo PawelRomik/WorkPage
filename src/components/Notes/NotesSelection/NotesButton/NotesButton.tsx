@@ -15,7 +15,7 @@ type NotesButtonProps = {
 	createNewNote: () => void;
 };
 
-const NotesButton = ({ notes, changeNote, removeNote, createNewNote, selectedNoteId }: NotesButtonProps) => {
+export const NotesButton = ({ notes, changeNote, removeNote, createNewNote, selectedNoteId }: NotesButtonProps) => {
 	const { t } = useTranslation();
 	const { darkMode, color } = useSettingsContext();
 
@@ -50,10 +50,10 @@ const NotesButton = ({ notes, changeNote, removeNote, createNewNote, selectedNot
 		() =>
 			notes
 				.sort((a, b) => a.id - b.id)
-				.map((note) => (
-					<div className={`noteButton ${selectedNoteId === note.id ? "active" : ""}`} css={notesButtonStyles(darkMode, color)} key={note.id} onClick={() => changeNote(note.id)}>
-						{note.id}
-						<button className='removeNote' onClick={(e) => showConfirmDialog(note.id, e)}>
+				.map(({ id }) => (
+					<div className={`noteButton ${selectedNoteId === id ? "active" : ""}`} css={notesButtonStyles(darkMode, color)} key={id} onClick={() => changeNote(id)}>
+						{id}
+						<button className='removeNote' onClick={(e) => showConfirmDialog(id, e)}>
 							<i className='fa-solid fa-trash'></i>
 						</button>
 					</div>
@@ -70,5 +70,3 @@ const NotesButton = ({ notes, changeNote, removeNote, createNewNote, selectedNot
 		</div>
 	);
 };
-
-export default NotesButton;

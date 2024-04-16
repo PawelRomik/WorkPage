@@ -3,12 +3,12 @@ import { useSettingsContext } from "../../providers/SettingsContext";
 import { useTranslation } from "react-i18next";
 import { useClerk } from "@clerk/clerk-react";
 import { userWindowStyles } from "./UserWindow.styles";
-import UserWindowLogoutAnimation from "./UserWindowLogoutAnimation/UserWindowLogoutAnimation";
+import { UserWindowLogoutAnimation } from "./UserWindowLogoutAnimation/UserWindowLogoutAnimation";
 
-const UserWindow = () => {
+export const UserWindow = () => {
 	const { color, darkMode } = useSettingsContext();
 	const { t } = useTranslation();
-	const [isAnimated, changeIsAnimated] = useState(false);
+	const [isAnimated, setIsAnimated] = useState(false);
 	const { user } = useClerk();
 
 	const dontHideOnClick = useCallback((e: React.MouseEvent) => {
@@ -16,7 +16,7 @@ const UserWindow = () => {
 	}, []);
 
 	const playLogoutAnimation = useCallback(() => {
-		changeIsAnimated(true);
+		setIsAnimated(true);
 	}, []);
 
 	return (
@@ -27,5 +27,3 @@ const UserWindow = () => {
 		</div>
 	);
 };
-
-export default UserWindow;

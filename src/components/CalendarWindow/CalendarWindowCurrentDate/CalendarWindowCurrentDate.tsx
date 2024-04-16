@@ -1,9 +1,9 @@
 import { useSettingsContext } from "../../../providers/SettingsContext";
-import Clock from "../../Clock/Clock";
-import CurrentDate from "../../CurrentDate/CurrentDate";
+import { Clock } from "../../Clock/Clock";
+import { CurrentDate } from "../../CurrentDate/CurrentDate";
 import { currentDateSectionStyles } from "./CalendarWindowCurrentDate.styles";
 
-const CalendarWindowCurrentDate = () => {
+export const CalendarWindowCurrentDate = () => {
 	const { darkMode, color } = useSettingsContext();
 	return (
 		<section className='currentDateSection' css={currentDateSectionStyles(darkMode, color)}>
@@ -12,5 +12,3 @@ const CalendarWindowCurrentDate = () => {
 		</section>
 	);
 };
-
-export default CalendarWindowCurrentDate;

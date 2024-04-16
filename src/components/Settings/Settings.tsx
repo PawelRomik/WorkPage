@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSettingsContext } from "../../providers/SettingsContext";
-import SettingsWallpaperSection from "./SettingsWallpaperSection/SettingsWallpaperSection";
-import SettingsPasswordSection from "./SettingsPasswordSection/SettingsPasswordSection";
-import SettingsColorSection from "./SettingsColorsSection/SettingsColorsSection";
+import { SettingsWallpaperSection } from "./SettingsWallpaperSection/SettingsWallpaperSection";
+import { SettingsPasswordSection } from "./SettingsPasswordSection/SettingsPasswordSection";
+import { SettingsColorSection } from "./SettingsColorsSection/SettingsColorsSection";
 import { useTranslation } from "react-i18next";
 import { useUser } from "@clerk/clerk-react";
 import { settingsContainerStyles } from "./Settings.styles";
 import { launchToast } from "../../utils/toastFunction";
 
-const Settings = () => {
+export const Settings = () => {
 	const { settingsLanguage, darkMode } = useSettingsContext();
-	const [darkModeInputValue, changeDarkModeInputValue] = useState("false");
+	const [darkModeInputValue, setDarkModeInputValue] = useState("false");
 	const { t, i18n } = useTranslation();
 	const { user } = useUser();
 
@@ -33,7 +33,7 @@ const Settings = () => {
 	);
 
 	const handleDarkModeChange = useCallback(() => {
-		changeDarkModeInputValue((prevValue) => {
+		setDarkModeInputValue((prevValue) => {
 			const newValue = !JSON.parse(prevValue);
 			return JSON.stringify(newValue);
 		});
@@ -71,7 +71,7 @@ const Settings = () => {
 
 	useEffect(() => {
 		const mode = darkMode || false;
-		changeDarkModeInputValue(mode.toString());
+		setDarkModeInputValue(mode.toString());
 	}, [darkMode]);
 
 	return (
@@ -89,5 +89,3 @@ const Settings = () => {
 		</div>
 	);
 };
-
-export default Settings;

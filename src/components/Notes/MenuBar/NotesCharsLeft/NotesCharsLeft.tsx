@@ -3,7 +3,7 @@ import { useCurrentEditor } from "@tiptap/react";
 import { notesCharsLeftStyles } from "./NotesCharsLeft.styles";
 import { useSettingsContext } from "../../../../providers/SettingsContext";
 
-const NotesCharsLeft = () => {
+export const NotesCharsLeft = () => {
 	const { t } = useTranslation();
 	const { editor } = useCurrentEditor();
 	const { darkMode } = useSettingsContext();
@@ -14,5 +14,3 @@ const NotesCharsLeft = () => {
 		</div>
 	);
 };
-
-export default NotesCharsLeft;

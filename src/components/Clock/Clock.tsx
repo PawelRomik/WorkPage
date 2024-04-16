@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { clockStyles } from "./Clock.styles";
 
-const Clock = () => {
+export const Clock = () => {
 	const [currentTime, setCurrentTime] = useState(new Date());
 	const { settingsLanguage } = useSettingsContext();
 
@@ -29,5 +29,3 @@ const Clock = () => {
 		</div>
 	);
 };
-
-export default Clock;

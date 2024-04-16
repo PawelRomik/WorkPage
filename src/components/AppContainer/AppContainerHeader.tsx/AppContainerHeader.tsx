@@ -8,7 +8,7 @@ type AppContainerHeaderProps = {
 	closeApp: () => void;
 };
 
-const AppContainerHeader = ({ appName, playAnimation, closeApp }: AppContainerHeaderProps) => {
+export const AppContainerHeader = ({ appName, playAnimation, closeApp }: AppContainerHeaderProps) => {
 	const { darkMode, color } = useSettingsContext();
 	const { t } = useTranslation();
 
@@ -21,5 +21,3 @@ const AppContainerHeader = ({ appName, playAnimation, closeApp }: AppContainerHe
 		</header>
 	);
 };
-
-export default AppContainerHeader;

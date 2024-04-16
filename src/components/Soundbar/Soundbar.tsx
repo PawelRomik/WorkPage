@@ -3,8 +3,8 @@ import { useSettingsContext } from "../../providers/SettingsContext";
 import { useTranslation } from "react-i18next";
 import { soundbarSliderStyles, soundbarStyles } from "./Soundbar.styles";
 
-const Soundbar = () => {
-	const { color, darkMode, sound, changeSound } = useSettingsContext();
+export const Soundbar = () => {
+	const { color, darkMode, sound, setSound } = useSettingsContext();
 	const [oldSoundVal, setOldSoundVal] = useState(0);
 	const { t } = useTranslation();
 
@@ -16,19 +16,19 @@ const Soundbar = () => {
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const volume = Number(e.target.value);
 			setOldSoundVal(sound);
-			changeSound(volume);
+			setSound(volume);
 		},
-		[sound, changeSound]
+		[sound, setSound]
 	);
 
 	const lowerVolumeOnIconClick = useCallback(() => {
 		if (sound == 0) {
-			changeSound(oldSoundVal);
+			setSound(oldSoundVal);
 		} else {
 			setOldSoundVal(sound);
-			changeSound(0);
+			setSound(0);
 		}
-	}, [oldSoundVal, changeSound, sound]);
+	}, [oldSoundVal, setSound, sound]);
 
 	const volumeClass = useMemo(() => (sound < 10 ? "fa-volume-xmark" : sound < 70 ? "fa-volume-low" : "fa-volume-high"), [sound]);
 
@@ -42,5 +42,3 @@ const Soundbar = () => {
 		</div>
 	);
 };
-
-export default Soundbar;

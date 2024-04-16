@@ -1,15 +1,15 @@
-import wallpaperData from "../../../data/wallpapers";
+import { wallpapers } from "../../../assets/wallpapers";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useCallback } from "react";
 import { useClerk } from "@clerk/clerk-react";
 import { launchToast } from "../../../utils/toastFunction";
-import CustomWallpaper from "./CustomWallpaper/CustomWallpaper";
-import WallpaperStyles from "./WallpaperStyles/WallpaperStyles";
+import { CustomWallpaper } from "./CustomWallpaper/CustomWallpaper";
+import { WallpaperStyles } from "./WallpaperStyles/WallpaperStyles";
 import { settingsWallpaperSectionStyles, wallpaperSelectionStyles } from "./SettingsWallpaperSection.styles";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 
-const SettingsWallpaperSection = () => {
+export const SettingsWallpaperSection = () => {
 	const { t } = useTranslation();
 	const { user } = useClerk();
 	const { darkMode } = useSettingsContext();
@@ -39,9 +39,9 @@ const SettingsWallpaperSection = () => {
 		[user, t]
 	);
 
-	const wallpapers = useMemo(
+	const wallpapersElements = useMemo(
 		() =>
-			wallpaperData.map((el, i) => (
+			wallpapers.map((el, i) => (
 				<button key={i} className='wallpaperButton' onClick={changeBackground}>
 					<img src={el} alt='wallpaper' />
 				</button>
@@ -55,12 +55,10 @@ const SettingsWallpaperSection = () => {
 			<div className='wallpaperSectionSettings'>
 				<CustomWallpaper />
 				<div className='wallpapersSelection' css={wallpaperSelectionStyles(darkMode)}>
-					{wallpapers}
+					{wallpapersElements}
 				</div>
 				<WallpaperStyles />
 			</div>
 		</section>
 	);
 };
-
-export default SettingsWallpaperSection;

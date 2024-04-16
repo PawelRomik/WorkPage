@@ -1,15 +1,15 @@
 import { useCallback } from "react";
 import { useSettingsContext } from "../../providers/SettingsContext";
-import appData from "../../data/apps";
-import AppContainer from "../AppContainer/AppContainer";
-import UserWindow from "../UserWindow/UserWindow";
-import CalendarWindow from "../CalendarWindow/CalendarWindow";
-import DesktopApps from "./DesktopApps/DesktopApps";
+import { appData } from "../../data/appData";
+import { AppContainer } from "../AppContainer/AppContainer";
+import { UserWindow } from "../UserWindow/UserWindow";
+import { CalendarWindow } from "../CalendarWindow/CalendarWindow";
+import { DesktopApps } from "./DesktopApps/DesktopApps";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Soundbar from "../Soundbar/Soundbar";
-import Wifi from "../Wifi/Wifi";
-import Weather from "../Weather/Weather";
+import { Soundbar } from "../Soundbar/Soundbar";
+import { Wifi } from "../Wifi/Wifi";
+import { Weather } from "../Weather/Weather";
 import { appWrapperStyles, desktopStyles } from "./Desktop.styles";
 import type { App } from "../../views/System/System";
 
@@ -23,12 +23,12 @@ type DesktopProps = {
 	hideSoundbarWindowState: () => void;
 	hideWifiWindowState: () => void;
 	chosenApp: App | null;
-	changeChosenApp: (newApp: App | null) => void;
+	setChosenApp: (newApp: App | null) => void;
 	isOff: boolean;
-	changeIsOff: (newValue: boolean) => void;
+	setIsOff: (newValue: boolean) => void;
 };
 
-const Desktop = ({
+export const Desktop = ({
 	hideUserWindowState,
 	userWindowState,
 	calendarWindowState,
@@ -38,9 +38,9 @@ const Desktop = ({
 	hideWifiWindowState,
 	hideSoundbarWindowState,
 	chosenApp,
-	changeChosenApp,
+	setChosenApp,
 	isOff,
-	changeIsOff,
+	setIsOff,
 }: DesktopProps) => {
 	const { background, darkMode, wallpaperStyle } = useSettingsContext();
 
@@ -48,17 +48,17 @@ const Desktop = ({
 		(e: React.MouseEvent) => {
 			const target = e.currentTarget as HTMLButtonElement;
 			const id: number = Number(target.dataset.app);
-			changeChosenApp(appData[id]);
+			setChosenApp(appData[id]);
 		},
-		[changeChosenApp]
+		[setChosenApp]
 	);
 
 	const closeApp = useCallback(() => {
 		if (isOff) {
-			changeChosenApp(null);
-			changeIsOff(false);
+			setChosenApp(null);
+			setIsOff(false);
 		}
-	}, [isOff, changeChosenApp, changeIsOff]);
+	}, [isOff, setChosenApp, setIsOff]);
 
 	const hidePanels = useCallback(() => {
 		hideUserWindowState();
@@ -90,7 +90,7 @@ const Desktop = ({
 					pauseOnHover={false}
 					theme={darkMode ? "light" : "dark"}
 				/>
-				{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} isOff={isOff} changeIsOff={changeIsOff} />}
+				{chosenApp && <AppContainer app={chosenApp} closeApp={closeApp} isOff={isOff} setIsOff={setIsOff} />}
 				{userWindowState && <UserWindow />}
 				{calendarWindowState && <CalendarWindow />}
 				{soundbarWindowState && <Soundbar />}
@@ -101,5 +101,3 @@ const Desktop = ({
 		</main>
 	);
 };
-
-export default Desktop;

@@ -7,7 +7,7 @@ type LoginPanelSignedInProps = {
 	handleLogin: () => void;
 };
 
-const LoginPanelSignedIn = ({ handleLogin }: LoginPanelSignedInProps) => {
+export const LoginPanelSignedIn = ({ handleLogin }: LoginPanelSignedInProps) => {
 	const { t } = useTranslation();
 	const { darkMode, color } = useSettingsContext();
 
@@ -29,5 +29,3 @@ const LoginPanelSignedIn = ({ handleLogin }: LoginPanelSignedInProps) => {
 		</>
 	);
 };
-
-export default LoginPanelSignedIn;

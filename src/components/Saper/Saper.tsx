@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Confetti from "react-confetti";
-import config from "./saper.config";
+import { config } from "./saper.config";
 import { useSettingsContext } from "../../providers/SettingsContext";
-import LocalStorageNames from "../../utils/localstorageNames";
-import SaperCenter from "./SaperCenter/SaperCenter";
-import SaperEndScreen from "./SaperEndScreen/SaperEndScreen";
+import { LocalStorageNames } from "../../utils/localstorageNames";
+import { SaperCenter } from "./SaperCenter/SaperCenter";
+import { SaperEndScreen } from "./SaperEndScreen/SaperEndScreen";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
@@ -19,7 +19,7 @@ export type Cell = {
 
 const { localSaperBestTimes } = LocalStorageNames;
 
-const Saper = () => {
+export const Saper = () => {
 	const { darkMode } = useSettingsContext();
 	const { t } = useTranslation();
 
@@ -27,13 +27,13 @@ const Saper = () => {
 	const [difficulty, setDifficulty] = useState(0);
 	const [gameOver, setGameOver] = useState(false);
 	const [revealedCount, setRevealedCount] = useState(0);
-	const [firstClick, changeFirstClick] = useState(true);
+	const [firstClick, setFirstClick] = useState(true);
 	const [gameTime, setGameTime] = useState(0);
 	const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 	const { rows, columns, totalBombs } = useMemo(() => config, []);
 	const victory = useMemo(() => revealedCount === rows[difficulty] * columns[difficulty] - totalBombs[difficulty], [revealedCount, columns, rows, totalBombs, difficulty]);
 	const [bestTimes, setBestTimes] = useState<number[]>([]);
-	const [loading, changeIsLoading] = useState(false);
+	const [loading, setIsLoading] = useState(false);
 	const boardRef = useRef(null);
 
 	const saveBestTime = useCallback(
@@ -172,7 +172,7 @@ const Saper = () => {
 					newBoard = initializeBoard();
 				}
 				setBoard(newBoard);
-				changeFirstClick(false);
+				setFirstClick(false);
 				revealHelper(newBoard, row, col);
 				startTimer();
 				return;
@@ -191,14 +191,14 @@ const Saper = () => {
 		setBoard(initializeBoard());
 		setGameOver(false);
 		setRevealedCount(0);
-		changeFirstClick(true);
+		setFirstClick(true);
 		stopTimer();
 		setGameTime(0);
-		changeIsLoading(true);
+		setIsLoading(true);
 	}, [initializeBoard, stopTimer]);
 
 	const animationEnd = useCallback(() => {
-		changeIsLoading(false);
+		setIsLoading(false);
 	}, []);
 
 	const playAgain = useCallback(() => {
@@ -324,5 +324,3 @@ const Saper = () => {
 		</div>
 	);
 };
-
-export default Saper;

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { currentDateStyles } from "./CurrentDate.styles";
 
-const CurrentDate = () => {
+export const CurrentDate = () => {
 	const getFormattedDate = useCallback(() => {
 		const today = new Date();
 		const day = today.getDate();
@@ -20,5 +20,3 @@ const CurrentDate = () => {
 		</p>
 	);
 };
-
-export default CurrentDate;

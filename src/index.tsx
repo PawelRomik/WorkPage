@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import App from "./views/App";
+import { App } from "./views/App";
 import { SettingsProvider } from "./providers/SettingsContext";
 import "./i18n";
 import { ClerkProvider } from "@clerk/clerk-react";

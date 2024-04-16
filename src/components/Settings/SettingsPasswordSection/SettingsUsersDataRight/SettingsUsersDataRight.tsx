@@ -6,10 +6,10 @@ import { SettingsUsersDataRightStyles } from "./SettingsUsersDataRight.styles";
 
 type SettingsUsersDataRightProps = {
 	avatar: string;
-	changeAvatar: (newValue: string) => void;
+	setAvatar: (newValue: string) => void;
 };
 
-const SettingsUsersDataRight = ({ avatar, changeAvatar }: SettingsUsersDataRightProps) => {
+export const SettingsUsersDataRight = ({ avatar, setAvatar }: SettingsUsersDataRightProps) => {
 	const { t } = useTranslation();
 	const { user } = useClerk();
 
@@ -25,9 +25,9 @@ const SettingsUsersDataRight = ({ avatar, changeAvatar }: SettingsUsersDataRight
 					launchToast("error", t("Settings.toastGenericError"));
 				});
 			await user?.reload();
-			changeAvatar(user!.imageUrl);
+			setAvatar(user!.imageUrl);
 		},
-		[user, t, changeAvatar]
+		[user, t, setAvatar]
 	);
 
 	return (
@@ -39,5 +39,3 @@ const SettingsUsersDataRight = ({ avatar, changeAvatar }: SettingsUsersDataRight
 		</div>
 	);
 };
-
-export default SettingsUsersDataRight;

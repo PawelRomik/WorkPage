@@ -1,7 +1,7 @@
 import { useCurrentEditor } from "@tiptap/react";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { useCallback, useEffect, useState } from "react";
-import NotesCharsLeft from "./NotesCharsLeft/NotesCharsLeft";
+import { NotesCharsLeft } from "./NotesCharsLeft/NotesCharsLeft";
 import { tiptapButtonsStyles } from "./MenuBar.styles";
 
 type MenuBarProps = {
@@ -9,10 +9,10 @@ type MenuBarProps = {
 	noteValue: string;
 };
 
-const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
+export const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 	const { editor } = useCurrentEditor();
 	const { color, darkMode } = useSettingsContext();
-	const [selection, changeSelection] = useState(0);
+	const [selection, setSelection] = useState(0);
 
 	const setColors = useCallback(() => {
 		if (editor?.isActive("textStyle")) {
@@ -40,7 +40,7 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 			editor.on("update", ({ editor }) => {
 				const html = editor.getHTML();
 				updateNote(html);
-				changeSelection(editor.state.selection.anchor);
+				setSelection(editor.state.selection.anchor);
 			});
 		}
 	}, [noteValue, editor, updateNote, color, selection]);
@@ -120,5 +120,3 @@ const MenuBar = ({ updateNote, noteValue }: MenuBarProps) => {
 		</>
 	);
 };
-
-export default MenuBar;

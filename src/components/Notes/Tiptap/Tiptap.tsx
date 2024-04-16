@@ -1,5 +1,5 @@
 import { EditorProvider } from "@tiptap/react";
-import MenuBar from "../MenuBar/MenuBar";
+import { MenuBar } from "../MenuBar/MenuBar";
 import StarterKit from "@tiptap/starter-kit";
 import CharacterCount from "@tiptap/extension-character-count";
 import { useSettingsContext } from "../../../providers/SettingsContext";
@@ -33,7 +33,7 @@ const extensions = [
 	}),
 ];
 
-const Tiptap = ({ notesLength, noteValue, updateNote }: tiptapProps) => {
+export const Tiptap = ({ notesLength, noteValue, updateNote }: tiptapProps) => {
 	const { t } = useTranslation();
 	const { darkMode } = useSettingsContext();
 	return (
@@ -52,5 +52,3 @@ const Tiptap = ({ notesLength, noteValue, updateNote }: tiptapProps) => {
 		</section>
 	);
 };
-
-export default Tiptap;

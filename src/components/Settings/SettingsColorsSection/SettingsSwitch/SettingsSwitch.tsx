@@ -6,7 +6,7 @@ type SettingsSwitchProps = {
 	handleDarkModeChange: () => void;
 };
 
-const SettingsSwitch = ({ darkModeInputValue, handleDarkModeChange }: SettingsSwitchProps) => {
+export const SettingsSwitch = ({ darkModeInputValue, handleDarkModeChange }: SettingsSwitchProps) => {
 	const { darkMode } = useSettingsContext();
 	return (
 		<div>
@@ -23,5 +23,3 @@ const SettingsSwitch = ({ darkModeInputValue, handleDarkModeChange }: SettingsSw
 		</div>
 	);
 };
-
-export default SettingsSwitch;

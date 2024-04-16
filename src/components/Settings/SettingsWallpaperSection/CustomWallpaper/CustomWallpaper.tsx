@@ -5,7 +5,7 @@ import { launchToast } from "../../../../utils/toastFunction";
 import { customWallpaperStyles } from "./CustomWallpaper.styles";
 import { useSettingsContext } from "../../../../providers/SettingsContext";
 
-const CustomWallpaper = () => {
+export const CustomWallpaper = () => {
 	const { t } = useTranslation();
 	const { user } = useClerk();
 	const { darkMode, color } = useSettingsContext();
@@ -64,5 +64,3 @@ const CustomWallpaper = () => {
 		</div>
 	);
 };
-
-export default CustomWallpaper;

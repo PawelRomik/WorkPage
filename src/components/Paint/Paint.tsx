@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import PaintTools from "./PaintTools/PaintTools";
-import PaintBoard from "./PaintBoard/PaintBoard";
-import LocalStorageNames from "../../utils/localstorageNames";
+import { PaintTools } from "./PaintTools/PaintTools";
+import { PaintBoard } from "./PaintBoard/PaintBoard";
+import { LocalStorageNames } from "../../utils/localstorageNames";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { useSettingsContext } from "../../providers/SettingsContext";
@@ -15,7 +15,7 @@ enum BrushShape {
 
 const { localPaintBackground, localPaintCanvas, localPaintColors } = LocalStorageNames;
 
-const Paint = () => {
+export const Paint = () => {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
 	const [brushColor, setBrushColor] = useState<string>("#000000");
@@ -25,7 +25,7 @@ const Paint = () => {
 	const [isEraserOn, setIsEraserOn] = useState<boolean>(false);
 	const [brushShape, setBrushShape] = useState<BrushShape>(BrushShape.Square);
 	const { darkMode } = useSettingsContext();
-	const [paintColors, changePaintColors] = useState<string[]>([]);
+	const [paintColors, setPaintColors] = useState<string[]>([]);
 	const { t } = useTranslation();
 
 	const saveToLocalStorage = useCallback(() => {
@@ -70,7 +70,7 @@ const Paint = () => {
 				array.pop();
 			}
 			localStorage.setItem(localPaintColors, JSON.stringify(array));
-			changePaintColors([...array]);
+			setPaintColors([...array]);
 		},
 		[paintColors]
 	);
@@ -222,7 +222,7 @@ const Paint = () => {
 		const storedColors = localStorage.getItem(localPaintColors);
 		if (storedColors) {
 			const parsedColors = JSON.parse(storedColors);
-			changePaintColors(parsedColors);
+			setPaintColors(parsedColors);
 			setBrushColor(parsedColors[0]);
 		}
 	}, []);
@@ -313,5 +313,3 @@ const Paint = () => {
 		</div>
 	);
 };
-
-export default Paint;
