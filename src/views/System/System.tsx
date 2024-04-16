@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import Desktop from "../../components/Desktop/Desktop";
-import Taskbar from "../../components/Taskbar/Taskbar";
-import Login from "../Login/Login";
+import { Desktop } from "../../components/Desktop/Desktop";
+import { Taskbar } from "../../components/Taskbar/Taskbar";
+import { Login } from "../Login/Login";
 import { useLocation } from "react-router-dom";
 import { fakeLoginStyles } from "./System.styles";
 export type App = {
@@ -10,73 +10,73 @@ export type App = {
 	class: string;
 };
 
-const System = () => {
-	const [userWindowState, changeUserWindowState] = useState(false);
-	const [calendarWindowState, changeCalendarWindowState] = useState(false);
-	const [soundbarWindowState, changeSoundbarWindowState] = useState(false);
-	const [wifiWindowState, changeWifiWindowState] = useState(false);
-	const [chosenApp, changeChosenApp] = useState<App | null>(null);
-	const [isOff, changeIsOff] = useState(false);
-	const [loadingAnimation, changeLoadingAnimation] = useState(true);
+export const System = () => {
+	const [userWindowState, setUserWindowState] = useState(false);
+	const [calendarWindowState, setCalendarWindowState] = useState(false);
+	const [soundbarWindowState, setSoundbarWindowState] = useState(false);
+	const [wifiWindowState, setWifiWindowState] = useState(false);
+	const [chosenApp, setChosenApp] = useState<App | null>(null);
+	const [isOff, setIsOff] = useState(false);
+	const [loadingAnimation, setLoadingAnimation] = useState(true);
 	const location = useLocation();
 
 	const displayUserWindowState = useCallback(() => {
-		changeUserWindowState((prevState) => !prevState);
-		changeCalendarWindowState(false);
-		changeSoundbarWindowState(false);
-		changeWifiWindowState(false);
+		setUserWindowState((prevState) => !prevState);
+		setCalendarWindowState(false);
+		setSoundbarWindowState(false);
+		setWifiWindowState(false);
 	}, []);
 
 	const hideUserWindowState = useCallback(() => {
-		changeUserWindowState(false);
+		setUserWindowState(false);
 	}, []);
 
 	const displaySoundbarWindowState = useCallback(() => {
-		changeSoundbarWindowState((prevState) => !prevState);
-		changeCalendarWindowState(false);
-		changeUserWindowState(false);
-		changeWifiWindowState(false);
+		setSoundbarWindowState((prevState) => !prevState);
+		setCalendarWindowState(false);
+		setUserWindowState(false);
+		setWifiWindowState(false);
 	}, []);
 
 	const hideSoundbarWindowState = useCallback(() => {
-		changeSoundbarWindowState(false);
+		setSoundbarWindowState(false);
 	}, []);
 
 	const displayCalendarWindowState = useCallback(() => {
-		changeCalendarWindowState((prevState) => !prevState);
-		changeUserWindowState(false);
-		changeSoundbarWindowState(false);
-		changeWifiWindowState(false);
+		setCalendarWindowState((prevState) => !prevState);
+		setUserWindowState(false);
+		setSoundbarWindowState(false);
+		setWifiWindowState(false);
 	}, []);
 
 	const hideCalendarWindowState = useCallback(() => {
-		changeCalendarWindowState(false);
+		setCalendarWindowState(false);
 	}, []);
 
 	const displayWifiWindowState = useCallback(() => {
-		changeWifiWindowState((prevState) => !prevState);
-		changeCalendarWindowState(false);
-		changeSoundbarWindowState(false);
-		changeUserWindowState(false);
+		setWifiWindowState((prevState) => !prevState);
+		setCalendarWindowState(false);
+		setSoundbarWindowState(false);
+		setUserWindowState(false);
 	}, []);
 
 	const hideWifiWindowState = useCallback(() => {
-		changeWifiWindowState(false);
+		setWifiWindowState(false);
 	}, []);
 
 	useEffect(() => {
 		if (location && location?.state?.loginAnimation) {
-			changeLoadingAnimation(location.state.loginAnimation);
+			setLoadingAnimation(location.state.loginAnimation);
 			window.history.replaceState({}, "");
 		} else {
-			changeLoadingAnimation(false);
+			setLoadingAnimation(false);
 		}
 	}, [location]);
 
 	return (
 		<>
 			{loadingAnimation && (
-				<div className='fakeLogin' css={fakeLoginStyles} onAnimationEnd={() => changeLoadingAnimation(false)}>
+				<div className='fakeLogin' css={fakeLoginStyles} onAnimationEnd={() => setLoadingAnimation(false)}>
 					<Login loaded={true} />
 				</div>
 			)}
@@ -90,9 +90,9 @@ const System = () => {
 				calendarWindowState={calendarWindowState}
 				hideCalendarWindow={hideCalendarWindowState}
 				chosenApp={chosenApp}
-				changeChosenApp={changeChosenApp}
+				setChosenApp={setChosenApp}
 				isOff={isOff}
-				changeIsOff={changeIsOff}
+				setIsOff={setIsOff}
 			/>
 			<Taskbar
 				displayUserWindowState={displayUserWindowState}
@@ -100,10 +100,8 @@ const System = () => {
 				displaySoundbarWindow={displaySoundbarWindowState}
 				displayWifiWindow={displayWifiWindowState}
 				chosenApp={chosenApp}
-				changeIsOff={changeIsOff}
+				setIsOff={setIsOff}
 			/>
 		</>
 	);
 };
-
-export default System;

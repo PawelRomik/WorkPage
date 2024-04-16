@@ -1,6 +1,6 @@
 import ReactPlayer from "react-player";
 import { useCallback, useRef } from "react";
-import LocalStorageNames from "../../../utils/localstorageNames";
+import { LocalStorageNames } from "../../../utils/localstorageNames";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { videoContainerSectionStyles } from "./VideoContainer.styles";
 import { useTranslation } from "react-i18next";
@@ -12,7 +12,7 @@ type VideoContainerProps = {
 
 const { localVideoLength } = LocalStorageNames;
 
-const VideoContainer = ({ videoTime, currentVideoUrl }: VideoContainerProps) => {
+export const VideoContainer = ({ videoTime, currentVideoUrl }: VideoContainerProps) => {
 	const videoRef = useRef<ReactPlayer>(null);
 	const { darkMode, sound } = useSettingsContext();
 	const { t } = useTranslation();
@@ -52,5 +52,3 @@ const VideoContainer = ({ videoTime, currentVideoUrl }: VideoContainerProps) => 
 		</section>
 	);
 };
-
-export default VideoContainer;

@@ -1,27 +1,27 @@
-import Settings from "../Settings/Settings";
-import Notes from "../Notes/Notes";
-import ToDoList from "../ToDoList/ToDoList";
+import { Settings } from "../Settings/Settings";
+import { Notes } from "../Notes/Notes";
+import { ToDoList } from "../ToDoList/ToDoList";
 import Calculator from "../Calculator/Calculator";
-import Saper from "../Saper/Saper";
-import Translator from "../Translator/Translator";
-import Paint from "../Paint/Paint";
+import { Saper } from "../Saper/Saper";
+import { Translator } from "../Translator/Translator";
+import { Paint } from "../Paint/Paint";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import { useCallback, useMemo, useState } from "react";
 import { appContainerStyles, appContainerBackgroundStyles, appContainerContentStyles } from "./AppContainer.styles";
-import AppContainerHeader from "./AppContainerHeader.tsx/AppContainerHeader";
+import { AppContainerHeader } from "./AppContainerHeader.tsx/AppContainerHeader";
 import type { App } from "../../views/System/System";
-import VideoPlayer from "../VideoPlayer.tsx/VideoPlayer";
+import { VideoPlayer } from "../VideoPlayer.tsx/VideoPlayer";
 
 type AppContainerProps = {
 	app: App;
 	closeApp: () => void;
 	isOff: boolean;
-	changeIsOff: (newValue: boolean) => void;
+	setIsOff: (newValue: boolean) => void;
 };
 
-const AppContainer = ({ app, closeApp, isOff, changeIsOff }: AppContainerProps) => {
+export const AppContainer = ({ app, closeApp, isOff, setIsOff }: AppContainerProps) => {
 	const { darkMode } = useSettingsContext();
-	const [clickTimeout, changeClickTimeout] = useState<null | number>(null);
+	const [clickTimeout, setClickTimeout] = useState<null | number>(null);
 
 	const renderAppContent = useCallback(() => {
 		const { name } = app;
@@ -48,24 +48,24 @@ const AppContainer = ({ app, closeApp, isOff, changeIsOff }: AppContainerProps) 
 	}, [app]);
 
 	const playAnimation = useCallback(() => {
-		changeIsOff(true);
-	}, [changeIsOff]);
+		setIsOff(true);
+	}, [setIsOff]);
 
 	const blockClosingOnClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 	}, []);
 
 	const handleMouseDown = useCallback(() => {
-		changeClickTimeout(1);
+		setClickTimeout(1);
 		setTimeout(() => {
-			changeClickTimeout(null);
+			setClickTimeout(null);
 		}, 300);
 	}, []);
 
 	const handleMouseUp = useCallback(() => {
 		if (clickTimeout === 1) {
 			clearTimeout(clickTimeout);
-			changeClickTimeout(null);
+			setClickTimeout(null);
 			playAnimation();
 		}
 	}, [clickTimeout, playAnimation]);
@@ -84,5 +84,3 @@ const AppContainer = ({ app, closeApp, isOff, changeIsOff }: AppContainerProps) 
 		</div>
 	);
 };
-
-export default AppContainer;

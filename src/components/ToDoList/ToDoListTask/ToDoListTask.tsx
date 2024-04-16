@@ -15,7 +15,7 @@ type toDoListTask = {
 	currentlyEdited: number | null;
 };
 
-const ToDoListTask = ({ tasks, priorityStyling, startEditing, removeTask, currentlyEdited }: toDoListTask) => {
+export const ToDoListTask = ({ tasks, priorityStyling, startEditing, removeTask, currentlyEdited }: toDoListTask) => {
 	const { darkMode, color } = useSettingsContext();
 	const { t } = useTranslation();
 
@@ -48,15 +48,15 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, removeTask, curren
 
 	const taskElements = useMemo(
 		() =>
-			tasks.map((task, id) => (
+			tasks.map(({ taskName, taskContent, taskPriority }, id) => (
 				<div className={`ToDoListTask ${currentlyEdited === id && "taskEdited"}`} key={id}>
 					<section className='taskContent'>
-						<h2 title={task.taskName}>
-							{t("ToDoList.toDoListTitle")}: {task.taskName}{" "}
+						<h2 title={taskName}>
+							{t("ToDoList.toDoListTitle")}: {taskName}{" "}
 						</h2>
-						{task.taskContent && <p title={task.taskContent}>{`${t("ToDoList.toDoListDescription")}: ${task.taskContent}`}</p>}
+						{taskContent && <p title={taskContent}>{`${t("ToDoList.toDoListDescription")}: ${taskContent}`}</p>}
 						<p>
-							{t("ToDoList.toDoListPriority")}: <span className='taskPriorityParagraph'>{priorityStyling(task.taskPriority)}</span>
+							{t("ToDoList.toDoListPriority")}: <span className='taskPriorityParagraph'>{priorityStyling(taskPriority)}</span>
 						</p>
 					</section>
 					<section className='taskOptions'>
@@ -77,5 +77,3 @@ const ToDoListTask = ({ tasks, priorityStyling, startEditing, removeTask, curren
 		</section>
 	);
 };
-
-export default ToDoListTask;

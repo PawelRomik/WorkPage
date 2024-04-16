@@ -1,4 +1,4 @@
-import SaperBoard from "../SaperBoard/SaperBoard";
+import { SaperBoard } from "../SaperBoard/SaperBoard";
 import { Cell } from "../Saper";
 import { useTranslation } from "react-i18next";
 import { saperCenterStyles } from "./SaperCenter.styles";
@@ -16,7 +16,7 @@ type SaperCenterProps = {
 	animationEnd: () => void;
 };
 
-const SaperCenter = ({ board, victory, gameOver, gameTime, handleTouchStart, revealCell, animationEnd, placeFlag, loading }: SaperCenterProps) => {
+export const SaperCenter = ({ board, victory, gameOver, gameTime, handleTouchStart, revealCell, animationEnd, placeFlag, loading }: SaperCenterProps) => {
 	const { t } = useTranslation();
 	const { darkMode } = useSettingsContext();
 
@@ -39,5 +39,3 @@ const SaperCenter = ({ board, victory, gameOver, gameTime, handleTouchStart, rev
 		</div>
 	);
 };
-
-export default SaperCenter;

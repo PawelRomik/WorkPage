@@ -3,7 +3,7 @@ import { useSettingsContext } from "../../../providers/SettingsContext";
 import { calendarStyles } from "./CalendarWindowCalendar.styles";
 import { reactCalendarStyles } from "./CalendarWindowCalendar.styles";
 
-const CalendarWindowCalendar = () => {
+export const CalendarWindowCalendar = () => {
 	const { darkMode, color, settingsLanguage } = useSettingsContext();
 
 	return (
@@ -12,5 +12,3 @@ const CalendarWindowCalendar = () => {
 		</section>
 	);
 };
-
-export default CalendarWindowCalendar;

@@ -1,17 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
 import translate from "translate";
-import TranslatorSettings from "./TranslatorSettings/TranslatorSettings";
-import TranslatorTextArea from "./TranslatorTextArea/TranslatorTextArea";
-import LocalStorageNames from "../../utils/localstorageNames";
+import { TranslatorSettings } from "./TranslatorSettings/TranslatorSettings";
+import { TranslatorTextArea } from "./TranslatorTextArea/TranslatorTextArea";
+import { LocalStorageNames } from "../../utils/localstorageNames";
 import { useTranslation } from "react-i18next";
 import { launchToast } from "../../utils/toastFunction";
 import { translatorContainerStyles } from "./Translator.styles";
 
 const { localTranslatorLanguageTo, localTranslatorLanguageFrom } = LocalStorageNames;
 
-const Translator = () => {
-	const [inputValue, changeInputValue] = useState("");
-	const [translated, changeTranslated] = useState<string | undefined | number>("");
+export const Translator = () => {
+	const [inputValue, setInputValue] = useState("");
+	const [translated, setTranslated] = useState<string | undefined | number>("");
 	const [selectedLanguageTo, setSelectedLanguageTo] = useState("en");
 	const [selectedLanguageFrom, setSelectedLanguageFrom] = useState("pl");
 	const { t } = useTranslation();
@@ -26,15 +26,15 @@ const Translator = () => {
 						engine: "deepl",
 						key: import.meta.env.VITE_TRANSLATOR_API,
 					});
-					changeTranslated(result);
+					setTranslated(result);
 				} else {
-					changeTranslated("");
+					setTranslated("");
 				}
 			} catch (error) {
 				if (error instanceof Error && error.message.includes("Auth Error")) {
 					launchToast("error", t("Translator.toastWrongApiKey"));
 				}
-				changeTranslated("");
+				setTranslated("");
 			}
 		},
 		[selectedLanguageTo, selectedLanguageFrom, t]
@@ -76,11 +76,11 @@ const Translator = () => {
 	}, [selectedLanguageFrom, selectedLanguageTo]);
 
 	const clear = useCallback(() => {
-		changeInputValue("");
+		setInputValue("");
 	}, []);
 
 	const updateInputValue = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		changeInputValue(e.target.value);
+		setInputValue(e.target.value);
 	}, []);
 
 	useEffect(() => {
@@ -96,9 +96,9 @@ const Translator = () => {
 
 	useEffect(() => {
 		if (inputValue) {
-			changeTranslated(0);
+			setTranslated(0);
 		} else {
-			changeTranslated("");
+			setTranslated("");
 		}
 
 		const timeoutId = setTimeout(() => {
@@ -124,5 +124,3 @@ const Translator = () => {
 		</div>
 	);
 };
-
-export default Translator;

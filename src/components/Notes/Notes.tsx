@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import NotesSelection from "./NotesSelection/NotesSelection";
-import Tiptap from "./Tiptap/Tiptap";
-import LocalStorageNames from "../../utils/localstorageNames";
+import { NotesSelection } from "./NotesSelection/NotesSelection";
+import { Tiptap } from "./Tiptap/Tiptap";
+import { LocalStorageNames } from "../../utils/localstorageNames";
 import { useTranslation } from "react-i18next";
 import { notesContainerStyles } from "./Notes.styles";
 
@@ -12,7 +12,7 @@ export type Note = {
 
 const { localNotes } = LocalStorageNames;
 
-const Notes = () => {
+export const Notes = () => {
 	const { t } = useTranslation();
 	const [noteValue, setNoteValue] = useState<string>("");
 	const [notes, setNotes] = useState<Note[]>([]);
@@ -102,5 +102,3 @@ const Notes = () => {
 		</div>
 	);
 };
-
-export default Notes;

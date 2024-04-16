@@ -8,10 +8,10 @@ import withReactContent from "sweetalert2-react-content";
 
 type VideoHistoryProps = {
 	videoData: Video[];
-	changeCurrentVideoUrl: (newUrl: string) => void;
+	setCurrentVideoUrl: (newUrl: string) => void;
 };
 
-const VideoHistory = ({ videoData, changeCurrentVideoUrl }: VideoHistoryProps) => {
+export const VideoHistory = ({ videoData, setCurrentVideoUrl }: VideoHistoryProps) => {
 	const { darkMode, color } = useSettingsContext();
 	const { t } = useTranslation();
 
@@ -33,11 +33,11 @@ const VideoHistory = ({ videoData, changeCurrentVideoUrl }: VideoHistoryProps) =
 				})
 				.then((result) => {
 					if (result.isConfirmed) {
-						changeCurrentVideoUrl(videoData[index].videoUrl);
+						setCurrentVideoUrl(videoData[index].videoUrl);
 					}
 				});
 		},
-		[changeCurrentVideoUrl, darkMode, t, videoData]
+		[setCurrentVideoUrl, darkMode, t, videoData]
 	);
 
 	const videoHistoryElements = useMemo(
@@ -70,5 +70,3 @@ const VideoHistory = ({ videoData, changeCurrentVideoUrl }: VideoHistoryProps) =
 		</section>
 	);
 };
-
-export default VideoHistory;

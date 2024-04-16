@@ -3,11 +3,11 @@ import { useSettingsContext } from "../../providers/SettingsContext";
 import { useTranslation } from "react-i18next";
 import { wifiContainerStyles } from "./Wifi.styles";
 
-const Wifi = () => {
+export const Wifi = () => {
 	const { color, darkMode } = useSettingsContext();
 	const { t } = useTranslation();
-	const [ip, changeApi] = useState("");
-	const [ipVisibility, changeIpVisibility] = useState(false);
+	const [ip, setIp] = useState("");
+	const [ipVisibility, setIpVisibility] = useState(false);
 
 	const dontHideOnClick = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation();
@@ -22,7 +22,7 @@ const Wifi = () => {
 				}
 
 				const locationResult = await locationResponse.json();
-				changeApi(locationResult.ip);
+				setIp(locationResult.ip);
 			} catch (error) {
 				console.error(error);
 			}
@@ -34,16 +34,16 @@ const Wifi = () => {
 		<div className='wifiContainer' css={wifiContainerStyles(darkMode, color)} onClick={dontHideOnClick}>
 			<div className='ipContainer'>
 				<p>IP:</p>
-				<p className='ipParagraph'>
+				<div className='ipParagraph'>
 					{!ipVisibility && (
-						<div className='hideIpBlock' onClick={() => changeIpVisibility(true)}>
+						<div className='hideIpBlock' onClick={() => setIpVisibility(true)}>
 							{t("Wifi.showIp")}
 						</div>
 					)}
-					<div onClick={() => changeIpVisibility(false)} title={t("Wifi.hideIp")}>
+					<div onClick={() => setIpVisibility(false)} title={t("Wifi.hideIp")}>
 						{ip}
 					</div>
-				</p>
+				</div>
 			</div>
 			<p className='wifiConnected'>
 				<i className='fa-solid fa-wifi'></i>
@@ -52,5 +52,3 @@ const Wifi = () => {
 		</div>
 	);
 };
-
-export default Wifi;

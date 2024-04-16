@@ -10,7 +10,7 @@ type CalculatorResultProps = {
 	secondNumber: string | undefined;
 };
 
-const CalculatorResult = ({ firstNumber, operator, secondNumber }: CalculatorResultProps) => {
+export const CalculatorResult = ({ firstNumber, operator, secondNumber }: CalculatorResultProps) => {
 	const { t } = useTranslation();
 	const { color, darkMode } = useSettingsContext();
 
@@ -34,5 +34,3 @@ const CalculatorResult = ({ firstNumber, operator, secondNumber }: CalculatorRes
 		</section>
 	);
 };
-
-export default CalculatorResult;

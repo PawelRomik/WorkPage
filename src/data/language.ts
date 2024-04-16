@@ -1,4 +1,4 @@
-const languageOptions = [
+export const languageOptions = [
 	{ code: "en", label: "English" },
 	{ code: "bg", label: "Bulgarian" },
 	{ code: "zh", label: "Chinese" },
@@ -29,5 +29,3 @@ const languageOptions = [
 	{ code: "hu", label: "Hungarian" },
 	{ code: "it", label: "Italian" },
 ];
-
-export default languageOptions;

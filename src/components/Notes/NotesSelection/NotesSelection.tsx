@@ -1,7 +1,7 @@
 import { Note } from "../Notes";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { notesSelectionStyles } from "./NotesSelection.styles";
-import NotesButton from "./NotesButton/NotesButton";
+import { NotesButton } from "./NotesButton/NotesButton";
 
 type NotesSelectionProps = {
 	notes: Note[];
@@ -11,7 +11,7 @@ type NotesSelectionProps = {
 	createNewNote: () => void;
 };
 
-const NotesSelection = ({ notes, selectedNoteId, changeNote, removeNote, createNewNote }: NotesSelectionProps) => {
+export const NotesSelection = ({ notes, selectedNoteId, changeNote, removeNote, createNewNote }: NotesSelectionProps) => {
 	const { color, darkMode } = useSettingsContext();
 
 	return (
@@ -20,5 +20,3 @@ const NotesSelection = ({ notes, selectedNoteId, changeNote, removeNote, createN
 		</section>
 	);
 };
-
-export default NotesSelection;

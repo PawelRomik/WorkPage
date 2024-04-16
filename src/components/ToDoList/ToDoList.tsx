@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import ToDoListAddTask from "./ToDoListAddTask/ToDoListAddTask";
-import ToDoListTask from "./ToDoListTask/ToDoListTask";
+import { ToDoListAddTask } from "./ToDoListAddTask/ToDoListAddTask";
+import { ToDoListTask } from "./ToDoListTask/ToDoListTask";
 import { useSettingsContext } from "../../providers/SettingsContext";
-import LocalStorageNames from "../../utils/localstorageNames";
+import { LocalStorageNames } from "../../utils/localstorageNames";
 import { todolistContainerStyles } from "./ToDoList.styles";
 
 export type Task = {
@@ -13,11 +13,11 @@ export type Task = {
 
 const { localToDoListTasks } = LocalStorageNames;
 
-const ToDoList = () => {
+export const ToDoList = () => {
 	const { darkMode } = useSettingsContext();
-	const [tasks, changeTasks] = useState<Task[]>([]);
-	const [inputValues, changeInputValues] = useState<Task>({ taskName: "", taskContent: "", taskPriority: 1 });
-	const [allowEdit, changeAllowEdit] = useState(false);
+	const [tasks, setTasks] = useState<Task[]>([]);
+	const [inputValues, setInputValues] = useState<Task>({ taskName: "", taskContent: "", taskPriority: 1 });
+	const [allowEdit, setAllowEdit] = useState(false);
 	const [currentlyEdited, setCurrentlyEdited] = useState<number | null>(null);
 
 	const addNewTask = useCallback(() => {
@@ -33,8 +33,8 @@ const ToDoList = () => {
 			const arr = [...tasks, newTask];
 			arr.sort((a, b) => b.taskPriority - a.taskPriority);
 
-			changeTasks(arr);
-			changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
+			setTasks(arr);
+			setInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 		}
 	}, [tasks, inputValues]);
 
@@ -42,24 +42,24 @@ const ToDoList = () => {
 		(id: number) => {
 			const updatedTasks = [...tasks];
 			updatedTasks.splice(id, 1);
-			changeTasks(updatedTasks);
+			setTasks(updatedTasks);
 			setCurrentlyEdited(null);
-			changeAllowEdit(false);
-			changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
+			setAllowEdit(false);
+			setInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 		},
 		[tasks]
 	);
 
 	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		changeInputValues((prevValues) => ({
+		setInputValues((prevValues) => ({
 			...prevValues,
 			[name]: value,
 		}));
 	}, []);
 
 	const handlePriorityChange = useCallback((value: number) => {
-		changeInputValues((prevValues) => ({
+		setInputValues((prevValues) => ({
 			...prevValues,
 			taskPriority: value,
 		}));
@@ -99,16 +99,16 @@ const ToDoList = () => {
 			if (currentlyEdited !== index) {
 				setCurrentlyEdited(index);
 				const taskToEdit = tasks[index];
-				changeInputValues({
+				setInputValues({
 					taskName: taskToEdit.taskName,
 					taskContent: taskToEdit.taskContent,
 					taskPriority: taskToEdit.taskPriority,
 				});
-				changeAllowEdit(true);
+				setAllowEdit(true);
 			} else {
 				setCurrentlyEdited(null);
-				changeAllowEdit(false);
-				changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
+				setAllowEdit(false);
+				setInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 			}
 		},
 		[tasks, currentlyEdited]
@@ -124,24 +124,24 @@ const ToDoList = () => {
 				taskPriority,
 			};
 			updatedTasks.sort((a, b) => b.taskPriority - a.taskPriority);
-			changeTasks(updatedTasks);
+			setTasks(updatedTasks);
 			setCurrentlyEdited(null);
-			changeAllowEdit(false);
-			changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
+			setAllowEdit(false);
+			setInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 		}
 	}, [currentlyEdited, tasks, inputValues]);
 
 	const closeEdit = useCallback(() => {
-		changeAllowEdit(false);
+		setAllowEdit(false);
 		setCurrentlyEdited(null);
-		changeInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
+		setInputValues({ taskName: "", taskContent: "", taskPriority: 1 });
 	}, []);
 
 	useEffect(() => {
 		const storedTasks = localStorage.getItem(localToDoListTasks);
 		if (storedTasks) {
 			const parsedTasks: Task[] = JSON.parse(storedTasks);
-			changeTasks(parsedTasks);
+			setTasks(parsedTasks);
 		}
 	}, []);
 
@@ -155,7 +155,7 @@ const ToDoList = () => {
 			<ToDoListAddTask
 				allowEdit={allowEdit}
 				handlePriorityChange={handlePriorityChange}
-				changeAllowEdit={changeAllowEdit}
+				setAllowEdit={setAllowEdit}
 				inputValues={inputValues}
 				handleInputChange={handleInputChange}
 				addNewTask={addNewTask}
@@ -166,5 +166,3 @@ const ToDoList = () => {
 		</div>
 	);
 };
-
-export default ToDoList;

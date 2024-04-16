@@ -6,7 +6,7 @@ type SettingsLanguageSelectProps = {
 	settingsLanguage: string;
 };
 
-const SettingsLanguageSelect = ({ changeLanguageOnChange, settingsLanguage }: SettingsLanguageSelectProps) => {
+export const SettingsLanguageSelect = ({ changeLanguageOnChange, settingsLanguage }: SettingsLanguageSelectProps) => {
 	const { darkMode } = useSettingsContext();
 
 	return (
@@ -20,5 +20,3 @@ const SettingsLanguageSelect = ({ changeLanguageOnChange, settingsLanguage }: Se
 		</select>
 	);
 };
-
-export default SettingsLanguageSelect;

@@ -1,15 +1,15 @@
 import { useMemo } from "react";
-import AppButton from "../DesktopAppButton/DesktopAppButton";
+import { AppButton } from "../DesktopAppButton/DesktopAppButton";
 import { useTranslation } from "react-i18next";
-import appData from "../../../data/apps";
 import { desktopAppsContainerStyles } from "./DesktopApps.styles";
 import { launchToast } from "../../../utils/toastFunction";
+import { appData } from "../../../data/appData";
 
 type DesktopAppsProps = {
 	handleLaunchApp: (e: React.MouseEvent) => void;
 };
 
-const DesktopApps = ({ handleLaunchApp }: DesktopAppsProps) => {
+export const DesktopApps = ({ handleLaunchApp }: DesktopAppsProps) => {
 	const { t } = useTranslation();
 
 	const apps = useMemo(() => {
@@ -32,5 +32,3 @@ const DesktopApps = ({ handleLaunchApp }: DesktopAppsProps) => {
 		</div>
 	);
 };
-
-export default DesktopApps;

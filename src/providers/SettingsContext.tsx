@@ -1,21 +1,21 @@
 import { createContext, useState, useContext, ReactNode, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useTranslation } from "react-i18next";
-import LocalStorageNames from "../utils/localstorageNames";
-
+import { LocalStorageNames } from "../utils/localstorageNames";
+import { wallpapers } from "../assets/wallpapers";
 type SettingsContextProps = {
 	background: string;
 	setBackground: (newBackground: string) => void;
 	settingsLanguage: string;
-	changeSettingsLanguage: (newLang: string) => void;
+	setSettingsLanguage: (newLang: string) => void;
 	color: string;
 	setColor: (newColor: string) => void;
 	darkMode: boolean;
-	changeDarkMode: (newMode: boolean) => void;
+	setDarkMode: (newMode: boolean) => void;
 	wallpaperStyle: string;
-	changeWallpaperStyle: (newStyle: string) => void;
+	setWallpaperStyle: (newStyle: string) => void;
 	sound: number;
-	changeSound: (newSound: number) => void;
+	setSound: (newSound: number) => void;
 };
 
 const { localSoundValue } = LocalStorageNames;
@@ -25,34 +25,33 @@ const SettingsContext = createContext<SettingsContextProps | undefined>(undefine
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 	const [background, setBackground] = useState("");
 	const [color, setColor] = useState("");
-	const [darkMode, changeDarkMode] = useState(false);
-	const [sound, changeSound] = useState(100);
-	const [wallpaperStyle, changeWallpaperStyle] = useState("");
-	const [settingsLanguage, changeSettingsLanguage] = useState("");
+	const [darkMode, setDarkMode] = useState(false);
+	const [sound, setSound] = useState(100);
+	const [wallpaperStyle, setWallpaperStyle] = useState("");
+	const [settingsLanguage, setSettingsLanguage] = useState("");
 	const { user } = useUser();
 	const { i18n } = useTranslation();
 
 	useEffect(() => {
-		const storedBackground =
-			user?.unsafeMetadata.background || "https://uhdwallpapers.org/uploads/converted/19/07/07/windows-10-hero-redesign-wallpaper-1920x1080_899885-mm-90.jpg";
+		const storedBackground = user?.unsafeMetadata.background || wallpapers[0];
 		if (storedBackground) {
 			setBackground(storedBackground.toString());
 		}
 
 		const storedLanguage = user?.unsafeMetadata?.settingsLanguage?.toString() || "en";
 		if (storedLanguage) {
-			changeSettingsLanguage(storedLanguage);
+			setSettingsLanguage(storedLanguage);
 			i18n.changeLanguage(storedLanguage);
 		}
 
 		const storedWallpaperStyle = user?.unsafeMetadata?.wallpaperStyle?.toString() || "cover";
 		if (storedWallpaperStyle) {
-			changeWallpaperStyle(storedWallpaperStyle);
+			setWallpaperStyle(storedWallpaperStyle);
 		}
 
 		const storedSound = Number(JSON.parse(localStorage.getItem(localSoundValue) || "100"));
 		if (storedSound) {
-			changeSound(storedSound);
+			setSound(storedSound);
 		}
 
 		const storedColor = user?.unsafeMetadata?.color?.toString() || "#CE17C5";
@@ -62,7 +61,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 
 		const storedMode = user?.unsafeMetadata?.darkMode?.toString() || "false";
 		if (storedMode) {
-			changeDarkMode(JSON.parse(storedMode));
+			setDarkMode(JSON.parse(storedMode));
 		}
 	}, [user, i18n]);
 
@@ -75,16 +74,16 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 			value={{
 				background,
 				settingsLanguage,
-				changeSettingsLanguage,
+				setSettingsLanguage,
 				setBackground,
 				setColor,
 				color,
 				darkMode,
-				changeDarkMode,
+				setDarkMode,
 				wallpaperStyle,
-				changeWallpaperStyle,
+				setWallpaperStyle,
 				sound,
-				changeSound,
+				setSound,
 			}}
 		>
 			{children}

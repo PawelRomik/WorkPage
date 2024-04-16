@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useSettingsContext } from "../../../providers/SettingsContext";
-import LoadingAnimation from "../../LoadingAnimation/LoadingAnimation";
+import { LoadingAnimation } from "../../LoadingAnimation/LoadingAnimation";
 import { useCallback } from "react";
 import { launchToast } from "../../../utils/toastFunction";
 import { translatorTextAreaStyles } from "./TranslatorTextArea.styles";
@@ -11,7 +11,7 @@ type TranslatorTextAreaProps = {
 	translated: string | undefined | number;
 };
 
-const TranslatorTextArea = ({ inputValue, updateInputValue, translated }: TranslatorTextAreaProps) => {
+export const TranslatorTextArea = ({ inputValue, updateInputValue, translated }: TranslatorTextAreaProps) => {
 	const { color, darkMode } = useSettingsContext();
 	const { t } = useTranslation();
 
@@ -38,5 +38,3 @@ const TranslatorTextArea = ({ inputValue, updateInputValue, translated }: Transl
 		</section>
 	);
 };
-
-export default TranslatorTextArea;

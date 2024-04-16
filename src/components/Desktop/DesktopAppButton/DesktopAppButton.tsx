@@ -9,7 +9,7 @@ type AppButtonProps = {
 	handleLaunchApp: (e: React.MouseEvent) => void;
 };
 
-const AppButton = ({ app, handleLaunchApp }: AppButtonProps) => {
+export const AppButton = ({ app, handleLaunchApp }: AppButtonProps) => {
 	const { id, name, class: appClass } = useMemo(() => app, [app]);
 	const { t } = useTranslation();
 	const { color } = useSettingsContext();
@@ -24,5 +24,3 @@ const AppButton = ({ app, handleLaunchApp }: AppButtonProps) => {
 		</button>
 	);
 };
-
-export default AppButton;

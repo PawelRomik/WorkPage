@@ -1,8 +1,8 @@
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import SaperDifficulty from "./SaperDifficulty/SaperDifficulty";
-import SaperStats from "./SaperStats/SaperStats";
+import { SaperDifficulty } from "./SaperDifficulty/SaperDifficulty";
+import { SaperStats } from "./SaperStats/SaperStats";
 import { saperEndScreenStyles } from "./SaperEndScreen.styles";
 
 type SaperEndScreenProps = {
@@ -14,7 +14,7 @@ type SaperEndScreenProps = {
 	changeDifficultyOnClick: (passedDifficulty: number) => void;
 };
 
-const SaperEndScreen = ({ bestTimes, gameOver, difficulty, playAgain, changeDifficultyOnClick, firstClick }: SaperEndScreenProps) => {
+export const SaperEndScreen = ({ bestTimes, gameOver, difficulty, playAgain, changeDifficultyOnClick, firstClick }: SaperEndScreenProps) => {
 	const { darkMode, color } = useSettingsContext();
 	const { t } = useTranslation();
 
@@ -32,5 +32,3 @@ const SaperEndScreen = ({ bestTimes, gameOver, difficulty, playAgain, changeDiff
 		</div>
 	);
 };
-
-export default SaperEndScreen;

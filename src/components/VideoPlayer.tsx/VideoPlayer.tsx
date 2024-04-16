@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { launchToast } from "../../utils/toastFunction";
-import LocalStorageNames from "../../utils/localstorageNames";
+import { LocalStorageNames } from "../../utils/localstorageNames";
 import { videoPlayerStyles } from "./VideoPlayer.styles";
 import { useSettingsContext } from "../../providers/SettingsContext";
 import nothumbnail from "../../assets/video/nothumbnail.png";
-import VideoContainer from "./VideoContainer/VideoContainer";
-import VideoHistory from "./VideoHistory/VideoHistory";
-import VideoInput from "./VideoInput/VideoInput";
+import { VideoContainer } from "./VideoContainer/VideoContainer";
+import { VideoHistory } from "./VideoHistory/VideoHistory";
+import { VideoInput } from "./VideoInput/VideoInput";
 import { useTranslation } from "react-i18next";
 
 const { localCurrentVideo, localVideoLength, localVideoHistory } = LocalStorageNames;
@@ -17,13 +17,13 @@ export type Video = {
 	videoUrl: string;
 };
 
-const VideoPlayer = () => {
-	const [videoInputValue, changeVideoInputValue] = useState("");
-	const [currentVideoUrl, changeCurrentVideoUrl] = useState("");
+export const VideoPlayer = () => {
+	const [videoInputValue, setVideoInputValue] = useState("");
+	const [currentVideoUrl, setCurrentVideoUrl] = useState("");
 	const [videoData, setVideoData] = useState<Video[]>([]);
-	const [videoHistory, changeVideoHistory] = useState<string[]>([]);
+	const [videoHistory, setVideoHistory] = useState<string[]>([]);
 	const { darkMode } = useSettingsContext();
-	const [videoTime, changeVideoTime] = useState(0);
+	const [videoTime, setVideoTime] = useState(0);
 	const { t } = useTranslation();
 
 	const setVideo = useCallback(() => {
@@ -31,17 +31,17 @@ const VideoPlayer = () => {
 			if (!videoHistory.includes(videoInputValue)) {
 				if (videoHistory.length >= 8) {
 					const newVideoHistory = [videoInputValue, ...videoHistory.slice(0, 7)];
-					changeVideoHistory(newVideoHistory);
+					setVideoHistory(newVideoHistory);
 				} else {
-					changeVideoHistory([videoInputValue, ...videoHistory]);
+					setVideoHistory([videoInputValue, ...videoHistory]);
 				}
 			}
-			changeCurrentVideoUrl(videoInputValue);
-			changeVideoInputValue("");
-			changeVideoTime(0);
+			setCurrentVideoUrl(videoInputValue);
+			setVideoInputValue("");
+			setVideoTime(0);
 			localStorage.setItem(localVideoLength, JSON.stringify(0));
 		} else {
-			changeVideoInputValue("");
+			setVideoInputValue("");
 			launchToast("error", t("Player.noVideo"));
 		}
 	}, [videoInputValue, videoHistory, t]);
@@ -83,21 +83,21 @@ const VideoPlayer = () => {
 	useEffect(() => {
 		const storedCurrVideo = localStorage.getItem(localCurrentVideo);
 		if (storedCurrVideo) {
-			changeCurrentVideoUrl(JSON.parse(storedCurrVideo));
+			setCurrentVideoUrl(JSON.parse(storedCurrVideo));
 		}
 	}, []);
 
 	useEffect(() => {
 		const storedVideoTime = localStorage.getItem(localVideoLength);
 		if (storedVideoTime) {
-			changeVideoTime(JSON.parse(storedVideoTime));
+			setVideoTime(JSON.parse(storedVideoTime));
 		}
 	}, []);
 
 	useEffect(() => {
 		const storedVideoHistory = localStorage.getItem(localVideoHistory);
 		if (storedVideoHistory) {
-			changeVideoHistory(JSON.parse(storedVideoHistory));
+			setVideoHistory(JSON.parse(storedVideoHistory));
 		}
 	}, []);
 
@@ -111,11 +111,9 @@ const VideoPlayer = () => {
 
 	return (
 		<div className='videoPlayer' css={videoPlayerStyles(darkMode)}>
-			<VideoInput setVideo={setVideo} videoInputValue={videoInputValue} changeVideoInputValue={changeVideoInputValue} />
+			<VideoInput setVideo={setVideo} videoInputValue={videoInputValue} setVideoInputValue={setVideoInputValue} />
 			<VideoContainer currentVideoUrl={currentVideoUrl} videoTime={videoTime} />
-			<VideoHistory videoData={videoData} changeCurrentVideoUrl={changeCurrentVideoUrl} />
+			<VideoHistory videoData={videoData} setCurrentVideoUrl={setCurrentVideoUrl} />
 		</div>
 	);
 };
-
-export default VideoPlayer;

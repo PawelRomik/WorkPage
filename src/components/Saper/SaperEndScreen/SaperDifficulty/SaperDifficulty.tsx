@@ -7,7 +7,7 @@ type SaperDifficultyProps = {
 	changeDifficultyOnClick: (newValue: number) => void;
 };
 
-const SaperDifficulty = ({ difficulty, changeDifficultyOnClick }: SaperDifficultyProps) => {
+export const SaperDifficulty = ({ difficulty, changeDifficultyOnClick }: SaperDifficultyProps) => {
 	const { t } = useTranslation();
 	const { darkMode } = useSettingsContext();
 
@@ -25,5 +25,3 @@ const SaperDifficulty = ({ difficulty, changeDifficultyOnClick }: SaperDifficult
 		</div>
 	);
 };
-
-export default SaperDifficulty;

@@ -9,10 +9,10 @@ import { SettingsUsersDataLeftStyles } from "./SettingsUsersDataLeft.styles";
 
 type SettingsUsersDataLeftProps = {
 	userName: string;
-	changeUserName: (newUsername: string) => void;
+	setUserName: (newUsername: string) => void;
 };
 
-const SettingsUsersDataLeft = ({ userName, changeUserName }: SettingsUsersDataLeftProps) => {
+export const SettingsUsersDataLeft = ({ userName, setUserName }: SettingsUsersDataLeftProps) => {
 	const { t } = useTranslation();
 	const { user } = useClerk();
 	const { darkMode, color } = useSettingsContext();
@@ -97,7 +97,7 @@ const SettingsUsersDataLeft = ({ userName, changeUserName }: SettingsUsersDataLe
 								await user?.reload();
 								const username = user?.username || "";
 
-								changeUserName(username);
+								setUserName(username);
 							} catch (error) {
 								Swal.showValidationMessage(``);
 							}
@@ -110,7 +110,7 @@ const SettingsUsersDataLeft = ({ userName, changeUserName }: SettingsUsersDataLe
 					});
 			}
 		},
-		[darkMode, t, user, changeUserName]
+		[darkMode, t, user, setUserName]
 	);
 	return (
 		<div className='usersDataLeft' css={SettingsUsersDataLeftStyles(darkMode, color)}>
@@ -130,5 +130,3 @@ const SettingsUsersDataLeft = ({ userName, changeUserName }: SettingsUsersDataLe
 		</div>
 	);
 };
-
-export default SettingsUsersDataLeft;

@@ -1,4 +1,4 @@
-export default [
+export const appData = [
 	{
 		id: 0,
 		name: "Settings",

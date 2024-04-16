@@ -42,6 +42,7 @@ export const saperBoardStyles = (darkMode: boolean, color: string) => css`
 				align-items: center;
 				animation: 400ms 400ms linear gameOver forwards;
 				background-color: ${color};
+				color: white;
 			}
 		}
 

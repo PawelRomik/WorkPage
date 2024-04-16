@@ -1,4 +1,4 @@
-const LocalStorageNames = {
+export const LocalStorageNames = {
 	localNotes: "notes",
 	localToDoListTasks: "tasks",
 	localPaintCanvas: "paintCanvas",
@@ -15,5 +15,3 @@ const LocalStorageNames = {
 	localVideoHistory: "videoHistory",
 	localVideoLength: "videoLength",
 };
-
-export default LocalStorageNames;

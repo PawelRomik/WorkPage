@@ -21,6 +21,32 @@ export const wifiContainerStyles = (darkMode: boolean, color: string) => css`
 			gap: 0.5rem;
 			justify-content: center;
 			align-items: center;
+
+			& > .ipParagraph {
+				cursor: pointer;
+				padding: 0.25rem;
+				background-color: ${darkMode ? "#dfdfdf" : "rgb(27,27,27)"};
+				color: ${darkMode ? "black" : "white"};
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 0.5rem;
+				position: relative;
+
+				& > .hideIpBlock {
+					background-color: ${color};
+					color: white;
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					cursor: pointer;
+				}
+			}
 		}
 
 		& > .wifiConnected {
@@ -38,27 +64,6 @@ export const wifiContainerStyles = (darkMode: boolean, color: string) => css`
 
 			& > i {
 				color: ${color};
-			}
-
-			&.ipParagraph {
-				cursor: pointer;
-				padding: 0.25rem;
-				background-color: ${darkMode ? "#dfdfdf" : "rgb(27,27,27)"};
-				color: ${darkMode ? "black" : "white"};
-			}
-
-			& > .hideIpBlock {
-				background-color: ${color};
-				color: white;
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				cursor: pointer;
 			}
 		}
 

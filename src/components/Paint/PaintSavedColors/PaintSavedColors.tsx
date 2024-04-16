@@ -7,7 +7,7 @@ type PaintToolsProps = {
 	handleOnButtonClickColorChange: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const PaintSavedColors = ({ paintColors, handleOnButtonClickColorChange }: PaintToolsProps) => {
+export const PaintSavedColors = ({ paintColors, handleOnButtonClickColorChange }: PaintToolsProps) => {
 	const { darkMode } = useSettingsContext();
 
 	const mappedColors = useMemo(() => {
@@ -26,5 +26,3 @@ const PaintSavedColors = ({ paintColors, handleOnButtonClickColorChange }: Paint
 		</div>
 	);
 };
-
-export default PaintSavedColors;

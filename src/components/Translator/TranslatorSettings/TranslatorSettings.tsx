@@ -1,4 +1,4 @@
-import TranslatorLanguages from "../TranslatorLanguages/TranslatorLanguages";
+import { TranslatorLanguages } from "../TranslatorLanguages/TranslatorLanguages";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { translatorSettingsStyles } from "./TranslatorSettings.styles";
 
@@ -11,7 +11,14 @@ type TranslatorSettingsProps = {
 	handleLanguageToChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-const TranslatorSettings = ({ selectedLanguageFrom, selectedLanguageTo, clear, swapLanguages, handleLanguageFromChange, handleLanguageToChange }: TranslatorSettingsProps) => {
+export const TranslatorSettings = ({
+	selectedLanguageFrom,
+	selectedLanguageTo,
+	clear,
+	swapLanguages,
+	handleLanguageFromChange,
+	handleLanguageToChange,
+}: TranslatorSettingsProps) => {
 	const { darkMode, color } = useSettingsContext();
 
 	return (
@@ -29,5 +36,3 @@ const TranslatorSettings = ({ selectedLanguageFrom, selectedLanguageTo, clear, s
 		</section>
 	);
 };
-
-export default TranslatorSettings;

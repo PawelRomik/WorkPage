@@ -1,4 +1,4 @@
-import Clock from "../../Clock/Clock";
+import { Clock } from "../../Clock/Clock";
 import { useMemo } from "react";
 import { taskbarRightContainerStyles } from "./TaskbarRightContainer.styles";
 import { useSettingsContext } from "../../../providers/SettingsContext";
@@ -9,7 +9,7 @@ type TaskbarRightContainerProps = {
 	displayWifiWindow: () => void;
 };
 
-const TaskbarRightContainer = ({ displaySoundbarWindow, displayWifiWindow, displayCalendarWindow }: TaskbarRightContainerProps) => {
+export const TaskbarRightContainer = ({ displaySoundbarWindow, displayWifiWindow, displayCalendarWindow }: TaskbarRightContainerProps) => {
 	const { darkMode, color, sound } = useSettingsContext();
 	const volumeClass = useMemo(() => (sound < 10 ? "fa-volume-xmark" : sound < 70 ? "fa-volume-low" : "fa-volume-high"), [sound]);
 
@@ -23,5 +23,3 @@ const TaskbarRightContainer = ({ displaySoundbarWindow, displayWifiWindow, displ
 		</div>
 	);
 };
-
-export default TaskbarRightContainer;

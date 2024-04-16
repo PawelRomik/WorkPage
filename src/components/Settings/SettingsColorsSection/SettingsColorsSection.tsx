@@ -1,5 +1,5 @@
-import SettingsLanguageSelect from "./SettingsLanguageSelect/SettingsLanguageSelect";
-import SettingsSwitch from "./SettingsSwitch/SettingsSwitch";
+import { SettingsLanguageSelect } from "./SettingsLanguageSelect/SettingsLanguageSelect";
+import { SettingsSwitch } from "./SettingsSwitch/SettingsSwitch";
 import { useSettingsContext } from "../../../providers/SettingsContext";
 import { useTranslation } from "react-i18next";
 import { settingsColorsSectionStyles } from "./SettingsColorsSection.styles";
@@ -12,7 +12,7 @@ type SettingsColorSectionProps = {
 	changeLanguageOnChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-const SettingsColorSection = ({ handleColorChange, darkModeInputValue, settingsLanguage, handleDarkModeChange, changeLanguageOnChange }: SettingsColorSectionProps) => {
+export const SettingsColorSection = ({ handleColorChange, darkModeInputValue, settingsLanguage, handleDarkModeChange, changeLanguageOnChange }: SettingsColorSectionProps) => {
 	const { darkMode } = useSettingsContext();
 	const { t } = useTranslation();
 
@@ -46,5 +46,3 @@ const SettingsColorSection = ({ handleColorChange, darkModeInputValue, settingsL
 		</section>
 	);
 };
-
-export default SettingsColorSection;
