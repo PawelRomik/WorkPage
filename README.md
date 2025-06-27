@@ -5,7 +5,7 @@
 <p align="center">
      <img src="https://github.com/LeQu15/WorkPage/assets/78439105/d5b97671-05f3-4ade-9a08-c319d72d4a3d" alt="desktop">
 </p>
-A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>, <b>Notes</b>, <b>Paint</b>, <b>Video Player</b> or <b>Translator</b>. Boost your productivity and keep everything in one convenient place!
+A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>, <b>Notes</b>, <b>Paint</b>, <b>Video Player</b>. Boost your productivity and keep everything in one convenient place!
 
 ## Tech/framework used :wrench:
 * [Vite](https://github.com/vitejs/vite)
