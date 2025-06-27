@@ -43,10 +43,6 @@ A simple website with essential tools like a <b>Calculator</b>, <b>ToDoList</b>,
 </p>
 
 <p align="center">
-    <img src="https://github.com/LeQu15/WorkPage/assets/78439105/eef76b16-e072-41ee-a3da-4d56315fa451" alt="Translator">
-</p>
-
-<p align="center">
     <img src="https://github.com/LeQu15/WorkPage/assets/78439105/7af5e513-7d22-411a-bb65-69b80800b4bc" alt="Video Player">
 </p>
 
@@ -55,7 +51,6 @@ To install this project run:
 > npm install
 
 Note: If you want to run this application locally, you need to have the [VITE_CLERK_PUBLISHABLE_KEY](https://clerk.com) in your .env file!
-<br>If you want the weather and translator modules to work, you'll need [VITE_WEATHER_API](https://www.visualcrossing.com) and [VITE_TRANSLATOR_API](www.deepl.com) as well.
 <br>Example .env values can be found in .env.example.
 ## Available scripts
 
